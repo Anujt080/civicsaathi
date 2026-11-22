@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CivicAlertsMarquee } from './components/CivicAlertsMarquee';
-import { ServicesSection } from './components/ServicesSection';
+import { ServicesExplorer } from './components/ServicesExplorer';
 import { ReadinessChecker } from './components/ReadinessChecker';
 import { HowItWorks } from './components/HowItWorks';
 import { KendrasSection } from './components/KendrasSection';
@@ -39,8 +39,8 @@ export const App: React.FC = () => {
         {/* 2. Civic Alerts & Procedural Bulletins Marquee */}
         <CivicAlertsMarquee />
 
-        {/* 3. Services Catalog & Document Checklist Directory */}
-        <ServicesSection
+        {/* 3. Civic Services Explorer & Statutory Checklist Directory */}
+        <ServicesExplorer
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           onSelectService={(service) => setSelectedService(service)}
