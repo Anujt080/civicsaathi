@@ -69,3 +69,48 @@ export interface FaqItem {
   answer: string;
   category: string;
 }
+
+// ==========================================
+// CIVIC ISSUE REPORTING TYPES
+// ==========================================
+
+export type IssueCategory =
+  | 'Roads & Potholes'
+  | 'Streetlights'
+  | 'Garbage & Sanitation'
+  | 'Water Supply'
+  | 'Public Buildings'
+  | 'Drainage'
+  | 'Other';
+
+export type IssueUrgency = 'Low' | 'Medium' | 'High';
+
+export type IssueStatus =
+  | 'Submitted'
+  | 'Under Review'
+  | 'In Progress'
+  | 'Resolved';
+
+export interface IssueStatusUpdate {
+  status: IssueStatus;
+  timestamp: string;
+  note: string;
+}
+
+export interface CivicIssueReport {
+  id: string;
+  title: string;
+  category: IssueCategory;
+  description: string;
+  location: string;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  urgency: IssueUrgency;
+  status: IssueStatus;
+  createdAt: string;
+  photoUrl?: string;
+  departmentAssigned?: string;
+  statusUpdates?: IssueStatusUpdate[];
+}
