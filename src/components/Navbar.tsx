@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchFocus }) => {
   };
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
+    { name: 'Services Explorer', href: '#services' },
     { name: 'Readiness Checker', href: '#readiness-checker', isNew: true },
     { name: 'How It Works', href: '#how-it-works' },
     { name: 'Civic Alerts', href: '#alerts' },

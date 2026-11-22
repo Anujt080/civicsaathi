@@ -1,27 +1,44 @@
+export type DocumentCategory = 'POI' | 'POA' | 'DOB' | 'POR' | 'OTHER';
+
 export interface DocumentRequirement {
   id: string;
   name: string;
-  category: 'POI' | 'POA' | 'DOB' | 'POR' | 'OTHER';
+  category: DocumentCategory;
   required: boolean;
   description: string;
   acceptedExamples: string[];
 }
 
+export type ServiceCategory =
+  | 'Identity & Documents'
+  | 'Education'
+  | 'Health'
+  | 'Government Schemes'
+  | 'Transport'
+  | 'Housing'
+  | 'Employment'
+  | 'Utilities';
+
 export interface CivicService {
   id: string;
   name: string;
   hindiName?: string;
-  category: 'Identity' | 'Welfare' | 'Transport' | 'Certificates' | 'Civil' | 'Travel';
+  category: ServiceCategory;
   department: string;
   officialPortalUrl: string;
   officialPortalName: string;
   fee: string;
   processingTime: string;
   summary: string;
-  isPopular?: boolean;
+  description: string;
+  whoCanApply: string[];
   documents: DocumentRequirement[];
   steps: string[];
+  importantInfo: string[];
   tips: string[];
+  iconName?: string;
+  isPopular?: boolean;
+  tags?: string[];
 }
 
 export interface CivicAlert {
