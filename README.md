@@ -1,7 +1,7 @@
 # CivicSaathi (सिविक साथी)
 
-> **Citizen Guidance Platform for Indian Public Services**  
-> Demystifying government service procedures, exploring public schemes, verifying document readiness, and eliminating counter friction for Indian citizens.
+> **Citizen Guidance & Grievance Platform for Indian Public Services**  
+> Demystifying government service procedures, reporting local civic issues, exploring public schemes, verifying document readiness, and eliminating counter friction for Indian citizens.
 
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -13,81 +13,89 @@
 
 ## 📌 Overview
 
-Every day, millions of Indian citizens visit government facilitation centers—such as **Aadhaar Seva Kendras (ASK)**, **Passport Seva Kendras (PSK)**, **Regional Transport Offices (RTO)**, and **Lok Seva Kendras (LSK)**—only to be turned away because of subtle documentation issues:
+Every day, millions of Indian citizens navigate civic services and public infrastructure challenges:
 
-1. **Name spelling discrepancies**: Initials or minor character mismatches between identity and address proofs.
-2. **Missing statutory proofs**: Missing mandatory date of birth certificates or submitting unaccepted proofs.
-3. **Outdated utility proofs**: Submitting electricity or water bills older than the mandatory 3-month statutory window.
-4. **Procedural confusion**: Unclear distinctions between services that can be completed online versus those requiring physical biometric counter capture.
+1. **Local Civic Grievances**: Dangerous potholes, failed streetlights, broken water pipelines, overflowing garbage dumps, and open storm drains with no transparent tracking mechanism.
+2. **Name spelling discrepancies**: Initials or minor character mismatches between identity and address proofs causing counter rejections at **Aadhaar Seva Kendras (ASK)**, **Passport Seva Kendras (PSK)**, **Regional Transport Offices (RTO)**, and **Lok Seva Kendras (LSK)**.
+3. **Missing statutory proofs**: Missing mandatory date of birth certificates or submitting unaccepted proofs.
+4. **Outdated utility proofs**: Submitting electricity or water bills older than the mandatory 3-month statutory window.
+5. **Procedural confusion**: Unclear distinctions between services that can be completed online versus those requiring physical biometric counter capture.
 
-**CivicSaathi (सिविक साथी)** is an independent, citizen-first civic-tech platform engineered to solve counter confusion before citizens leave their homes.
+**CivicSaathi (सिविक साथी)** is an independent, citizen-first civic-tech platform engineered to empower citizens to explore verified public service rules, verify document readiness, and report neighborhood civic issues effortlessly.
 
 ---
 
 ## 🚀 Features & Capabilities
 
-### 1. ✨ NEW: Civic Services Explorer (`#services`)
-A comprehensive, responsive directory for discovering and understanding Central and State public services across India:
-- **What It Does**: Provides an interactive, categorized catalog of government services, outlining who qualifies to apply, statutory fee schedules, processing turnarounds, acceptable proof lists, and step-by-step submission workflows.
-- **Search & Filter Functionality**:
-  - **Prominent Live Search**: Real-time keyword filtering across service names, Hindi transliterations, administrative departments, description summaries, search tags, and statutory proof requirements.
-  - **8 Standardized Civic Categories**:
-    1. **Identity & Documents**: Aadhaar Enrolment, Aadhaar Biometric Updates, PAN Card Allotment/Correction, Passport Seva, Domicile/Residence, Caste Certificates (SC/ST/OBC).
-    2. **Education**: National Scholarship Portal (NSP Post-Matric & Merit), Right to Education (RTE) 25% Free School Admission, PM-eVIDYA Digital Education.
-    3. **Health**: Ayushman Bharat PM-JAY (₹5 Lakh Cashless Cover), PM Bhartiya Janaushadhi (Generic Medicines), Mother & Child Tracking (MCP Card).
-    4. **Government Schemes**: PM Kisan Samman Nidhi (₹6,000/yr Income Support), National Social Assistance Pensions (IGNOAPS / Widow / Disability), PM Suraksha Bima Yojana.
-    5. **Transport**: Driving Licence (Learner's & Permanent DL via Parivahan), Vehicle RC Ownership Transfer, High Security Registration Plates (HSRP).
-    6. **Housing**: Pradhan Mantri Awas Yojana - Urban (PMAY-U), PMAY - Gramin (PMAY-G Rural Housing), Property Mutation & e-Khata Transfer.
-    7. **Employment**: National Career Service (NCS Job Seeker ID), PM Employment Generation Programme (PMEGP Credit Subsidy), Mahatma Gandhi NREGA Job Cards.
-    8. **Utilities**: PM Surya Ghar Muft Bijli Yojana (Rooftop Solar Subsidy up to ₹78,000), PM Ujjwala Yojana 2.0 (Free LPG Connection), Jal Jeevan Mission (Har Ghar Jal).
-  - **Dynamic Counters & Active Filter Badges**: Real-time counter of available services per category with 1-click filter reset.
-  - **Clean Empty States**: Informative zero-result screens featuring suggested search terms and 1-tap filter reset.
-- **Dedicated Service Details View**:
-  - Clicking **"View Details"** opens a dedicated modal providing:
-    - **Service Name & Department**: Clear authority attribution.
-    - **Detailed Description**: Full procedural overview and scope.
-    - **Who Can Apply**: Explicit eligibility checklists and qualification criteria.
-    - **Required Documents**: Categorized into **POI**, **POA**, **DOB**, and **POR** with exhaustive lists of accepted proofs.
-    - **Basic Application Steps**: Numbered chronological guide from application initiation to document delivery.
-    - **Important Information**: Critical statutory warnings, time limits, and regulatory caveats.
-    - **Clear Action CTAs**: Direct **"Start Application"** button opening the official government portal (`uidai.gov.in`, `passportindia.gov.in`, `parivahan.gov.in`, `beneficiary.nha.gov.in`, etc.) and a secondary **"Verify Readiness First"** link seamlessly transferring context into the Document Readiness Checker.
-- **Structured Sample-Data Architecture**:
-  - Maintained in `src/data/servicesData.ts` adhering to the strongly-typed `CivicService` interface (`src/types/index.ts`).
-  - Decoupled from presentation components so it can be seamlessly backed by an external REST API or database (e.g. Supabase / PostgreSQL) in future releases without UI refactoring.
+### 1. ✨ Civic Issue Reporting (`/report-issue` & `/my-reports`)
+A complete civic grievance redressal module enabling citizens to report local infrastructure defects and track municipal remediation:
+- **Dedicated "Report an Issue" Page**:
+  - **Issue Title**: Concise, descriptive subject of the incident with validation (min 5 characters).
+  - **Category Selector**: Dropdown categorizing issues into:
+    - *Roads & Potholes*
+    - *Streetlights*
+    - *Garbage & Sanitation*
+    - *Water Supply*
+    - *Public Buildings*
+    - *Drainage*
+    - *Other*
+  - **Detailed Description**: Multiline description detailing the issue, severity, pedestrian hazards, and duration (min 15 characters).
+  - **Evidence Photo Upload with Live Preview**:
+    - Supports image upload (`.jpg`, `.jpeg`, `.png`, `.webp` up to 5MB) via file browser or drag-and-drop.
+    - Real-time image preview thumbnail with file size and one-click removal.
+    - Pre-packaged demo presets (*Sample Pothole, Sample Streetlight, Sample Sanitation*) for instant testing.
+  - **Polished Location UI**:
+    - Landmark and street address input.
+    - **"Use Current Location"** button with simulated geolocation detection.
+    - Mock latitude and longitude display (e.g., `21.2514° N, 81.6296° E`) with green geotag confirmation badge.
+  - **Color-Coded Urgency Selector**:
+    - `Low` (Emerald): Routine maintenance defect.
+    - `Medium` (Amber): Affecting local traffic flow or neighborhood convenience.
+    - `High` (Rose): Immediate danger to public safety, flooding, or major hazard.
+  - **Form Validation & Error States**: Comprehensive inline validation preventing submission of incomplete fields.
+  - **Submission Workflow**:
+    - Simulated submission loading state.
+    - Unique tracking reference ID generation (e.g., `CS-2026-4821`).
+    - Success screen displaying generated Report ID, category, urgency, location, and timestamp.
+    - Action buttons to return to the homepage, track in **My Reports**, or submit another report.
+- **Dedicated "My Reports" Page**:
+  - Displays all previously submitted grievances with persistent storage in `localStorage`.
+  - **Status Filtering**: Filter by `All`, `Submitted`, `Under Review`, `In Progress`, and `Resolved` with dynamic count badges.
+  - **Live Search**: Instant keyword filtering by Report ID, title, or location.
+  - **Rich Report Cards**: Tracking reference ID, category, color-coded urgency and status, photo thumbnails, GPS coordinates, and expandable departmental resolution timeline.
+- **Current Technical Limitation**: Operates with client-side `localStorage` persistence.
 
-### 2. Interactive Document Readiness & Discrepancy Verifier (`#readiness-checker`)
-A pre-counter scrutiny engine running entirely client-side with zero data storage:
-- **Service-Aware Rule Loading**: Automatically loads statutory document requirements based on the selected service.
-- **Token-Level Name Consistency Analysis**:
-  - `EXACT`: Letter-for-letter match across application records and physical cards.
-  - `PERMUTATION`: Flags first/last name sequence variations (e.g., *"Rahul Sharma"* vs *"Sharma Rahul"*).
-  - `PARTIAL / INITIAL`: Identifies abbreviations (e.g., *"R. Sharma"*) and alerts citizens to carry secondary photo ID.
-  - `MISMATCH`: Detects critical spelling discrepancies that result in counter rejection.
-- **Statutory Age & Eligibility Checks**: Validates applicant date of birth against statutory age limits (e.g. 18+ for Driving Licence, 60+ for Old Age Pension).
-- **Utility Bill Currency Verification**: Automatically checks whether electricity/water bills meet the 3-month recency requirement.
-- **Counter Success Scorecard (0–100%)**: Displays real-time pass/fail indicators, passed checks counter, and actionable advice for every detected discrepancy.
-- **1-Click Test Scenarios**: Instant demo buttons to test:
-  - *Scenario A*: Counter Ready (Full Match)
-  - *Scenario B*: Advisory Warning (Abbreviated Initial)
-  - *Scenario C*: Action Required (Name Mismatch & Expired POA)
-- **Printable Civic Readiness Slip**: One-click print/export tool allowing citizens to print a physical preparation summary slip before visiting the counter.
+---
 
-### 3. Modern Civic-Tech Landing Page & Architecture
-- **Indian Civic Visual Identity**: Designed with clean typography, responsive layouts, and Indian civic color accents (Navy, Royal Blue, Saffron, Emerald).
-- **Persistent Theme Switching**: Seamless toggle between Light Mode and AMOLED Dark Mode, persisted in `localStorage`.
-- **Mobile-First Responsive Layout**: Optimized navigation with hamburger drawer for mobile devices and clean desktop viewports.
+### 2. Civic Services Explorer (`#services`)
+A comprehensive directory for discovering Central and State public services across India:
+- **Search & Filter Functionality**: Real-time keyword filtering across service names, Hindi transliterations, administrative departments, description summaries, search tags, and statutory proof requirements.
+- **8 Standardized Civic Categories**: Identity & Documents, Education, Health, Government Schemes, Transport, Housing, Employment, Utilities.
+- **Dedicated Service Details Modal**: Eligibility checklists, POI/POA/DOB/POR document requirements, step-by-step submission guide, statutory warnings, and direct portal links.
 
-### 4. Live Civic Bulletins & Procedural Advisories
-- Interactive ticker highlighting critical government deadlines and procedural rules (UIDAI free re-validation drives, PAN-Aadhaar linking guidelines, PSK appointment mandates, contactless LL tests).
+---
+
+### 3. Interactive Document Readiness & Discrepancy Verifier (`#readiness-checker`)
+A pre-counter scrutiny engine running client-side with zero data storage:
+- **Service-Aware Rule Loading**: Automatically loads statutory document requirements based on selected service.
+- **Token-Level Name Consistency Analysis**: Detects exact matches, word-order permutations, abbreviated initials (e.g., *"R. Sharma"*), and critical spelling mismatches.
+- **Statutory Checks**: Age limits and 3-month recency window for utility address proofs.
+- **Printable Civic Readiness Slip**: One-click summary slip export.
+
+---
+
+### 4. Separate Navbar Webpages & Dedicated Routing
+Navbar items open on independent, dedicated routes with active tab indicators:
+- **How It Works** → `/how-it-works`
+- **Civic Alerts** → `/civic-alerts`
+- **Find Centers** → `/find-centers`
+- **Report an Issue** → `/report-issue`
+- **My Reports** → `/my-reports`
+
+---
 
 ### 5. Authorized Seva Kendras Directory
-- Directory of facilitation centers across districts with operational schedules, toll-free helpline numbers (1947, 1800-258-1800), and one-tap Google Maps directions.
-
-### 6. The 3-Step Civic Journey
-- Clear guidance educating citizens through:
-  1. *Know Requirements Upfront*
-  2. *Pre-Submission Self-Check*
-  3. *Submit First-Time-Right*
+Directory of facilitation centers across districts with operational schedules, toll-free helpline numbers, and one-tap Google Maps directions.
 
 ---
 
@@ -96,6 +104,7 @@ A pre-counter scrutiny engine running entirely client-side with zero data storag
 | Layer | Technologies |
 | :--- | :--- |
 | **Framework** | [React 18](https://react.dev/) (Functional Components, Hooks) |
+| **Routing** | [React Router 7](https://reactrouter.com/) |
 | **Language** | [TypeScript 5.6](https://www.typescriptlang.org/) (Strict Mode) |
 | **Build Tool & Bundler** | [Vite 5](https://vitejs.dev/) |
 | **Styling** | [Tailwind CSS 3](https://tailwindcss.com/) with PostCSS & Autoprefixer |
@@ -169,33 +178,43 @@ CivicSaathi/
 │   ├── hero-civic-bg.svg               # Vector background graphic
 │   └── logo.png                        # CivicSaathi emblem mark
 └── src/                                # Application source code
-    ├── main.tsx                        # React DOM root entrypoint
-    ├── App.tsx                         # Main page layout & state orchestration
+    ├── main.tsx                        # React DOM root entrypoint (BrowserRouter)
+    ├── App.tsx                         # Main page layout & Route orchestration
     ├── index.css                       # Tailwind directives & custom utilities
     ├── types/                          # Type definitions
-    │   └── index.ts                    # Service, Kendra, Alert, and Checker interfaces
+    │   └── index.ts                    # Service, Issue Report, Kendra, Alert interfaces
     ├── data/                           # Curated Indian civic datasets
     │   ├── servicesData.ts             # 27+ Central & state government services catalog
+    │   ├── reportsData.ts              # Pre-seeded mock civic issue reports
     │   ├── alertsData.ts               # Real-time procedural civic bulletins
     │   └── kendrasData.ts              # Facilitation center directories & schedules
-    ├── utils/                          # Business & verification logic
-    │   └── verifierEngine.ts           # Token matching, age verification & readiness scoring
+    ├── utils/                          # Business & storage logic
+    │   ├── verifierEngine.ts           # Token matching, age verification & readiness scoring
+    │   └── reportsStorage.ts           # LocalStorage persistence & mock ID generator
+    ├── pages/                          # Dedicated route views
+    │   ├── HomePage.tsx                # Complete interactive landing page
+    │   ├── HowItWorksPage.tsx          # Dedicated /how-it-works page
+    │   ├── CivicAlertsPage.tsx         # Dedicated /civic-alerts page
+    │   └── FindCentersPage.tsx         # Dedicated /find-centers page
     └── components/                     # Componentized UI modules
         ├── BrandLogo.tsx               # Logo emblem & CivicSaathi wordmark
-        ├── Navbar.tsx                  # Top navigation bar with theme switcher
+        ├── Navbar.tsx                  # Top navigation bar with active route highlighting
         ├── Hero.tsx                    # Hero section with live search & shortcuts
         ├── CivicAlertsMarquee.tsx      # Rotating advisory bulletin carousel
+        ├── CivicIssuesBanner.tsx       # Civic Issue Reporting discovery banner
+        ├── ReportIssueForm.tsx         # Dedicated "Report an Issue" form with photo & GPS
+        ├── MyReports.tsx               # "My Reports" tracking view with status filters
         ├── ServicesExplorer.tsx        # Civic Services Explorer with search & category filters
         ├── ServiceCategoryFilter.tsx   # Reusable 8-category filter component with counters
         ├── ServiceCard.tsx             # Service preview card with icons & metadata
         ├── ServiceIcon.tsx             # Typed civic icon mapper for services & categories
         ├── ServiceModal.tsx            # Comprehensive document checklist & detail modal
-        ├── ServicesSection.tsx         # Forwarder wrapper for ServicesExplorer
         ├── ReadinessChecker.tsx        # Interactive pre-counter verification tool
         ├── HowItWorks.tsx              # 3-step citizen journey breakdown
         ├── KendrasSection.tsx          # Kendra & office locator directory
         ├── PillarsSection.tsx          # Trust & transparency pillars
         ├── FaqSection.tsx              # Citizen FAQ accordion
+        ├── ScrollToTop.tsx             # Scroll restoration and hash anchor navigation
         └── Footer.tsx                  # National directory, helplines & legal disclaimer
 ```
 
