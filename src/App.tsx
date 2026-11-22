@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CivicAlertsMarquee } from './components/CivicAlertsMarquee';
 import { ServicesSection } from './components/ServicesSection';
+import { ReadinessChecker } from './components/ReadinessChecker';
 import { HowItWorks } from './components/HowItWorks';
 import { KendrasSection } from './components/KendrasSection';
 import { PillarsSection } from './components/PillarsSection';
@@ -45,16 +46,19 @@ export const App: React.FC = () => {
           onSelectService={(service) => setSelectedService(service)}
         />
 
-        {/* 4. Three-Step Workflow */}
+        {/* 4. Interactive Pre-Submission Readiness & Discrepancy Checker (New Feature) */}
+        <ReadinessChecker initialServiceId={selectedService?.id} />
+
+        {/* 5. Three-Step Workflow */}
         <HowItWorks />
 
-        {/* 5. Seva Kendras & Facilitation Center Directory */}
+        {/* 6. Seva Kendras & Facilitation Center Directory */}
         <KendrasSection />
 
-        {/* 6. Why CivicSaathi: Trust, Privacy & Accuracy Pillars */}
+        {/* 7. Why CivicSaathi: Trust, Privacy & Accuracy Pillars */}
         <PillarsSection />
 
-        {/* 7. Common Citizen Questions & FAQ */}
+        {/* 8. Common Citizen Questions & FAQ */}
         <FaqSection />
       </main>
 

@@ -29,6 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchFocus }) => {
 
   const navLinks = [
     { name: 'Services', href: '#services' },
+    { name: 'Readiness Checker', href: '#readiness-checker', isNew: true },
     { name: 'How It Works', href: '#how-it-works' },
     { name: 'Civic Alerts', href: '#alerts' },
     { name: 'Find Centers', href: '#kendras' },
@@ -56,9 +57,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onSearchFocus }) => {
               <a
                 key={link.name}
                 href={link.href}
-                className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:underline"
+                className="hover:text-blue-700 dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:underline flex items-center gap-1.5"
               >
-                {link.name}
+                <span>{link.name}</span>
+                {link.isNew && (
+                  <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                    New
+                  </span>
+                )}
               </a>
             ))}
           </nav>

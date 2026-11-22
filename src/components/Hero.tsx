@@ -117,7 +117,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearchChange, searchQuery }) => {
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap gap-4 pt-2">
+          <div className="flex flex-wrap gap-3.5 pt-2">
             <a
               href="#services"
               className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold px-6 py-3.5 rounded-xl transition flex items-center gap-2 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
@@ -126,10 +126,17 @@ export const Hero: React.FC<HeroProps> = ({ onSearchChange, searchQuery }) => {
               <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="#how-it-works"
-              className="bg-white/90 dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 text-slate-700 dark:text-slate-200 font-semibold px-6 py-3.5 rounded-xl transition border border-slate-300 dark:border-zinc-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
+              href="#readiness-checker"
+              className="bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 font-semibold px-5 py-3.5 rounded-xl transition border border-emerald-200 dark:border-emerald-800 flex items-center gap-2 shadow-2xs"
             >
-              How CivicSaathi Works
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Verify Counter Readiness</span>
+            </a>
+            <a
+              href="#how-it-works"
+              className="bg-white/90 dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 text-slate-700 dark:text-slate-200 font-semibold px-5 py-3.5 rounded-xl transition border border-slate-300 dark:border-zinc-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shadow-2xs"
+            >
+              How It Works
             </a>
           </div>
 
