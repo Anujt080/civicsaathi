@@ -1,0 +1,48 @@
+import { SevaKendra } from '../types';
+
+export const SEVA_KENDRAS: SevaKendra[] = [
+  {
+    id: 'kendra-1',
+    name: 'Aadhaar Seva Kendra (ASK) - Civic Center',
+    type: 'Aadhaar Seva Kendra',
+    district: 'Durg / Bhilai',
+    address: 'Block A, First Floor, Civic Center, Bhilai, Chhattisgarh 490006',
+    timing: '09:30 AM – 05:30 PM (Mon – Sat)',
+    phone: '1947 (Toll-Free)',
+    servicesAvailable: ['New Enrolment', 'Biometric Update', 'Demographic Correction', 'PVC Card Request'],
+    directionsUrl: 'https://maps.google.com/?q=Civic+Center+Bhilai+Chhattisgarh',
+  },
+  {
+    id: 'kendra-2',
+    name: 'Passport Seva Kendra (PSK) - Raipur',
+    type: 'Passport Seva Kendra',
+    district: 'Raipur',
+    address: 'Near Magneto Mall, Labhandi, G.E. Road, Raipur, Chhattisgarh 492006',
+    timing: '09:00 AM – 05:00 PM (Mon – Fri)',
+    phone: '1800-258-1800',
+    servicesAvailable: ['Fresh Passport', 'Tatkaal Reissue', 'Police Clearance Certificate (PCC)'],
+    directionsUrl: 'https://maps.google.com/?q=Passport+Seva+Kendra+Raipur',
+  },
+  {
+    id: 'kendra-3',
+    name: 'Lok Seva Kendra (LSK) - Collectorate Complex',
+    type: 'Lok Seva Kendra',
+    district: 'Durg',
+    address: 'Collectorate Campus, Durg, Chhattisgarh 491001',
+    timing: '10:00 AM – 05:00 PM (Mon – Sat)',
+    phone: '0788-2322001',
+    servicesAvailable: ['Domicile Certificate', 'Caste Certificate', 'Income Certificate', 'Land Revenue Records'],
+    directionsUrl: 'https://maps.google.com/?q=Collectorate+Durg+Chhattisgarh',
+  },
+  {
+    id: 'kendra-4',
+    name: 'Regional Transport Office (RTO) - Bhilai / Durg',
+    type: 'RTO Office',
+    district: 'Durg',
+    address: 'RTO Office, Near New Bus Stand, Durg, Chhattisgarh 491001',
+    timing: '10:30 AM – 05:00 PM (Mon – Fri)',
+    phone: '0788-2210344',
+    servicesAvailable: ['Learner Licence Test', 'Driving Skill Track Test', 'Vehicle Fitness & RC Transfer'],
+    directionsUrl: 'https://maps.google.com/?q=RTO+Office+Durg',
+  },
+];
