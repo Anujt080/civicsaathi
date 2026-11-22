@@ -168,7 +168,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) 
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{doc.description}</p>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-zinc-950 p-2 rounded-lg">
                     <strong className="text-slate-700 dark:text-slate-300">Accepted proofs: </strong>
-                    {doc.acceptedExamples.join(', ')}
+                    {(doc.acceptedExamples || []).join(', ')}
                   </div>
                 </div>
               ))}

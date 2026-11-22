@@ -8,13 +8,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        civic: {
-          blue: '#1D4ED8',
-          navy: '#0F172A',
-          emerald: '#059669',
-          saffron: '#D97706',
-          amber: '#F59E0B',
-        },
         amoled: {
           bg: '#000000',
           card: '#0a0a0a',
@@ -24,9 +17,6 @@ export default {
           hover: '#171717',
           input: '#0d0d0d',
         },
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
     },
   },

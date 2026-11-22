@@ -49,9 +49,9 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
       const matchesCategoryName = service.category.toLowerCase().includes(q);
       const matchesTags = service.tags ? service.tags.some((t) => t.toLowerCase().includes(q)) : false;
       const matchesDocs = service.documents.some(
-        (d) =>
+        (d: any) =>
           d.name.toLowerCase().includes(q) ||
-          d.acceptedExamples.some((ex) => ex.toLowerCase().includes(q))
+          (d.acceptedExamples || []).some((ex: string) => ex.toLowerCase().includes(q))
       );
 
       return (
