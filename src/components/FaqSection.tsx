@@ -68,7 +68,7 @@ export const FaqSection: React.FC = () => {
             >
               <button
                 type="button"
-                onClick={() => setOpenId(isOpen ? null : faq.id)}
+                onClick={() => setOpenId(isOpen ? null : (faq.id || null))}
                 className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
               >
                 <div className="space-y-0.5">

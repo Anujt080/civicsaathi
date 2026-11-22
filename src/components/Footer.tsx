@@ -1,99 +1,249 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  ShieldCheck,
+  CheckCircle2,
+  ExternalLink,
+  AlertCircle,
+  HelpCircle,
+  MessageSquare,
+  Info,
+  Layers,
+  Phone,
+  Home as HomeIcon,
+} from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
-import { AlertCircle, ExternalLink, Shield } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
-  const governmentLinks = [
-    { name: 'National Portal of India (india.gov.in)', url: 'https://www.india.gov.in' },
-    { name: 'UIDAI Aadhaar Portal (uidai.gov.in)', url: 'https://uidai.gov.in' },
-    { name: 'Passport Seva Online (passportindia.gov.in)', url: 'https://passportindia.gov.in' },
-    { name: 'Parivahan Sewa - Driving Licences', url: 'https://parivahan.gov.in' },
-    { name: 'Protean e-Gov PAN Services', url: 'https://www.onlineservices.nsdl.com' },
-    { name: 'State e-District Portal (Chhattisgarh)', url: 'https://edistrict.cgstate.gov.in' },
-  ];
-
-  const nationalHelplines = [
-    { title: 'Emergency Service', number: '112' },
-    { title: 'Aadhaar Helpdesk', number: '1947' },
-    { title: 'Passport Call Center', number: '1800-258-1800' },
-    { title: 'National Cyber Crime', number: '1930' },
-    { title: 'Senior Citizen Helpline', number: '14567' },
-  ];
-
   return (
-    <footer className="bg-slate-950 text-slate-300 border-t border-slate-900 mt-16 pt-12 pb-8 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        {/* Top 3-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Column 1: Brand & Mission */}
-          <div className="md:col-span-2 space-y-4">
-            <BrandLogo lightText size="lg" showSubtitle />
-            <p className="text-xs text-slate-400 max-w-md leading-relaxed">
-              CivicSaathi is a citizen-first civic guidance platform built to bridge the gap between Indian citizens and public services. We simplify government procedures with clear document checklists, pre-submission consistency checking, and facilitation office discovery.
+    <footer className="relative bg-[#0B1528] text-slate-300 border-t border-slate-800/80 overflow-hidden mt-auto">
+      {/* Subtle Government Building & Geometric Architectural Vector Overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.04] overflow-hidden"
+        aria-hidden="true"
+      >
+        <svg
+          className="w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 400"
+          preserveAspectRatio="none"
+        >
+          {/* Subtle civic dome and pillars silhouette */}
+          <path
+            d="M 100,400 L 100,320 L 150,320 L 150,400 M 170,400 L 170,320 L 220,320 L 220,400 M 240,400 L 240,320 L 290,320 L 290,400 M 60,320 L 330,320 L 310,270 L 80,270 Z M 195,270 A 90 90 0 0 1 285,180 L 105,180 A 90 90 0 0 1 195,270 Z M 195,180 L 195,140 M 195,140 L 210,147 L 195,155 Z"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          />
+          {/* Subtle right-side architectural geometry */}
+          <path
+            d="M 900,400 L 900,300 L 950,300 L 950,400 M 970,400 L 970,300 L 1020,300 L 1020,400 M 1040,400 L 1040,300 L 1090,300 L 1090,400 M 870,300 L 1120,300 L 1100,250 L 890,250 Z M 995,250 A 80 80 0 0 1 1075,170 L 915,170 A 80 80 0 0 1 995,250 Z"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          />
+          {/* Geometric grid lines */}
+          <line x1="0" y1="360" x2="1200" y2="360" stroke="white" strokeWidth="1" strokeDasharray="6 6" />
+          <line x1="0" y1="200" x2="1200" y2="200" stroke="white" strokeWidth="1" strokeDasharray="10 10" />
+        </svg>
+      </div>
+
+      {/* Subtle Indian Tricolor Accent Line at top */}
+      <div className="h-0.5 w-full bg-gradient-to-r from-amber-500/80 via-white/40 to-emerald-500/80" />
+
+      {/* Main Content Area */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 space-y-10">
+        {/* Simplified Navigation Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
+          {/* Column 1: CivicSaathi Branding */}
+          <div className="space-y-4 md:col-span-2 lg:col-span-2 lg:pr-8">
+            <Link to="/" className="inline-block hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg">
+              <BrandLogo lightText={true} size="md" />
+            </Link>
+
+            <div>
+              <span className="inline-block text-[10px] font-bold tracking-widest text-amber-400 uppercase bg-amber-950/60 border border-amber-800/60 px-2.5 py-0.5 rounded">
+                CITIZEN ASSISTANCE PORTAL
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Government services, simplified for everyone. Prepare, verify, find and track your documentation in one place.
             </p>
-            <div className="flex items-center gap-2 text-xs text-slate-400 pt-1">
-              <Shield className="w-4 h-4 text-emerald-400" />
-              <span>Independent Civic-Tech Initiative • Non-Commercial</span>
+
+            {/* Badges accurately describing actual functionality */}
+            <div className="flex flex-col sm:flex-row gap-2 pt-1">
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-800/60 px-2.5 py-1 rounded-lg w-fit">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Prevention-First Guidance</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-medium text-blue-300 bg-blue-950/50 border border-blue-800/60 px-2.5 py-1 rounded-lg w-fit">
+                <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <span>Rule-Guided Document Checks</span>
+              </div>
             </div>
           </div>
 
-          {/* Column 2: Official Government Portals */}
+          {/* Column 4: Official Portals */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              Official Government Portals
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {governmentLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition flex items-center gap-1 group text-slate-400"
-                  >
-                    <span className="truncate">{link.name}</span>
-                    <ExternalLink className="w-3 h-3 text-slate-600 group-hover:text-blue-400 shrink-0" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-xs font-bold tracking-wider uppercase text-amber-500">
+              OFFICIAL PORTALS
+            </h3>
+            <nav aria-label="Official Government Portals" className="flex flex-col space-y-2 text-xs">
+              <a
+                href="https://uidai.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>UIDAI (Aadhaar)</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+              <a
+                href="https://www.incometax.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>Income Tax Department</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+              <a
+                href="https://www.passportindia.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>Passport Seva</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+              <a
+                href="https://www.digilocker.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>DigiLocker</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+              <a
+                href="https://www.myscheme.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>myScheme Portal</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+              <a
+                href="https://pgportal.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center justify-between group focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <span>CPGRAMS Grievances</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-white shrink-0" />
+              </a>
+            </nav>
           </div>
 
-          {/* Column 3: Statutory Helplines */}
+          {/* Column 5: Quick Links */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-              National Citizen Helplines
-            </h4>
-            <ul className="space-y-2 text-xs text-slate-400">
-              {nationalHelplines.map((item) => (
-                <li key={item.number} className="flex justify-between items-center py-0.5 border-b border-slate-900">
-                  <span>{item.title}</span>
-                  <strong className="text-emerald-400 font-mono font-bold">{item.number}</strong>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-xs font-bold tracking-wider uppercase text-amber-500">
+              QUICK LINKS
+            </h3>
+            <nav aria-label="Quick Links" className="flex flex-col space-y-2 text-xs">
+              <Link
+                to="/"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <HomeIcon className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>Home</span>
+              </Link>
+              <Link
+                to="/faq"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>FAQ</span>
+              </Link>
+              <Link
+                to="/feedback"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>Support & Feedback</span>
+              </Link>
+              <Link
+                to="/about"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>About Us</span>
+              </Link>
+              <Link
+                to="/services"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>Resources & Guides</span>
+              </Link>
+              <Link
+                to="/contact"
+                className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+              >
+                <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>Contact Us</span>
+              </Link>
+            </nav>
           </div>
         </div>
 
-        {/* Highlighted Non-Governmental Disclaimer Box */}
+        {/* Highlighted Disclaimer Box */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 shadow-sm text-xs text-slate-300">
           <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            <strong>Official Guidance Notice:</strong> CivicSaathi is an independent civic-tech guidance platform. It is not an official government agency and does not issue documents, approve applications, or collect government fees. Always confirm final statutory rules and pay statutory fees directly on official government portals or at authorized facilitation counters.
+            <strong>Official Guidance Notice:</strong> CivicSaathi is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.
           </p>
         </div>
 
-        {/* Bottom Legal Navigation & Copyright */}
-        <div className="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        {/* Bottom Legal Navigation & Dynamic Copyright */}
+        <div className="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p className="text-center sm:text-left">
-            © {currentYear} CivicSaathi. Citizen Assistance Platform. Built for public good.
+            © {currentYear} CivicSaathi Citizen Assistance Platform. Non-commercial civic assistance utility.
           </p>
-          <div className="flex items-center gap-1 text-slate-400">
-            <span>Designed for Indian Public Service Transparency</span>
-            <span className="text-emerald-400 ml-1">🇮🇳</span>
-          </div>
+
+          <nav aria-label="Legal Navigation" className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs">
+            <Link
+              to="/privacy"
+              className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+            >
+              Privacy Policy
+            </Link>
+            <span className="text-slate-700 hidden sm:inline">•</span>
+            <Link
+              to="/terms"
+              className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+            >
+              Terms of Use
+            </Link>
+            <span className="text-slate-700 hidden sm:inline">•</span>
+            <Link
+              to="/feedback"
+              className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+            >
+              Feedback
+            </Link>
+            <span className="text-slate-700 hidden sm:inline">•</span>
+            <Link
+              to="/contact"
+              className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
+            >
+              Contact Us
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

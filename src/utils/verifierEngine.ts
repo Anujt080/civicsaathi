@@ -146,14 +146,14 @@ export function verifyReadiness(
 
   // 1. Check mandatory document coverage
   const requiredCategories = new Set(
-    service.documents.filter((d) => d.required).map((d) => d.category)
+    service.documents.filter((d: any) => d.required).map((d: any) => d.category)
   );
 
-  const providedCategories = new Set(documents.map((d) => d.category));
+  const providedCategories = new Set(documents.map((d: any) => d.category));
 
   for (const reqCat of requiredCategories) {
     totalChecks++;
-    if (!providedCategories.has(reqCat)) {
+    if (!providedCategories.has(reqCat as any)) {
       issues.push({
         type: 'CRITICAL',
         title: `Missing ${reqCat} Document`,
