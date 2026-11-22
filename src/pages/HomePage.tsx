@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Hero } from '../components/Hero';
 import { CivicAlertsMarquee } from '../components/CivicAlertsMarquee';
+import { CivicIssuesBanner } from '../components/CivicIssuesBanner';
 import { ServicesExplorer } from '../components/ServicesExplorer';
 import { ReadinessChecker } from '../components/ReadinessChecker';
 import { HowItWorks } from '../components/HowItWorks';
@@ -22,6 +24,8 @@ export const HomePage: React.FC<HomePageProps> = ({
   selectedService,
   onSelectService,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-12 sm:space-y-16">
       {/* 1. Hero Landing Banner & Quick Search */}
@@ -30,26 +34,32 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 2. Civic Alerts & Procedural Bulletins Marquee */}
       <CivicAlertsMarquee />
 
-      {/* 3. Civic Services Explorer & Statutory Checklist Directory */}
+      {/* 3. Civic Issue Reporting Discovery Banner */}
+      <CivicIssuesBanner
+        onReportIssue={() => navigate('/report-issue')}
+        onViewMyReports={() => navigate('/my-reports')}
+      />
+
+      {/* 4. Civic Services Explorer & Statutory Checklist Directory */}
       <ServicesExplorer
         searchQuery={searchQuery}
         onSearchChange={onSearchChange}
         onSelectService={onSelectService}
       />
 
-      {/* 4. Interactive Pre-Submission Readiness & Discrepancy Checker */}
+      {/* 5. Interactive Pre-Submission Readiness & Discrepancy Checker */}
       <ReadinessChecker initialServiceId={selectedService?.id} />
 
-      {/* 5. Three-Step Workflow */}
+      {/* 6. Three-Step Workflow */}
       <HowItWorks />
 
-      {/* 6. Seva Kendras & Facilitation Center Directory */}
+      {/* 7. Seva Kendras & Facilitation Center Directory */}
       <KendrasSection />
 
-      {/* 7. Why CivicSaathi: Trust, Privacy & Accuracy Pillars */}
+      {/* 8. Why CivicSaathi: Trust, Privacy & Accuracy Pillars */}
       <PillarsSection />
 
-      {/* 8. Common Citizen Questions & FAQ */}
+      {/* 9. Common Citizen Questions & FAQ */}
       <FaqSection />
     </div>
   );
