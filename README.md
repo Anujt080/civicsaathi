@@ -425,7 +425,6 @@ Ensure you have the following installed on your machine:
 | :--- | :---: | :---: | :--- |
 | `GEMINI_API_KEY` | **Yes** (for AI) | **Server Secret** | API key for Google Gemini AI civic assistant. Set in Vercel Environment Variables or Supabase Secrets. **Never** prefix with `VITE_` or expose to browser code. |
 | `GEMINI_MODEL` | *Optional* | **Server Secret** | Model ID override for AI chat completions (defaults to `gemini-3-flash-preview` with automatic multi-model fallback). |
-| `VITE_VOICE_API_URL` | *Optional* | **Public Frontend** | Base URL of the deployed CivicSeva Python voice-to-text service (e.g. `https://voice.civicseva.org`). If omitted, defaults to `http://localhost:8000` during local development and preview testing. |
 | `SUPABASE_URL` | **Yes** | Public Frontend | Your Supabase project URL (`https://<project-ref>.supabase.co`). |
 | `SUPABASE_ANON_KEY` | **Yes** | Public Frontend | The public/anon API key for Supabase. Safe for client exposure under PostgreSQL RLS. |
 | `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Public Frontend | Google Maps Embed API key. If omitted, CivicSeva automatically uses OpenStreetMap. |
@@ -656,10 +655,9 @@ The Vite development server's internal middleware handles `/api/chat` requests d
 
 ## 🚀 Deployment Guide (Vercel)
 
-CivicSeva is optimized for production deployment on [Vercel](https://vercel.com/) with a hybrid architecture:
+CivicSeva is optimized for production deployment on [Vercel](https://vercel.com/):
 
 - **Frontend & Serverless Chat:** Deployed directly to Vercel (React + Vite static assets + `/api/chat` serverless function).
-- **Hinglish Voice Service:** Deployed as a standalone Python container service (Render, Railway, Fly.io, Cloud Run, or Hugging Face Spaces) due to native CTranslate2 and PyAV dependencies.
 
 ---
 
@@ -685,7 +683,6 @@ Under **Project Settings ➔ Environment Variables**, add:
 | Key | Value | Scope / Protection |
 | :--- | :--- | :--- |
 | `GEMINI_API_KEY` | Your secret API key from Google AI Studio | **Server Secret** (Available to `/api/chat`; never exposed to browser) |
-| `VITE_VOICE_API_URL` | `https://your-voice-service.onrender.com` | **Public Frontend** (URL of your deployed Python voice service) |
 | `SUPABASE_URL` | `https://<your-project>.supabase.co` | Public Frontend (Inlined at build time) |
 | `SUPABASE_ANON_KEY` | `<your-supabase-anon-key>` | Public Frontend (Inlined at build time) |
 | `GEMINI_MODEL` *(Optional)* | `gemini-3-flash-preview` | Server Secret |
@@ -694,32 +691,12 @@ Under **Project Settings ➔ Environment Variables**, add:
 > [!IMPORTANT]
 > **Server Secrets vs. Public Frontend Variables:**
 > - `GEMINI_API_KEY` is a **server-side secret**. It is read securely by Vercel Serverless Function `/api/chat` and is **never** bundled into browser code.
-> - `VITE_VOICE_API_URL` is a **public frontend variable**. It tells the browser where to send recorded audio for transcription.
 
 #### 5. Deploy
 Click **Deploy**. Vercel will run `tsc && vite build` and deploy the application globally.
 
 #### 6. Redeploy Note
-Client variables (`VITE_*`, `SUPABASE_*`) are inlined during build time. If you add or update `VITE_VOICE_API_URL` or Supabase keys after the initial build, navigate to **Deployments** ➔ select the latest deployment ➔ click **Redeploy** (without cache) for the changes to take effect.
-
----
-
-### Deploying the Python Voice Service (Standalone)
-
-Because `faster-whisper`, CTranslate2, and PyAV require compiled binary libraries and persistent model caching, the voice service cannot run inside Vercel's ephemeral 250MB serverless lambda limit. Deploy it as a container service:
-
-1. **Deploy via Docker / Cloud Provider:**
-   Deploy the `voice-service/` directory using the provided [`voice-service/Dockerfile`](voice-service/Dockerfile) to any container platform:
-   - **Render:** New Web Service ➔ connect repository ➔ Root Directory: `voice-service` ➔ Runtime: Docker.
-   - **Railway / Fly.io / Cloud Run:** Deploy using `voice-service/Dockerfile`.
-2. **Configure CORS on Voice Service:**
-   Set the environment variable on your voice service:
-   ```bash
-   ALLOWED_ORIGINS=https://your-civicseva.vercel.app
-   ```
-   *(By default, all `https://*.vercel.app` domains and local development origins are automatically permitted via built-in regex).*
-3. **Connect Frontend:**
-   Copy your deployed voice service URL (e.g. `https://voice.civicseva.org` or `https://civicseva-voice.onrender.com`) and paste it as `VITE_VOICE_API_URL` in your Vercel project environment variables.
+Client variables (`VITE_*`, `SUPABASE_*`) are inlined during build time. If you update Supabase keys after the initial build, navigate to **Deployments** ➔ select the latest deployment ➔ click **Redeploy** (without cache) for the changes to take effect.
 
 ---
 
@@ -728,9 +705,8 @@ Because `faster-whisper`, CTranslate2, and PyAV require compiled binary librarie
 Once deployed, verify the complete pipeline:
 
 - [ ] **Normal Gemini Chat:** Open the CivicSeva AI Assistant drawer, send `"What documents are accepted for Proof of Address?"`, and verify that the assistant responds as **CivicSeva (सिविक सेवा)**.
-- [ ] **Microphone Recording:** Tap the microphone button in the chat input or on the homepage **Voice Assistant** section and speak in Hinglish (e.g., *"mere area mein road bahut kharab hai"*).
-- [ ] **Hinglish Transcription:** Verify that the recorded speech transcribes into Roman Hinglish text in the input box.
-- [ ] **Transcription ➔ Gemini Response:** Send the transcribed message and verify that CivicSeva AI provides a complete civic guidance response.
+- [ ] **Civic Service Directory:** Navigate through Central and State schemes and verify statutory document checklists.
+- [ ] **SPA Route Navigation:** Refresh the page on sub-routes like `/services` or `/profile` to confirm `vercel.json` SPA routing works without 404 errors.
 
 ---
 

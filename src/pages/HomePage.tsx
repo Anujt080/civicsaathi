@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Hero } from '../components/Hero';
 import { CivicAlertsMarquee } from '../components/CivicAlertsMarquee';
 import { CivicIssuesBanner } from '../components/CivicIssuesBanner';
-import { SpeakYourIssueSection } from '../components/SpeakYourIssueSection';
 import { ServicesExplorer } from '../components/ServicesExplorer';
 import { ReadinessChecker } from '../components/ReadinessChecker';
 import { HowItWorks } from '../components/HowItWorks';
@@ -40,9 +39,6 @@ export const HomePage: React.FC<HomePageProps> = ({
         onReportIssue={() => navigate('/report-issue')}
         onViewMyReports={() => navigate('/my-reports')}
       />
-
-      {/* Voice Assistant / Speak Your Issue Section */}
-      <SpeakYourIssueSection />
 
       {/* 4. Civic Services Explorer & Statutory Checklist Directory */}
       <ServicesExplorer
