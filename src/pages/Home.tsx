@@ -5,6 +5,7 @@ import { ServiceCard } from '../components/ServiceCard';
 import { CivicAlerts } from '../components/CivicAlerts';
 import { NearbySevaKendras } from '../components/NearbySevaKendras';
 import { HowItWorks } from '../components/HowItWorks';
+import { SpeakYourIssueSection } from '../components/SpeakYourIssueSection';
 import { ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from '../context/LanguageContext';
@@ -74,6 +75,9 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Voice Assistant / Speak Your Issue Section */}
+      <SpeakYourIssueSection />
 
       {/* 3. Popular Services */}
       <section className="space-y-6">

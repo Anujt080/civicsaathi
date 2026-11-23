@@ -74,10 +74,13 @@ export async function askCivicSeva(
       currentStep: context?.currentStep,
       verificationIssues: context?.verificationIssues,
     },
-    history: (history || []).slice(-8).map((h) => ({
-      sender: h.sender,
-      text: h.text,
-    })),
+    history: (history || [])
+      .filter((h) => !h.text.includes('Backend Notice') && !h.text.includes('PROVIDERS_UNAVAILABLE') && !h.text.includes('temporarily unavailable'))
+      .slice(-8)
+      .map((h) => ({
+        sender: h.sender,
+        text: h.text,
+      })),
   };
 
   // 1. Try Supabase Edge Function: 'chat'

@@ -13,7 +13,7 @@ function scrubSensitivePII(text: string): string {
     .replace(phoneRegex, "[REDACTED_PHONE]");
 }
 
-const CIVICSAATHI_SYSTEM_PROMPT = `You are the CivicSaathi AI Assistant (सिविक साथी), an official civic advisor helping Indian citizens understand and prepare for government services.
+const CIVICSEVA_SYSTEM_PROMPT = `You are the CivicSeva AI Assistant (सिविक सेवा), an official civic advisor helping Indian citizens understand and prepare for government services.
 
 Your primary mission:
 1. Explain document categories clearly:
@@ -22,7 +22,7 @@ Your primary mission:
    - DOB (Proof of Date of Birth): E.g., Birth Certificate, 10th Standard Marksheet, Passport, PAN Card.
    - POR (Proof of Relationship): E.g., Birth Certificate, Ration Card, PDS Card with family head.
 
-2. Guide citizens through CivicSaathi's 3-step workflow:
+2. Guide citizens through CivicSeva's 3-step workflow:
    - Step 1: Pre-submission Checklist (Confirming physical papers vs conditional items).
    - Step 2: Verification & Consistency Check (Checking for name spelling and DOB discrepancies).
    - Step 3: Submission Mode (Applying via official online portals vs visiting a local Seva Kendra).
@@ -42,15 +42,17 @@ Your primary mission:
 4. Guidelines for tone and safety:
    - Be concise, supportive, and respectful.
    - Format responses with bullet points, bold key terms, and markdown links where helpful.
-   - Suggest relevant CivicSaathi internal routes: "/services" (all services), "/offices" (kendra locator), or service links.
+   - Suggest relevant CivicSeva internal routes: "/services" (all services), "/offices" (kendra locator), or service links.
    - NEVER invent government fees, eligibility requirements, or laws. If uncertain, explicitly state: "Please verify with the official facilitation officer at your nearest Lok Seva Kendra."
    - NEVER claim that you have submitted the citizen's application or officially verified their identity.
    - NEVER ask users for personal Aadhaar numbers, PAN numbers, OTPs, or financial credentials.`;
 
 const VERIFIED_GEMINI_MODELS = [
+  "gemini-3-flash-preview",
   "gemini-3.6-flash",
-  "gemini-3.8-flash",
+  "gemini-3.5-flash",
   "gemini-3.1-flash-lite",
+  "gemini-flash-lite-latest",
 ];
 
 interface ErrorAnalysis {
@@ -144,7 +146,7 @@ export default async function handler(req: any, res: any) {
       activeContextNote = `\nCitizen is currently viewing: "${context.activeServiceName}" (Category: ${context.activeServiceCategory || 'General'}). Focus advice on this service where relevant.`;
     }
 
-    const systemInstruction = CIVICSAATHI_SYSTEM_PROMPT + activeContextNote;
+    const systemInstruction = CIVICSEVA_SYSTEM_PROMPT + activeContextNote;
 
     // Convert history and current message to Google Gemini contents structure (user / model turns)
     const geminiContents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
@@ -193,7 +195,7 @@ export default async function handler(req: any, res: any) {
     for (const modelToTry of candidateModels) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 25000);
+        const timeoutId = setTimeout(() => controller.abort(), 45000);
 
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${apiKey}`;
 

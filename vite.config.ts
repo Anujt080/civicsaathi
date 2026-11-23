@@ -69,10 +69,10 @@ export default defineConfig(({ mode }) => {
                   activeContextNote = `\nCitizen is currently viewing: "${context.activeServiceName}" (Category: ${context.activeServiceCategory || 'General'}). Focus advice on this service where relevant.`;
                 }
 
-                const systemInstruction = `You are the CivicSaathi AI Assistant (सिविक साथी), an official civic advisor helping Indian citizens understand and prepare for government services.
+                const systemInstruction = `You are the CivicSeva AI Assistant (सिविक सेवा), an official civic advisor helping Indian citizens understand and prepare for government services.
 Your primary mission:
 1. Explain document categories clearly (POI, POA, DOB, POR).
-2. Guide citizens through CivicSaathi's 3-step workflow (Pre-submission Checklist -> Verification & Consistency Check -> Submission Mode).
+2. Guide citizens through CivicSeva's 3-step workflow (Pre-submission Checklist -> Verification & Consistency Check -> Submission Mode).
 3. Provide accurate information for indexed services (Central: Aadhaar, Passport, PAN, DL; Chhattisgarh: Domicile, Caste, Pensions).
 4. Tone & safety: Be concise, supportive, respectful. Suggest internal routes (/services, /offices). NEVER invent fees or laws. NEVER ask for Aadhaar numbers, PAN, OTPs, or passwords. Never claim to have officially submitted applications.${activeContextNote}`;
 
@@ -120,9 +120,11 @@ Your primary mission:
                 }
 
                 const verifiedGeminiModels = [
+                  'gemini-3-flash-preview',
                   'gemini-3.6-flash',
-                  'gemini-3.8-flash',
+                  'gemini-3.5-flash',
                   'gemini-3.1-flash-lite',
+                  'gemini-flash-lite-latest',
                 ];
 
                 const candidateModels = Array.from(new Set([configuredModel, ...verifiedGeminiModels]));
@@ -132,7 +134,7 @@ Your primary mission:
                 for (const modelToTry of candidateModels) {
                   try {
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 25000);
+                    const timeoutId = setTimeout(() => controller.abort(), 45000);
 
                     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${geminiApiKey}`;
 
@@ -161,6 +163,7 @@ Your primary mission:
                       const reply = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
                       if (reply) {
+                        console.log(`[Gemini /api/chat] Successfully generated response with model: ${modelToTry}`);
                         res.statusCode = 200;
                         res.end(JSON.stringify({ reply, model: modelToTry }));
                         return;
@@ -171,6 +174,8 @@ Your primary mission:
                     const errObj = errorData?.error || errorData || {};
                     const errMsg = (errObj.message || '').toLowerCase();
                     const statusStr = (errObj.status || '').toLowerCase();
+
+                    console.warn(`[Gemini /api/chat] Model ${modelToTry} returned HTTP ${geminiRes.status}: ${errObj.message || statusStr || 'unknown'}`);
 
                     const isAuthError =
                       geminiRes.status === 401 ||
@@ -208,7 +213,8 @@ Your primary mission:
                     }
 
                     continue;
-                  } catch (_err) {
+                  } catch (_err: any) {
+                    console.warn(`[Gemini /api/chat] Model ${modelToTry} exception: ${_err?.message || _err}`);
                     lastError = {
                       status: 504,
                       isAuthError: false,
