@@ -42,11 +42,11 @@ export function sanitizeCitizenInput(text: string): { cleanText: string; hasSens
 }
 
 /**
- * Sends a query to the CivicSaathi AI backend.
+ * Sends a query to the CivicSeva AI backend.
  * Checks Supabase Edge Function first, falling back to serverless /api/chat.
  * Does not fabricate successful responses when the backend/API key is unavailable.
  */
-export async function askCivicSaathi(
+export async function askCivicSeva(
   question: string,
   context?: AIContext,
   history?: ChatHistoryItem[]
@@ -54,7 +54,7 @@ export async function askCivicSaathi(
   const trimmed = question.trim();
   if (!trimmed) {
     return {
-      reply: 'Please enter a question to ask the CivicSaathi assistant.',
+      reply: 'Please enter a question to ask the CivicSeva assistant.',
       isError: true,
       errorCode: 'EMPTY_INPUT',
     };
@@ -156,4 +156,4 @@ export async function askCivicSaathi(
 }
 
 // Backward-compatible export alias
-export const askSevaGuide = askCivicSaathi;
+export const askSevaGuide = askCivicSeva;

@@ -93,7 +93,7 @@ export const DemoVerificationPanel: React.FC<DemoVerificationPanelProps> = ({
         </div>
 
         <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-          Evaluate how CivicSaathi cross-checks applicant details against supporting documents.
+          Evaluate how CivicSeva cross-checks applicant details against supporting documents.
           Select one of the two scenarios below to test automated consistency validation instantly.
         </p>
 

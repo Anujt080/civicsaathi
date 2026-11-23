@@ -3,7 +3,7 @@ import { TranslationType } from './en';
 export const te: TranslationType = {
   // Navigation & Header
   nav: {
-    brandName: 'CivicSaathi',
+    brandName: 'CivicSeva',
     brandTagline: 'పౌర సహాయ పోర్టల్',
     services: 'సేవలు',
     offices: 'కార్యాలయాల గుర్తింపు',
@@ -15,7 +15,7 @@ export const te: TranslationType = {
     profile: 'నా ప్రొఫైల్',
     documents: 'మీ పత్రాలు',
     settings: 'ఖాతా సెట్టింగ్‌లు',
-    askAi: 'CivicSaathi AI ని అడగండి',
+    askAi: 'CivicSeva AI ని అడగండి',
     theme: 'థీమ్',
     themeLight: 'లైట్',
     themeDark: 'డార్క్',
@@ -98,8 +98,8 @@ export const te: TranslationType = {
 
   // How It Works
   howItWorks: {
-    badge: 'CivicSaathi ఫ్రేమ్‌వర్క్',
-    title: 'CivicSaathi ప్రభుత్వ సేవలను ఎలా సులభతరం చేస్తుంది',
+    badge: 'CivicSeva ఫ్రేమ్‌వర్క్',
+    title: 'CivicSeva ప్రభుత్వ సేవలను ఎలా సులభతరం చేస్తుంది',
     subtitle: 'పునరావృత పర్యటనలు, అనవసరమైన సెలవులు మరియు క్యూలను నివారించడానికి రూపొందించబడిన ముందస్తు నివారణ విధానం.',
     phase1: 'దశ 1 మార్గదర్శకత్వం',
     phase2: 'దశ 2 మార్గదర్శకత్వం',
@@ -166,7 +166,7 @@ export const te: TranslationType = {
     startVerificationBtn: 'పత్రాల ధృవీకరణ ప్రారంభించండి',
     officialPortalNotice: 'అధికారిక ప్రభుత్వ దరఖాస్తు పోర్టల్',
     visitPortalBtn: 'అధికారిక పోర్టల్ తెరవండి',
-    counterNotice: 'CivicSaathi అనేది ఒక స్వతంత్ర సమాచార వేదిక. తుది దరఖాస్తులను అధికారిక ప్రభుత్వ పోర్టల్‌లు లేదా సేవా కేంద్రాల ద్వారా మాత్రమే సమర్పించాలి.',
+    counterNotice: 'CivicSeva అనేది ఒక స్వతంత్ర సమాచార వేదిక. తుది దరఖాస్తులను అధికారిక ప్రభుత్వ పోర్టల్‌లు లేదా సేవా కేంద్రాల ద్వారా మాత్రమే సమర్పించాలి.',
   },
 
   // Verification & Readiness Checker
@@ -270,9 +270,9 @@ export const te: TranslationType = {
   // Auth: Login & Signup
   auth: {
     loginTitle: 'తిరిగి స్వాగతం',
-    loginSubtitle: 'CivicSaathi ని కొనసాగించడానికి సైన్ ఇన్ చేయండి',
+    loginSubtitle: 'CivicSeva ని కొనసాగించడానికి సైన్ ఇన్ చేయండి',
     signupTitle: 'ఖాతాను సృష్టించండి',
-    signupSubtitle: 'CivicSaathi పౌర సహాయంతో ప్రారంభించండి',
+    signupSubtitle: 'CivicSeva పౌర సహాయంతో ప్రారంభించండి',
     emailLabel: 'ఈమెయిల్ చిరునామా',
     emailPlaceholder: 'name@example.com',
     passwordLabel: 'పాస్‌వర్డ్',
@@ -315,7 +315,7 @@ export const te: TranslationType = {
     appearanceTheme: 'థీమ్ ఎంపిక',
     accessibilityTitle: 'ప్రాప్యత & రంగు దృష్టి మోడ్‌లు',
     saveSuccess: 'ప్రాధాన్యతలు విజయవంతంగా నవీకరించబడ్డాయి.',
-    signOutBtn: 'CivicSaathi నుండి సైన్ అవుట్ చేయండి',
+    signOutBtn: 'CivicSeva నుండి సైన్ అవుట్ చేయండి',
   },
 
   // Footer
@@ -336,15 +336,15 @@ export const te: TranslationType = {
     termsOfUse: 'ఉపయోగ నిబంధనలు',
     feedback: 'అభిప్రాయం',
     disclaimerTitle: 'అధికారిక మార్గదర్శక నోటీసు:',
-    disclaimerText: 'CivicSaathi అనేది ఒక స్వతంత్ర మార్గదర్శక వేదిక. ఇది పత్రాలను జారీ చేయదు, దరఖాస్తులను ఆమోదించదు లేదా ప్రభుత్వ పోర్టల్‌లను భర్తీ చేయదు. అధికారిక వెబ్‌సైట్‌లో ఎల్లప్పుడూ రుసుములు మరియు నియమాలను ధృవీకరించుకోండి.',
-    copyright: 'CivicSaathi సిటిజెన్ అసిస్టెన్స్ ప్లాట్‌ఫామ్. వాణిజ్యేతర పౌర ప్రయోజన సదుపాయం.',
+    disclaimerText: 'CivicSeva అనేది ఒక స్వతంత్ర మార్గదర్శక వేదిక. ఇది పత్రాలను జారీ చేయదు, దరఖాస్తులను ఆమోదించదు లేదా ప్రభుత్వ పోర్టల్‌లను భర్తీ చేయదు. అధికారిక వెబ్‌సైట్‌లో ఎల్లప్పుడూ రుసుములు మరియు నియమాలను ధృవీకరించుకోండి.',
+    copyright: 'CivicSeva సిటిజెన్ అసిస్టెన్స్ ప్లాట్‌ఫామ్. వాణిజ్యేతర పౌర ప్రయోజన సదుపాయం.',
   },
 
   // AI Assistant Drawer
   aiDrawer: {
-    title: 'CivicSaathi AI సహాయకుడు',
+    title: 'CivicSeva AI సహాయకుడు',
     subtitle: 'పౌర పత్రాలు మరియు పరిపాలనా విధానాల కోసం ధృవీకరించబడిన మార్గదర్శకత్వం',
-    welcomeGreeting: 'నమస్కారం! నేను CivicSaathi AI అసిస్టెంట్‌ని.',
+    welcomeGreeting: 'నమస్కారం! నేను CivicSeva AI అసిస్టెంట్‌ని.',
     helpIntro: 'నేను మీకు వీటిలో సహాయపడగలను:',
     helpPoint1: 'POI, POA మరియు DOB రుజువు వర్గాలను వివరించడం',
     helpPoint2: 'కేంద్ర మరియు రాష్ట్ర సేవల కోసం అర్హత మరియు దశలవారీ చెక్‌లిస్ట్‌లు',
@@ -360,7 +360,7 @@ export const te: TranslationType = {
     inputPlaceholder: 'ప్రభుత్వ విధానాలు, పత్రాలు, రుసుముల గురించి ఏదైనా ప్రశ్న అడగండి...',
     sendBtn: 'పంపండి',
     clearChat: 'సంభాషణను క్లియర్ చేయండి',
-    disclaimer: 'CivicSaathi AI ప్రజా ప్రభుత్వ నియమాల ఆధారంగా సమాచార మార్గదర్శకత్వాన్ని అందిస్తుంది. ఎల్లప్పుడూ అధికారిక పోర్టల్‌లలో ధృవీకరించుకోండి.',
+    disclaimer: 'CivicSeva AI ప్రజా ప్రభుత్వ నియమాల ఆధారంగా సమాచార మార్గదర్శకత్వాన్ని అందిస్తుంది. ఎల్లప్పుడూ అధికారిక పోర్టల్‌లలో ధృవీకరించుకోండి.',
   },
 
   // Quick Access Floating Toolbar
@@ -393,10 +393,10 @@ export const te: TranslationType = {
 
   // About Page
   about: {
-    title: 'CivicSaathi గురించి',
+    title: 'CivicSeva గురించి',
     subtitle: 'ప్రభుత్వ సేవా విధానాలను సులభతరం చేయడం మరియు ప్రతి పౌరుడికి కౌంటర్ వద్ద ఇబ్బందులను తొలగించడం.',
     missionTitle: 'మా ప్రజా లక్ష్యం',
-    missionDesc: 'ప్రతిరోజూ వేలాది మంది భారతీయ పౌరులు పని నుండి సెలవు తీసుకుని ప్రభుత్వ కౌంటర్లకు వెళతారు, అయితే కేవలం స్పెల్లింగ్ లోపం లేదా ధృవీకరించని చిరునామా కారణంగా వెనుదిరుగుతారు. ఈ ఇబ్బందిని నిర్మూలించడానికే CivicSaathi నిర్మించబడింది.',
+    missionDesc: 'ప్రతిరోజూ వేలాది మంది భారతీయ పౌరులు పని నుండి సెలవు తీసుకుని ప్రభుత్వ కౌంటర్లకు వెళతారు, అయితే కేవలం స్పెల్లింగ్ లోపం లేదా ధృవీకరించని చిరునామా కారణంగా వెనుదిరుగుతారు. ఈ ఇబ్బందిని నిర్మూలించడానికే CivicSeva నిర్మించబడింది.',
     pillarsTitle: 'మా ముఖ్య కార్యాచరణ సూత్రాలు',
     pillar1Title: 'గెజిట్ ఆధారిత ఖచ్చితత్వం',
     pillar1Desc: 'అన్ని పత్రాల అవసరాలు మరియు చెక్‌లిస్ట్‌లు అధికారిక ప్రభుత్వ నోటిఫికేషన్‌ల నుండి నేరుగా ధృవీకరించబడతాయి.',
@@ -426,7 +426,7 @@ export const te: TranslationType = {
   // Feedback Page
   feedback: {
     title: 'పౌరుల అభిప్రాయం & సూచనలు',
-    subtitle: 'మీ అనుభవాన్ని పంచుకోవడం ద్వారా CivicSaathi ని మెరుగుపరచడంలో మాకు సహాయపడండి.',
+    subtitle: 'మీ అనుభవాన్ని పంచుకోవడం ద్వారా CivicSeva ని మెరుగుపరచడంలో మాకు సహాయపడండి.',
     ratingLabel: 'మీ అనుభవం ఎంతవరకు సహాయకరంగా ఉంది?',
     categoryLabel: 'అభిప్రాయ వర్గం',
     categories: {
@@ -440,13 +440,13 @@ export const te: TranslationType = {
     commentPlaceholder: 'మేము మార్గదర్శకత్వాన్ని ఎలా సులభతరం చేయవచ్చో లేదా మీరు సందర్శించిన కౌంటర్ వివరాలను పంచుకోండి...',
     submitBtn: 'అభిప్రాయాన్ని సమర్పించండి',
     thankYouTitle: 'మీ అభిప్రాయానికి ధన్యవాదాలు!',
-    thankYouDesc: 'CivicSaathi పౌరులందరికీ అత్యంత ఆధారపడదగిన వేదికగా ఉండటానికి మీ సూచనలు సహాయపడతాయి.',
+    thankYouDesc: 'CivicSeva పౌరులందరికీ అత్యంత ఆధారపడదగిన వేదికగా ఉండటానికి మీ సూచనలు సహాయపడతాయి.',
   },
 
   // Privacy Policy & Terms
   legal: {
     privacyTitle: 'గోప్యతా విధానం',
-    privacySubtitle: 'CivicSaathi పౌర గోప్యతను ఎలా కాపాడుతుంది మరియు సమాచారాన్ని ఎలా నిర్వహిస్తుంది.',
+    privacySubtitle: 'CivicSeva పౌర గోప్యతను ఎలా కాపాడుతుంది మరియు సమాచారాన్ని ఎలా నిర్వహిస్తుంది.',
     termsTitle: 'ఉపయోగ నిబంధనలు',
     termsSubtitle: 'కార్యాచరణ మార్గదర్శకాలు, చట్టబద్ధమైన అధికార నిరాకరణ మరియు సేవా నిబంధనలు.',
     lastUpdated: 'చివరి నవీకరణ: జనవరి 2026',

@@ -29,7 +29,7 @@ export const PrivacyPolicy: React.FC = () => {
           {t('legal.privacyTitle') || 'Privacy Policy & Data Handling'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          {t('legal.lastUpdated') || 'Last updated: January 2026'}. {t('legal.privacySubtitle') || 'How CivicSaathi protects citizen privacy and handles informational queries.'}
+          {t('legal.lastUpdated') || 'Last updated: January 2026'}. {t('legal.privacySubtitle') || 'How CivicSeva protects citizen privacy and handles informational queries.'}
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export const PrivacyPolicy: React.FC = () => {
       <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex items-start gap-3 text-xs text-amber-900 dark:text-amber-200">
         <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong>Non-Governmental Environment Notice:</strong> CivicSaathi is an independent civic-tech platform. We do not transmit your documents to government departments or external commercial advertisers. All processing disclosures below reflect our actual technical implementation.
+          <strong>Non-Governmental Environment Notice:</strong> CivicSeva is an independent civic-tech platform. We do not transmit your documents to government departments or external commercial advertisers. All processing disclosures below reflect our actual technical implementation.
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export const PrivacyPolicy: React.FC = () => {
             <h2 className="text-base font-bold text-slate-900 dark:text-white">1. Data We Collect</h2>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            CivicSaathi collects only the information necessary to provide guidance and pre-submission document verification:
+            CivicSeva collects only the information necessary to provide guidance and pre-submission document verification:
           </p>
           <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
             <li><strong>Account Profile:</strong> When registering, we store your email address, unique account identifier (UID), and optional profile preferences in your private profile.</li>

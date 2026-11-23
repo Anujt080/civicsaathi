@@ -3,7 +3,7 @@ import { TranslationType } from './en';
 export const gu: TranslationType = {
   // Navigation & Header
   nav: {
-    brandName: 'CivicSaathi',
+    brandName: 'CivicSeva',
     brandTagline: 'નાગરિક સહાયતા પોર્ટલ',
     services: 'સેવાઓ',
     offices: 'કાર્યાલય શોધો',
@@ -15,7 +15,7 @@ export const gu: TranslationType = {
     profile: 'મારી પ્રોફાઇલ',
     documents: 'તમારા દસ્તાવેજો',
     settings: 'ખાતાની સેટિંગ્સ',
-    askAi: 'CivicSaathi AI ને પૂછો',
+    askAi: 'CivicSeva AI ને પૂછો',
     theme: 'થીમ',
     themeLight: 'લાઇટ',
     themeDark: 'ડાર્ક',
@@ -98,8 +98,8 @@ export const gu: TranslationType = {
 
   // How It Works
   howItWorks: {
-    badge: 'CivicSaathi ફ્રેમવર્ક',
-    title: 'CivicSaathi સરકારી સેવાઓને કેવી રીતે સરળ બનાવે છે',
+    badge: 'CivicSeva ફ્રેમવર્ક',
+    title: 'CivicSeva સરકારી સેવાઓને કેવી રીતે સરળ બનાવે છે',
     subtitle: 'વારંવારની મુલાકાતો, બિનજરૂરી રજાઓ અને કાઉન્ટરની લાઈનોથી બચાવવા માટે રચાયેલ નિવારણ-પ્રથમ અભિગમ.',
     phase1: 'તબક્કો 1 માર્ગદર્શન',
     phase2: 'તબક્કો 2 માર્ગદર્શન',
@@ -166,7 +166,7 @@ export const gu: TranslationType = {
     startVerificationBtn: 'દસ્તાવેજ ચકાસણી શરૂ કરો',
     officialPortalNotice: 'સત્તાવાર સરકારી સબમિશન પોર્ટલ',
     visitPortalBtn: 'સત્તાવાર પોર્ટલ ખોલો',
-    counterNotice: 'CivicSaathi એ એક સ્વતંત્ર માહિતીપ્રદ મંચ છે. અંતિમ અરજીઓ અધિકૃત સરકારી પોર્ટલ અથવા નિયુક્ત સેવા કેન્દ્રો દ્વારા જ સબમિટ કરવી આવશ્યક છે.',
+    counterNotice: 'CivicSeva એ એક સ્વતંત્ર માહિતીપ્રદ મંચ છે. અંતિમ અરજીઓ અધિકૃત સરકારી પોર્ટલ અથવા નિયુક્ત સેવા કેન્દ્રો દ્વારા જ સબમિટ કરવી આવશ્યક છે.',
   },
 
   // Verification & Readiness Checker
@@ -270,9 +270,9 @@ export const gu: TranslationType = {
   // Auth: Login & Signup
   auth: {
     loginTitle: 'સ્વાગત છે',
-    loginSubtitle: 'CivicSaathi માં ચાલુ રાખવા માટે સાઇન ઇન કરો',
+    loginSubtitle: 'CivicSeva માં ચાલુ રાખવા માટે સાઇન ઇન કરો',
     signupTitle: 'ખાતું બનાવો',
-    signupSubtitle: 'CivicSaathi નાગરિક સહાયતા સાથે પ્રારંભ કરો',
+    signupSubtitle: 'CivicSeva નાગરિક સહાયતા સાથે પ્રારંભ કરો',
     emailLabel: 'ઇમેઇલ સરનામું',
     emailPlaceholder: 'name@example.com',
     passwordLabel: 'પાસવર્ડ',
@@ -315,7 +315,7 @@ export const gu: TranslationType = {
     appearanceTheme: 'થીમની પસંદગી',
     accessibilityTitle: 'ઍક્સેસિબિલિટી અને કલર વિઝન મોડ્સ',
     saveSuccess: 'પસંદગીઓ સફળતાપૂર્વક અપડેટ થઈ.',
-    signOutBtn: 'CivicSaathi માંથી સાઇન આઉટ કરો',
+    signOutBtn: 'CivicSeva માંથી સાઇન આઉટ કરો',
   },
 
   // Footer
@@ -336,15 +336,15 @@ export const gu: TranslationType = {
     termsOfUse: 'ઉપયોગની શરતો',
     feedback: 'પ્રતિસાદ',
     disclaimerTitle: 'સત્તાવાર માર્ગદર્શન સૂચના:',
-    disclaimerText: 'CivicSaathi એ એક સ્વતંત્ર માર્ગદર્શન મંચ છે. તે દસ્તાવેજો જારી કરતું નથી, અરજીઓ મંજૂર કરતું નથી અથવા સત્તાવાર સરકારી પોર્ટલનું સ્થાન લેતું નથી. સત્તાવાર વેબસાઇટ પર હંમેશા ફી અને નિયમોની પુષ્ટિ કરો.',
-    copyright: 'CivicSaathi સિટીઝન આસિસ્ટન્સ પ્લેટફોર્મ. બિન-વ્યવસાયિક નાગરિક ઉપયોગિતા.',
+    disclaimerText: 'CivicSeva એ એક સ્વતંત્ર માર્ગદર્શન મંચ છે. તે દસ્તાવેજો જારી કરતું નથી, અરજીઓ મંજૂર કરતું નથી અથવા સત્તાવાર સરકારી પોર્ટલનું સ્થાન લેતું નથી. સત્તાવાર વેબસાઇટ પર હંમેશા ફી અને નિયમોની પુષ્ટિ કરો.',
+    copyright: 'CivicSeva સિટીઝન આસિસ્ટન્સ પ્લેટફોર્મ. બિન-વ્યવસાયિક નાગરિક ઉપયોગિતા.',
   },
 
   // AI Assistant Drawer
   aiDrawer: {
-    title: 'CivicSaathi AI સહાયક',
+    title: 'CivicSeva AI સહાયક',
     subtitle: 'નાગરિક દસ્તાવેજીકરણ અને વહીવટી પ્રક્રિયાઓ માટે પ્રમાણિત માર્ગદર્શન',
-    welcomeGreeting: 'નમસ્તે! હું CivicSaathi AI સહાયક છું.',
+    welcomeGreeting: 'નમસ્તે! હું CivicSeva AI સહાયક છું.',
     helpIntro: 'હું આ બાબતોમાં તમારી મદદ કરી શકું છું:',
     helpPoint1: 'POI, POA અને DOB પુરાવાની કેટેગરી સમજાવવી',
     helpPoint2: 'કેન્દ્રીય અને રાજ્ય સેવાઓ માટે પાત્રતા અને પગલાવાર ચેકલિસ્ટ',
@@ -360,7 +360,7 @@ export const gu: TranslationType = {
     inputPlaceholder: 'સરકારી પ્રક્રિયાઓ, દસ્તાવેજો, ફી વિશે પ્રશ્ન પૂછો...',
     sendBtn: 'મોકલો',
     clearChat: 'વાતચીત સાફ કરો',
-    disclaimer: 'CivicSaathi AI જાહેર સરકારી નિયમો પર આધારિત માહિતીપ્રદ માર્ગદર્શન પૂરું પાડે છે. હંમેશા સત્તાવાર પોર્ટલ પર પુષ્ટિ કરો.',
+    disclaimer: 'CivicSeva AI જાહેર સરકારી નિયમો પર આધારિત માહિતીપ્રદ માર્ગદર્શન પૂરું પાડે છે. હંમેશા સત્તાવાર પોર્ટલ પર પુષ્ટિ કરો.',
   },
 
   // Quick Access Floating Toolbar
@@ -393,10 +393,10 @@ export const gu: TranslationType = {
 
   // About Page
   about: {
-    title: 'CivicSaathi વિશે',
+    title: 'CivicSeva વિશે',
     subtitle: 'સરકારી સેવા પ્રક્રિયાઓને સરળ બનાવવી અને દરેક નાગરિક માટે કાઉન્ટર પર થતી પરેશાનીઓનો અંત લાવવો.',
     missionTitle: 'અમારું જાહેર મિશન',
-    missionDesc: 'દરરોજ હજારો ભારતીય નાગરિકો કામ પરથી રજા લઈને સરકારી કાઉન્ટર પર જાય છે, માત્ર ખોટી અટક અથવા અપ્રમાણિત સરનામાને કારણે પાછા ફરવું પડે છે. આ પરેશાની દૂર કરવા માટે CivicSaathi બનાવવામાં આવ્યું છે.',
+    missionDesc: 'દરરોજ હજારો ભારતીય નાગરિકો કામ પરથી રજા લઈને સરકારી કાઉન્ટર પર જાય છે, માત્ર ખોટી અટક અથવા અપ્રમાણિત સરનામાને કારણે પાછા ફરવું પડે છે. આ પરેશાની દૂર કરવા માટે CivicSeva બનાવવામાં આવ્યું છે.',
     pillarsTitle: 'અમારા મુખ્ય સિદ્ધાંતો',
     pillar1Title: 'ગેઝેટ-સમર્થિત ચોકસાઈ',
     pillar1Desc: 'બધી દસ્તાવેજ આવશ્યકતાઓ સીધી સત્તાવાર સરકારી સૂચનાઓ દ્વારા ચકાસવામાં આવે છે.',
@@ -426,7 +426,7 @@ export const gu: TranslationType = {
   // Feedback Page
   feedback: {
     title: 'નાગરિક પ્રતિસાદ અને સૂચનો',
-    subtitle: 'તમારો અનુભવ શેર કરીને અથવા જૂની પ્રક્રિયાઓની જાણ કરીને CivicSaathi ને સુધારવામાં મદદ કરો.',
+    subtitle: 'તમારો અનુભવ શેર કરીને અથવા જૂની પ્રક્રિયાઓની જાણ કરીને CivicSeva ને સુધારવામાં મદદ કરો.',
     ratingLabel: 'તમારો અનુભવ કેટલો ઉપયોગી રહ્યો?',
     categoryLabel: 'પ્રતિસાદ કેટેગરી',
     categories: {
@@ -440,13 +440,13 @@ export const gu: TranslationType = {
     commentPlaceholder: 'જણાવો કે અમે નાગરિક માર્ગદર્શનને કેવી રીતે વધુ સરળ બનાવી શકીએ...',
     submitBtn: 'પ્રતિસાદ સબમિટ કરો',
     thankYouTitle: 'તમારા પ્રતિસાદ બદલ આભાર!',
-    thankYouDesc: 'તમારા મંતવ્યો ખાતરી કરવામાં મદદ કરે છે કે CivicSaathi દેશભરના નાગરિકો માટે સૌથી વિશ્વસનીય સ્ત્રોત રહે.',
+    thankYouDesc: 'તમારા મંતવ્યો ખાતરી કરવામાં મદદ કરે છે કે CivicSeva દેશભરના નાગરિકો માટે સૌથી વિશ્વસનીય સ્ત્રોત રહે.',
   },
 
   // Privacy Policy & Terms
   legal: {
     privacyTitle: 'ગોપનીયતા નીતિ',
-    privacySubtitle: 'CivicSaathi કેવી રીતે નાગરિક ડેટા અને ગોપનીયતાનું રક્ષણ કરે છે.',
+    privacySubtitle: 'CivicSeva કેવી રીતે નાગરિક ડેટા અને ગોપનીયતાનું રક્ષણ કરે છે.',
     termsTitle: 'ઉપયોગની શરતો',
     termsSubtitle: 'પ્લેટફોર્મ નિયમો, કાનૂની સત્તાનો અસ્વીકાર અને સેવાની શરતો.',
     lastUpdated: 'છેલ્લું અપડેટ: જાન્યુઆરી 2026',

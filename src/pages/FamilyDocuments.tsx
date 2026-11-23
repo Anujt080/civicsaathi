@@ -334,7 +334,7 @@ export const FamilyDocuments: React.FC<FamilyDocumentsProps> = ({ embedded = fal
         <div className="space-y-0.5">
           <span className="font-bold">Household Records & Privacy Notice:</span>
           <p className="text-blue-800/90 dark:text-blue-300/90 text-[11px] leading-relaxed">
-            Family Management IDs (e.g., <code className="font-mono font-semibold">FAM-2026-001</code>) are internal household identifiers created exclusively for organizing civic records within your CivicSaathi profile. They are not government identity numbers. Verification statuses reflect organizational checks to assist in public scheme applications.
+            Family Management IDs (e.g., <code className="font-mono font-semibold">FAM-2026-001</code>) are internal household identifiers created exclusively for organizing civic records within your CivicSeva profile. They are not government identity numbers. Verification statuses reflect organizational checks to assist in public scheme applications.
           </p>
         </div>
       </div>

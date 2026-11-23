@@ -49,7 +49,7 @@ export const ExternalPortalModal: React.FC<ExternalPortalModalProps> = ({
                 id="external-portal-modal-title"
                 className="font-bold text-lg sm:text-xl text-slate-900 dark:text-white"
               >
-                {t('serviceDetails.officialPortalNotice') || "You're leaving CivicSaathi"}
+                {t('serviceDetails.officialPortalNotice') || "You're leaving CivicSeva"}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Official external destination verification

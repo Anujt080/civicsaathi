@@ -285,7 +285,7 @@ export const CivicAlertsPage: React.FC = () => {
             Official Source Attribution & Citizen Safety Notice
           </h3>
           <p>
-            CivicSaathi aggregates regulatory updates directly from official gazette notifications and ministry
+            CivicSeva aggregates regulatory updates directly from official gazette notifications and ministry
             press releases. Government authorities never request OTPs, ATM PINs, or biometric captures via phone
             calls or unverified links. Always ensure you are on authentic <code>.gov.in</code> or <code>.nic.in</code> domains.
           </p>

@@ -1,7 +1,7 @@
 export const en = {
   // Navigation & Header
   nav: {
-    brandName: 'CivicSaathi',
+    brandName: 'CivicSeva',
     brandTagline: 'Citizen Assistance Portal',
     services: 'Services',
     offices: 'Office Locator',
@@ -13,7 +13,7 @@ export const en = {
     profile: 'My Profile',
     documents: 'Your Documents',
     settings: 'Account Settings',
-    askAi: 'Ask CivicSaathi AI',
+    askAi: 'Ask CivicSeva AI',
     theme: 'Theme',
     themeLight: 'Light',
     themeDark: 'Dark',
@@ -96,8 +96,8 @@ export const en = {
 
   // How It Works
   howItWorks: {
-    badge: 'The CivicSaathi Framework',
-    title: 'How CivicSaathi Simplifies Public Services',
+    badge: 'The CivicSeva Framework',
+    title: 'How CivicSeva Simplifies Public Services',
     subtitle: 'A prevention-first approach engineered to save you repeat visits, unnecessary leave days, and frustrating counter queues.',
     phase1: 'Phase 1 Guidance',
     phase2: 'Phase 2 Guidance',
@@ -164,7 +164,7 @@ export const en = {
     startVerificationBtn: 'Start Document Verification',
     officialPortalNotice: 'Official Government Submission Portal',
     visitPortalBtn: 'Open Official Portal',
-    counterNotice: 'CivicSaathi is an independent informational platform. Final applications must be submitted via authorized government portals or designated Seva Kendras.',
+    counterNotice: 'CivicSeva is an independent informational platform. Final applications must be submitted via authorized government portals or designated Seva Kendras.',
   },
 
   // Verification & Readiness Checker
@@ -268,9 +268,9 @@ export const en = {
   // Auth: Login & Signup
   auth: {
     loginTitle: 'Welcome back',
-    loginSubtitle: 'Sign in to continue to CivicSaathi',
+    loginSubtitle: 'Sign in to continue to CivicSeva',
     signupTitle: 'Create an account',
-    signupSubtitle: 'Get started with CivicSaathi Citizen Assistance',
+    signupSubtitle: 'Get started with CivicSeva Citizen Assistance',
     emailLabel: 'Email address',
     emailPlaceholder: 'name@example.com',
     passwordLabel: 'Password',
@@ -313,7 +313,7 @@ export const en = {
     appearanceTheme: 'Appearance Theme',
     accessibilityTitle: 'Accessibility & Color Vision Modes',
     saveSuccess: 'Preferences updated successfully.',
-    signOutBtn: 'Sign Out of CivicSaathi',
+    signOutBtn: 'Sign Out of CivicSeva',
   },
 
   // Footer
@@ -334,15 +334,15 @@ export const en = {
     termsOfUse: 'Terms of Use',
     feedback: 'Feedback',
     disclaimerTitle: 'Official Guidance Notice:',
-    disclaimerText: 'CivicSaathi is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.',
-    copyright: 'CivicSaathi Citizen Assistance Platform. Non-commercial civic assistance utility.',
+    disclaimerText: 'CivicSeva is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.',
+    copyright: 'CivicSeva Citizen Assistance Platform. Non-commercial civic assistance utility.',
   },
 
   // AI Assistant Drawer
   aiDrawer: {
-    title: 'CivicSaathi AI Assistant',
+    title: 'CivicSeva AI Assistant',
     subtitle: 'Verified guidance for citizen documentation & administrative procedures',
-    welcomeGreeting: 'Namaste! I am the CivicSaathi AI Assistant.',
+    welcomeGreeting: 'Namaste! I am the CivicSeva AI Assistant.',
     helpIntro: 'I can help you with:',
     helpPoint1: 'Explaining POI, POA, and DOB proof categories',
     helpPoint2: 'Eligibility and step-by-step checklists for Central & State services',
@@ -358,7 +358,7 @@ export const en = {
     inputPlaceholder: 'Ask a question about government procedures, documents, fees...',
     sendBtn: 'Send',
     clearChat: 'Clear conversation',
-    disclaimer: 'CivicSaathi AI provides informational guidance based on public government rules. Always verify on official portals.',
+    disclaimer: 'CivicSeva AI provides informational guidance based on public government rules. Always verify on official portals.',
   },
 
   // Quick Access Floating Toolbar
@@ -391,10 +391,10 @@ export const en = {
 
   // About Page
   about: {
-    title: 'About CivicSaathi',
+    title: 'About CivicSeva',
     subtitle: 'Demystifying government service procedures and eliminating counter friction for every citizen.',
     missionTitle: 'Our Public Mission',
-    missionDesc: 'Every day, thousands of Indian citizens take leave from work and travel to government facilitation counters, only to be turned away due to a misspelled surname, an unverified address proof, or an outdated form. CivicSaathi was built to eliminate this friction.',
+    missionDesc: 'Every day, thousands of Indian citizens take leave from work and travel to government facilitation counters, only to be turned away due to a misspelled surname, an unverified address proof, or an outdated form. CivicSeva was built to eliminate this friction.',
     pillarsTitle: 'Our Core Operating Principles',
     pillar1Title: 'Gazette-Backed Accuracy',
     pillar1Desc: 'All document requirements and checklists are verified directly against official government notifications.',
@@ -424,7 +424,7 @@ export const en = {
   // Feedback Page
   feedback: {
     title: 'Citizen Feedback & Suggestions',
-    subtitle: 'Help us improve CivicSaathi by sharing your experience or reporting outdated procedures.',
+    subtitle: 'Help us improve CivicSeva by sharing your experience or reporting outdated procedures.',
     ratingLabel: 'How helpful was your experience?',
     categoryLabel: 'Feedback Category',
     categories: {
@@ -438,13 +438,13 @@ export const en = {
     commentPlaceholder: 'Tell us how we can make civic guidance simpler or share details of the counter you visited...',
     submitBtn: 'Submit Feedback',
     thankYouTitle: 'Thank You for Your Feedback!',
-    thankYouDesc: 'Your insights help ensure that CivicSaathi remains the most dependable civic resource for citizens nationwide.',
+    thankYouDesc: 'Your insights help ensure that CivicSeva remains the most dependable civic resource for citizens nationwide.',
   },
 
   // Privacy Policy & Terms
   legal: {
     privacyTitle: 'Privacy Policy',
-    privacySubtitle: 'How CivicSaathi protects citizen privacy and handles informational queries.',
+    privacySubtitle: 'How CivicSeva protects citizen privacy and handles informational queries.',
     termsTitle: 'Terms of Use',
     termsSubtitle: 'Operating guidelines, disclaimer of statutory authority, and terms of service.',
     lastUpdated: 'Last Updated: January 2026',

@@ -26,7 +26,7 @@ export const About: React.FC = () => {
           <span>Citizen Guidance Platform</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          {t('about.title') || 'About CivicSaathi'}
+          {t('about.title') || 'About CivicSeva'}
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
           {t('about.subtitle') || 'Demystifying government service procedures and eliminating counter friction for every citizen.'}
@@ -39,10 +39,10 @@ export const About: React.FC = () => {
           {t('about.missionTitle') || 'Our Mission: Ending Counter Confusion'}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          {t('about.missionDesc') || 'Every day, thousands of Indian citizens take leave from work and travel to government facilitation counters, only to be turned away due to a misspelled surname, an unverified address proof, or an outdated form. CivicSaathi was built to eliminate this friction.'}
+          {t('about.missionDesc') || 'Every day, thousands of Indian citizens take leave from work and travel to government facilitation counters, only to be turned away due to a misspelled surname, an unverified address proof, or an outdated form. CivicSeva was built to eliminate this friction.'}
         </p>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          CivicSaathi was designed as a "prevention-first" civic companion. We do not issue documents or replace authorized portals. Instead, we ensure you have the exact required paperwork in hand, validated for common consistency errors, before you stand in line.
+          CivicSeva was designed as a "prevention-first" civic companion. We do not issue documents or replace authorized portals. Instead, we ensure you have the exact required paperwork in hand, validated for common consistency errors, before you stand in line.
         </p>
       </div>
 

@@ -59,7 +59,7 @@ export const Footer: React.FC = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 space-y-10">
         {/* Simplified Navigation Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
-          {/* Column 1: CivicSaathi Branding */}
+          {/* Column 1: CivicSeva Branding */}
           <div className="space-y-4 md:col-span-2 lg:col-span-2 lg:pr-8">
             <Link to="/" className="inline-block hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg">
               <BrandLogo lightText={true} size="md" />

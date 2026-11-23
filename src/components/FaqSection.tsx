@@ -11,30 +11,30 @@ export const FaqSection: React.FC = () => {
     {
       id: 'faq-1',
       category: 'General',
-      question: 'Is CivicSaathi an official government website?',
+      question: 'Is CivicSeva an official government website?',
       answer:
-        'No. CivicSaathi is an independent, non-commercial civic-tech guidance platform. We do not issue government documents, collect statutory fees, or approve applications. We empower citizens with clear checklists, consistency checking, and direct links to authentic government portals.',
+        'No. CivicSeva is an independent, non-commercial civic-tech guidance platform. We do not issue government documents, collect statutory fees, or approve applications. We empower citizens with clear checklists, consistency checking, and direct links to authentic government portals.',
     },
     {
       id: 'faq-2',
       category: 'Fees',
-      question: 'Does CivicSaathi charge any fees for using the platform?',
+      question: 'Does CivicSeva charge any fees for using the platform?',
       answer:
-        'No. CivicSaathi is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are official statutory government fees payable directly to authorized government departments.',
+        'No. CivicSeva is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are official statutory government fees payable directly to authorized government departments.',
     },
     {
       id: 'faq-3',
       category: 'Applications',
       question: 'Can I submit my passport, Aadhaar, or driving licence application directly here?',
       answer:
-        'No. Statutory applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSaathi provides verified document checklists and direct portal links once your papers are counter-ready.',
+        'No. Statutory applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSeva provides verified document checklists and direct portal links once your papers are counter-ready.',
     },
     {
       id: 'faq-4',
       category: 'Privacy',
       question: 'Are my personal documents or information stored on your servers?',
       answer:
-        'No. CivicSaathi adheres to strict privacy-by-design principles. We do not record your personal information, Aadhaar numbers, or financial details. Everything you browse runs locally in your web browser.',
+        'No. CivicSeva adheres to strict privacy-by-design principles. We do not record your personal information, Aadhaar numbers, or financial details. Everything you browse runs locally in your web browser.',
     },
     {
       id: 'faq-5',
@@ -56,7 +56,7 @@ export const FaqSection: React.FC = () => {
           {t('faq.title') || 'Common Questions & Guidance'}
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-          {t('faq.subtitle') || 'Everything you need to know about CivicSaathi, document preparedness, and public service workflows.'}
+          {t('faq.subtitle') || 'Everything you need to know about CivicSeva, document preparedness, and public service workflows.'}
         </p>
       </div>
 
