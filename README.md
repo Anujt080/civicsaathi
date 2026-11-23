@@ -1,4 +1,4 @@
-# CivicSaathi (सिविक साथी)
+# CivicSeva (सिविक सेवा)
 
 > **Citizen Guidance Platform for Indian Public Services**  
 > Navigating government services, verifying document readiness, and eliminating civic friction before you reach the counter.
@@ -9,7 +9,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.13-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-Auth_%26_Postgres-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com/)
 [![Tesseract.js](https://img.shields.io/badge/OCR-Tesseract.js_7.0-blue)](https://tesseract.projectnaptha.com/)
-[![AI Assistant](https://img.shields.io/badge/AI_Assistant-Privacy--First_Civic_LLM-orange)](#-civicsaathi-ai-assistant--backend-architecture)
+[![AI Assistant](https://img.shields.io/badge/AI_Assistant-Privacy--First_Civic_LLM-orange)](#-civicseva-ai-assistant--backend-architecture)
 
 ---
 
@@ -17,7 +17,7 @@
 
 - [Overview](#-overview)
   - [The Problem](#the-problem)
-  - [The CivicSaathi Solution](#the-civicsaathi-solution)
+  - [The CivicSeva Solution](#the-civicseva-solution)
   - [Target Users and Impact](#target-users-and-impact)
 - [Key Features](#-key-features)
   - [1. Comprehensive Services Catalog](#1-comprehensive-services-catalog)
@@ -27,7 +27,7 @@
   - [5. Family Document Management (Accounts Section)](#5-family-document-management-accounts-section)
   - [6. Floating Quick-Access Toolbar](#6-floating-quick-access-toolbar)
   - [7. Global Color Vision Accessibility Suite](#7-global-color-vision-accessibility-suite)
-  - [8. CivicSaathi AI Civic Assistant](#8-civicsaathi-ai-civic-assistant)
+  - [8. CivicSeva AI Civic Assistant](#8-civicseva-ai-civic-assistant)
   - [9. Office Locator & Nearby Seva Kendras](#9-office-locator--nearby-seva-kendras)
 - [System Architecture](#-system-architecture)
   - [Architecture Diagram](#architecture-diagram)
@@ -43,7 +43,7 @@
   - [1. Execute Schema Migration](#1-execute-schema-migration)
   - [2. Storage Bucket Configuration](#2-storage-bucket-configuration)
   - [3. Row Level Security (RLS) Policies](#3-row-level-security-rls-policies)
-- [CivicSaathi AI Assistant & Backend Architecture](#-civicsaathi-ai-assistant--backend-architecture)
+- [CivicSeva AI Assistant & Backend Architecture](#-civicseva-ai-assistant--backend-architecture)
   - [Dual Backend Routing & Fallback](#dual-backend-routing--fallback)
   - [Security & PII Sanitization](#security--pii-sanitization)
   - [Rate-Limit & Quota Resilience Strategy](#rate-limit--quota-resilience-strategy)
@@ -53,6 +53,7 @@
 - [Project Directory Structure](#-project-directory-structure)
 - [Available NPM Scripts](#-available-npm-scripts)
 - [Security, Privacy & Compliance](#-security-privacy--compliance)
+- [AI-Assisted Development](#-ai-assisted-development)
 - [Contributing & License](#-contributing--license)
 
 ---
@@ -68,9 +69,9 @@ Every year, millions of Indian citizens visit government offices—such as **Lok
 3. **Confusion between online portals and physical counter requirements**: Unclear distinctions between what can be done entirely online versus services requiring in-person biometric capture.
 4. **Bureaucratic cognitive load**: Navigating dense government gazettes and complex portals without clear, step-by-step guidance.
 
-### The CivicSaathi Solution
+### The CivicSeva Solution
 
-**CivicSaathi (सिविक साथी)** is a citizen-first civic guidance platform built to bridge the gap between citizens and Indian public services. CivicSaathi simplifies public services by providing:
+**CivicSeva (सिविक सेवा)** is a citizen-first civic guidance platform built to bridge the gap between citizens and Indian public services. CivicSeva simplifies public services by providing:
 
 - Clear eligibility rules, required vs. conditional document checklists, and transparent fee/timeline breakdowns.
 - An automated pre-submission consistency check that identifies name spelling mismatches and date discrepancies before citizens visit facilitation centres.
@@ -92,7 +93,7 @@ Every year, millions of Indian citizens visit government offices—such as **Lok
 
 ### 1. Comprehensive Services Catalog
 
-CivicSaathi indexes essential central government services and Chhattisgarh state welfare services with transparent fee breakdowns, processing durations, and official portal links:
+CivicSeva indexes essential central government services and Chhattisgarh state welfare services with transparent fee breakdowns, processing durations, and official portal links:
 
 - **Identity & Civil Registration**:
   - New Aadhaar Enrolment (Free, 15–30 days)
@@ -139,7 +140,7 @@ Each service detail page provides an interactive, structured 3-step workflow:
 
 ### 3. Pre-Submission Document Verification & OCR Prototype
 
-CivicSaathi includes an automated pre-submission verification engine designed to detect common documentation errors before submission:
+CivicSeva includes an automated pre-submission verification engine designed to detect common documentation errors before submission:
 
 - **Client-Side OCR Extraction via Tesseract.js**:
   - Processes uploaded JPEG/PNG documents directly in the citizen's browser using a WebAssembly Web Worker (`src/services/ocr.ts`).
@@ -214,12 +215,12 @@ A persistent, responsive floating toolbar anchored to the bottom edge provides i
 - **Civic Calendar**: Displays official gazetted public holidays, tax deadlines, and Aadhaar update deadlines, synchronized with user-defined reminders stored in Supabase (`personal_reminders`).
 - **User Feedback Drawer**: Star-rating and categorization feedback tool saving citizen reviews.
 - **Accessibility Suite**: Direct controls for display magnification (80% to 150%) and color vision deficiency themes.
-- **AI Assistant Trigger**: Instant shortcut to launch the CivicSaathi civic assistant drawer.
+- **AI Assistant Trigger**: Instant shortcut to launch the CivicSeva civic assistant drawer.
 - **Share Portal**: One-click URL clipboard copier with temporary confirmation toast.
 
 ### 7. Global Color Vision Accessibility Suite
 
-CivicSaathi implements a comprehensive color vision deficiency system engineered with CSS variables and synchronous DOM attributes:
+CivicSeva implements a comprehensive color vision deficiency system engineered with CSS variables and synchronous DOM attributes:
 
 - **Default Theme**: Saffron, navy, and emerald civic palette.
 - **Protanopia-Friendly**: Replaces red/green conflict palettes with optimized blue, vermilion, and neutral tones.
@@ -229,7 +230,7 @@ CivicSaathi implements a comprehensive color vision deficiency system engineered
 - **AMOLED Pitch Dark Mode**: Battery-saving, pure black `#000000` dark theme.
 - **FOUC Prevention**: Synchronous pre-render script in `index.html` inspects `localStorage` and applies `data-vision-mode` and `.dark` before the first paint.
 
-### 8. CivicSaathi AI Civic Assistant
+### 8. CivicSeva AI Civic Assistant
 
 A fully integrated, privacy-focused conversational civic advisor accessible across the entire application:
 - **Circular Floating Launcher**: Elegant bottom-right bubble with a pulsing status badge, screen-reader accessibility (`aria-label`), and seamless integration with the floating toolbar.
@@ -238,7 +239,7 @@ A fully integrated, privacy-focused conversational civic advisor accessible acro
 - **Multi-Model Fallback Cascade**: Built with resilient server-side fallback across Google Gemini models (`gemini-3.6-flash`, `gemini-3.8-flash`, `gemini-3.1-flash-lite`).
 - **Bounded Rate-Limit & Quota Handling**: Parses `Retry-After` headers with bounded exponential backoff; distinguishes between temporary provider busy states and daily free quota exhaustion (`DAILY_QUOTA_EXHAUSTED`).
 - **Duplicate Request Guard**: Implements synchronous submit locks (`isSubmittingRef`) to eliminate duplicate requests caused by accidental double-clicks or rapid enter keys.
-- **Rich Civic Formatting**: Renders markdown bullet lists, bold terminology, government portal links, message copy buttons, suggested question chips, and session-preserved conversation history (`sessionStorage`). *See [CivicSaathi AI Assistant & Backend Architecture](#-civicsaathi-ai-assistant--backend-architecture) for full architecture and configuration.*
+- **Rich Civic Formatting**: Renders markdown bullet lists, bold terminology, government portal links, message copy buttons, suggested question chips, and session-preserved conversation history (`sessionStorage`). *See [CivicSeva AI Assistant & Backend Architecture](#-civicseva-ai-assistant--backend-architecture) for full architecture and configuration.*
 
 ### 9. Office Locator & Nearby Seva Kendras
 
@@ -369,8 +370,8 @@ Ensure you have the following installed on your machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Anujt080/civicsaathi.git
-   cd CivicSaathi
+   git clone https://github.com/Anujt080/civicseva.git
+   cd CivicSeva
    ```
 
 2. **Install project dependencies:**
@@ -424,13 +425,13 @@ Ensure you have the following installed on your machine:
 | :--- | :---: | :---: | :--- |
 | `SUPABASE_URL` | **Yes** | Client (Inlined) | Your Supabase project URL (`https://<project-ref>.supabase.co`). |
 | `SUPABASE_ANON_KEY` | **Yes** | Client (Inlined) | The public/anon API key for Supabase. Safe for client exposure under PostgreSQL RLS. |
-| `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Client | Google Maps Embed API key. If omitted, CivicSaathi automatically uses OpenStreetMap. |
+| `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Client | Google Maps Embed API key. If omitted, CivicSeva automatically uses OpenStreetMap. |
 | `GEMINI_API_KEY` | *Optional* | Server-side only | API key for the AI civic assistant. Set in Supabase Secrets or Vercel Environment Variables. Never prefix with `VITE_`. |
 | `GEMINI_MODEL` | *Optional* | Server-side only | Model ID override for AI chat completions. Defaults to `gemini-3.6-flash`. |
 
 ### Vite Environment Variable Architecture
 
-Standard Vite applications only expose environment variables prefixed with `VITE_` to browser code via `import.meta.env`. To maintain clean variable naming (`SUPABASE_URL` and `SUPABASE_ANON_KEY`), CivicSaathi's [`vite.config.ts`](vite.config.ts) is configured as follows:
+Standard Vite applications only expose environment variables prefixed with `VITE_` to browser code via `import.meta.env`. To maintain clean variable naming (`SUPABASE_URL` and `SUPABASE_ANON_KEY`), CivicSeva's [`vite.config.ts`](vite.config.ts) is configured as follows:
 
 ```typescript
 import { defineConfig, loadEnv } from 'vite';
@@ -460,7 +461,7 @@ export default defineConfig(({ mode }) => {
 
 ## 🗄️ Supabase Backend Setup
 
-CivicSaathi uses Supabase for user authentication, structured PostgreSQL data, and encrypted document storage.
+CivicSeva uses Supabase for user authentication, structured PostgreSQL data, and encrypted document storage.
 
 ### 1. Execute Schema Migration
 
@@ -565,9 +566,9 @@ CREATE TABLE IF NOT EXISTS public.family_documents (
 
 ---
 
-## 🤖 CivicSaathi AI Assistant & Backend Architecture
+## 🤖 CivicSeva AI Assistant & Backend Architecture
 
-CivicSaathi incorporates an intelligent, privacy-grounded civic advisor designed to guide citizens through official government requirements, document categories (POI, POA, DOB, POR), and counter readiness.
+CivicSeva incorporates an intelligent, privacy-grounded civic advisor designed to guide citizens through official government requirements, document categories (POI, POA, DOB, POR), and counter readiness.
 
 ### Architecture & Data Flow
 
@@ -589,7 +590,7 @@ CivicSaathi incorporates an intelligent, privacy-grounded civic advisor designed
    └────────────────────────────────────────────────────────┘
        │  
        │  4. Reads server secret: GEMINI_API_KEY (never exposed to browser)
-       │  5. Injects verified CivicSaathi rules & civic system prompt
+       │  5. Injects verified CivicSeva rules & civic system prompt
        │  6. Multi-Model Fallback Cascade (Evaluates HTTP 429 & 503)
        ▼
 [ Google Gemini Generative API ]
@@ -617,7 +618,7 @@ The assistant employs a resilient dual-tier architecture in [`src/services/ai.ts
 
 ### Rate-Limit & Quota Resilience Strategy
 
-Free AI model tiers occasionally encounter upstream provider throttling. CivicSaathi handles these transparently:
+Free AI model tiers occasionally encounter upstream provider throttling. CivicSeva handles these transparently:
 - **`Retry-After` Header Parsing**: Inspects upstream response headers for standard rate-limit intervals.
 - **Bounded Backoff**: If throttled (`HTTP 429`), the backend delays for the requested duration (capped at 3 seconds) and retries once before advancing to the next fallback free model.
 - **Daily Quota Classification**: Differentiates between temporary concurrency throttling and account-level daily limit exhaustion (`error_type: "daily_limit"`, `DAILY_QUOTA_EXHAUSTED`). If the daily quota is exhausted, the UI informs the citizen directly and suppresses the retry button to avoid wasteful queries.
@@ -654,7 +655,7 @@ The Vite development server's internal middleware handles `/api/chat` requests d
 
 ## 🚀 Deployment Guide (Vercel)
 
-CivicSaathi is optimized for deployment on [Vercel](https://vercel.com/):
+CivicSeva is optimized for deployment on [Vercel](https://vercel.com/):
 
 1. **Push your code to GitHub**:
    Ensure your latest code is committed and pushed to your GitHub repository on `main`.
@@ -662,7 +663,7 @@ CivicSaathi is optimized for deployment on [Vercel](https://vercel.com/):
 2. **Import Project in Vercel**:
    - Go to your [Vercel Dashboard](https://vercel.com/dashboard).
    - Click **Add New...** ➔ **Project**.
-   - Select your `CivicSaathi` repository and click **Import**.
+   - Select your `CivicSeva` repository and click **Import**.
 
 3. **Configure Project Settings**:
    - **Framework Preset**: `Vite`
@@ -690,11 +691,11 @@ CivicSaathi is optimized for deployment on [Vercel](https://vercel.com/):
 
 > [!IMPORTANT]
 > **Prototype Demonstration Notice**  
-> CivicSaathi's automated document verification engine is a **client-side pre-submission consistency check** designed to help citizens identify discrepancies (such as spelling mismatches or missing proofs) before visiting government counters.
+> CivicSeva's automated document verification engine is a **client-side pre-submission consistency check** designed to help citizens identify discrepancies (such as spelling mismatches or missing proofs) before visiting government counters.
 >
 > **Legal & Administrative Disclaimer:**
-> - CivicSaathi **does not** authenticate official government databases or interface directly with internal government records (such as UIDAI CIDR, NSDL/UTIITSL databases, or the Income Tax Department).
-> - Successful verification within CivicSaathi does not guarantee acceptance by government authorities.
+> - CivicSeva **does not** authenticate official government databases or interface directly with internal government records (such as UIDAI CIDR, NSDL/UTIITSL databases, or the Income Tax Department).
+> - Successful verification within CivicSeva does not guarantee acceptance by government authorities.
 > - Citizens must always carry their original physical documents to authorized facilitation centres.
 > - The sample documents provided in `public/demo-documents/` (for Rahul Sharma and Prateek Agrawal) are fictional representations created exclusively for evaluation and prototype testing.
 
@@ -703,7 +704,7 @@ CivicSaathi is optimized for deployment on [Vercel](https://vercel.com/):
 ## 📁 Project Directory Structure
 
 ```
-CivicSaathi/
+CivicSeva/
 ├── .env.example                     # Sample environment variable template
 ├── .gitignore                       # Git ignore list (node_modules, .env, dist)
 ├── index.html                       # HTML entry point with FOUC theme pre-render script
@@ -718,9 +719,7 @@ CivicSaathi/
 │   ├── favicon.svg                  # Platform favicon
 │   ├── hero-banner.png              # Civic hero illustration
 │   ├── hero-civic-bg.svg            # Hero background SVG vector
-│   ├── logo.png                     # CivicSaathi emblem logo
-│   ├── civicsaathi-logo.png         # Extended horizontal logo
-│   ├── sevaguide-logo.png           # Retained legacy asset
+│   ├── logo.png                     # Official CivicSeva emblem logo
 │   └── demo-documents/              # Sample testbed documents for verification demo
 │       ├── rahul_pan.jpeg           # Sample PAN (Rahul Sharma)
 │       ├── rahul_10th.jpeg          # Sample 10th marksheet (Rahul Sharma)
@@ -833,6 +832,17 @@ CivicSaathi/
 - **Row Level Security (RLS)**: PostgreSQL RLS policies guarantee that users can never query, insert, or modify another citizen's records or uploaded documents.
 - **In-Browser OCR Processing**: When using client-side OCR via Tesseract.js, character recognition runs locally inside a WebAssembly Web Worker on the citizen's device. Images are not relayed to third-party OCR cloud services.
 - **Credential Hygiene**: Local environment configurations (`.env`, `.env.local`) are strictly excluded in `.gitignore` to prevent credential leaks.
+
+---
+
+## 🤖 AI-Assisted Development
+
+CivicSeva was developed with the support of AI-assisted development tools, including:
+
+- **ChatGPT** — used for brainstorming, architecture discussions, debugging, code assistance, documentation, and development guidance.
+- **Antigravity** — used as an AI coding/development agent for implementing features, modifying code, debugging, testing, and project integration.
+
+These tools served strictly as intelligent development assistants throughout the development lifecycle. All architectural decisions, source code, user interfaces, security rules, and system integrations were reviewed, verified, and tested by the project development team.
 
 ---
 
