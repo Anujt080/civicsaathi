@@ -27,7 +27,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
               : size === 'sm'
               ? 'w-7 h-7'
               : 'w-9 h-9'
-          } object-contain rounded-xl bg-white shadow-2xs border border-slate-200/80 dark:border-zinc-800 p-0.5`}
+          } aspect-square object-contain rounded-full bg-white shadow-2xs border border-slate-200/80 dark:border-zinc-800 p-0.5`}
         />
       </div>
 
