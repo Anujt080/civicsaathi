@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// CivicSeva Tailwind configuration
 export default {
   darkMode: 'class',
   content: [

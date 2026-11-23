@@ -1,3 +1,4 @@
+// CivicSeva setup script
 const fs = require('fs');
 const path = require('path');
 
