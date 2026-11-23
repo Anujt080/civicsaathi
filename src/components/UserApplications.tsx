@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { SERVICES_DATA } from '../data/services';
 import { Application } from '../types';
 import { ProcessSteps } from './ProcessSteps';
+import { useTranslation } from '../context/LanguageContext';
 import {
   FileText,
   ArrowRight,
@@ -19,6 +20,7 @@ import {
 
 export const UserApplications: React.FC = () => {
   const { user } = useAuth();
+  const { t, getServiceTranslation } = useTranslation();
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -86,21 +88,21 @@ export const UserApplications: React.FC = () => {
         return (
           <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Completed
+            {t('applications.tabs.completed')}
           </span>
         );
       case 'Action Required':
         return (
           <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
             <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
-            Action Required
+            {t('applications.tabs.actionRequired')}
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200">
             <Clock className="w-3.5 h-3.5 text-blue-600" />
-            In Progress
+            {t('applications.tabs.inProgress')}
           </span>
         );
     }
@@ -111,12 +113,16 @@ export const UserApplications: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">My Applications</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+              {t('applications.title')}
+            </h2>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
-              {applications.length} {applications.length === 1 ? 'record' : 'records'}
+              {applications.length}
             </span>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Track your ongoing civic service submissions</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            {t('applications.subtitle')}
+          </p>
         </div>
 
         <Link
@@ -124,7 +130,7 @@ export const UserApplications: React.FC = () => {
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline px-3 py-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 transition"
         >
           <Plus className="w-3.5 h-3.5" />
-          <span>Start Application</span>
+          <span>{t('applications.exploreBtn')}</span>
         </Link>
       </div>
 
@@ -167,7 +173,7 @@ export const UserApplications: React.FC = () => {
       {loading ? (
         <div className="py-12 flex flex-col justify-center items-center gap-2 text-slate-500">
           <Loader2 className="w-6 h-6 animate-spin text-blue-700" />
-          <span className="text-xs">Loading your applications...</span>
+          <span className="text-xs">{t('common.loading')}</span>
         </div>
       ) : applications.length === 0 ? (
         /* Useful Empty State */
@@ -176,23 +182,27 @@ export const UserApplications: React.FC = () => {
             <FileText className="w-7 h-7" />
           </div>
           <div className="max-w-md mx-auto space-y-1">
-            <h3 className="font-bold text-base text-slate-900 dark:text-white">No applications initiated yet</h3>
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">
+              {t('applications.emptyTitle')}
+            </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              You haven't tracked any service applications yet. Explore government services to verify documents, locate centers, and monitor your process.
+              {t('applications.emptyDesc')}
             </p>
           </div>
           <Link
             to="/services"
             className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-sm"
           >
-            <span>Explore Government Services</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t('applications.exploreBtn')}</span>
+            <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
           </Link>
         </div>
       ) : (
         <div className="space-y-4">
           {applications.map((app) => {
             const service = SERVICES_DATA.find((s) => s.id === app.serviceId);
+            const localized = getServiceTranslation(app.serviceId);
+            const appServiceName = localized?.name || app.serviceName;
             const totalSteps = service?.steps.length || 5;
             const progressText = `${app.currentStepIndex + 1} / ${totalSteps}`;
 
@@ -203,17 +213,17 @@ export const UserApplications: React.FC = () => {
               >
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-100 dark:border-zinc-900 pb-4">
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white">{app.serviceName}</h3>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white">{appServiceName}</h3>
                     <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
-                      Ref: <span className="font-mono">{app.id}</span> • Step: <strong className="text-slate-700 dark:text-slate-300">{progressText}</strong>
+                      Ref: <span className="font-mono">{app.id}</span> • {t('applications.currentStep')} <strong className="text-slate-700 dark:text-slate-300">{progressText}</strong>
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     {renderStatusBadge(app.status)}
                     <button
-                      onClick={() => handleDeleteApplication(app.id, app.serviceName)}
-                      className="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
-                      title="Remove tracking record"
+                      onClick={() => handleDeleteApplication(app.id, appServiceName)}
+                      className="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
+                      title={t('common.delete')}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -228,7 +238,7 @@ export const UserApplications: React.FC = () => {
 
                 <div className="flex flex-wrap justify-between items-center gap-3 pt-2">
                   <span className="text-xs text-slate-400 dark:text-slate-500">
-                    Updated {app.lastUpdated}
+                    {t('common.lastUpdated')} {app.lastUpdated}
                   </span>
                   <div className="flex items-center gap-2">
                     <Link
@@ -236,14 +246,14 @@ export const UserApplications: React.FC = () => {
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-800 dark:text-slate-200 border border-transparent dark:border-zinc-800 transition"
                     >
                       <ShieldCheck className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
-                      <span>Pre-check Docs</span>
+                      <span>{t('applications.checkReadinessBtn')}</span>
                     </Link>
                     <Link
                       to={`/services/${app.serviceId}`}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white transition shadow-sm"
                     >
-                      <span>{app.status === 'Completed' ? 'View Details' : 'Continue'}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>{app.status === 'Completed' ? t('common.view') : t('applications.continueBtn')}</span>
+                      <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
                     </Link>
                   </div>
                 </div>

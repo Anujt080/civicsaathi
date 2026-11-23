@@ -277,7 +277,7 @@ export const FamilyMemberModal: React.FC<FamilyMemberModalProps> = ({
           </div>
 
           <div className="pt-2 text-[11px] text-slate-500 dark:text-slate-400 italic">
-            Note: Family Management IDs are internal household records for CivicSeva document indexing and do not represent government identity numbers.
+            Note: Family Management IDs are internal household records for CivicSaathi document indexing and do not represent government identity numbers.
           </div>
 
           {/* Footer Buttons */}

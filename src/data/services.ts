@@ -1207,7 +1207,7 @@ export const SERVICES_DATA: Service[] = [
     officialPortalUrl: 'https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html',
     officialPortalName: 'Protean / NSDL e-Gov Portal',
     officeAssistanceInfo: 'Authorized NSDL / UTIITSL PAN facilitation centres and TIN-FC offices.',
-    conditionalNotice: 'PAN verification supports automated OCR discrepancy checking in CivicSeva. Name and date of birth are cross-checked against applicant profile.',
+    conditionalNotice: 'PAN verification supports automated OCR discrepancy checking in CivicSaathi. Name and date of birth are cross-checked against applicant profile.',
     hasConditionalDocs: false,
     eligibilitySummary: [
       'Existing PAN card holders who need to correct typographical errors, change marital surname, update father’s name, or request a reprint of damaged/lost cards.',
@@ -1256,13 +1256,13 @@ export const SERVICES_DATA: Service[] = [
     ],
     stepDetails: [
       { step: 1, title: 'Prepare Documents', description: 'Gather proof of identity, address, and copy of existing PAN card.' },
-      { step: 2, title: 'Pre-Submission Check', description: 'Run CivicSeva’s automated pre-submission check to detect name and DoB discrepancies.' },
+      { step: 2, title: 'Pre-Submission Check', description: 'Run CivicSaathi’s automated pre-submission check to detect name and DoB discrepancies.' },
       { step: 3, title: 'Fill Online Form', description: 'Complete Form 49A/Correction on Protean (NSDL) or UTIITSL portal.' },
       { step: 4, title: 'e-Sign / Submit', description: 'Submit using Aadhaar OTP e-Sign or send physical signed documents to the TIN-FC office.' },
       { step: 5, title: 'Card Delivery', description: 'Receive updated physical PAN card at your registered address.' }
     ],
     importantNotes: [
-      'CivicSeva provides browser-based OCR and rule-based validation for PAN cards.',
+      'CivicSaathi provides browser-based OCR and rule-based validation for PAN cards.',
       'Check that name on identity proof matches the correction request exactly.'
     ],
     disclaimer: 'Based on Income Tax Department / Protean guidelines. Income Tax Department issues final PAN corrections.'

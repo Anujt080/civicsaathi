@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { askCivicSaathi, AIContext } from '../services/ai';
 import { ChatMessage } from '../types';
+import { useTranslation } from '../context/LanguageContext';
 
 interface AIAssistantDrawerProps {
   isOpen: boolean;
@@ -28,7 +29,7 @@ interface AIAssistantDrawerProps {
 const DEFAULT_WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome-1',
   sender: 'assistant',
-  text: `Namaste! I am the **CivicSeva AI Assistant**.
+  text: `Namaste! I am the **CivicSaathi AI Assistant**.
 
 I can help you with:
 - Explaining **POI**, **POA**, and **DOB** proof categories
@@ -40,14 +41,6 @@ How may I assist your civic journey today?`,
   timestamp: 'Just now',
 };
 
-const SUGGESTED_QUESTIONS = [
-  'What documents are accepted for Proof of Address (POA)?',
-  'What do I need for New Aadhaar Enrolment?',
-  'How to fix name mismatch between PAN and Aadhaar?',
-  'What is required for Chhattisgarh Domicile Certificate?',
-  'How much is the fee for Aadhaar update?',
-];
-
 // Session storage key to preserve conversation history during the session
 const CHAT_STORAGE_KEY = 'civicsaathi_chat_history_v1';
 
@@ -57,6 +50,16 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   onOpen,
   context,
 }) => {
+  const { t } = useTranslation();
+
+  const suggestedQuestions = [
+    t('aiDrawer.q1') || 'What documents are accepted for Proof of Address (POA)?',
+    t('aiDrawer.q2') || 'What do I need for New Aadhaar Enrolment?',
+    t('aiDrawer.q3') || 'How to fix name mismatch between PAN and Aadhaar?',
+    t('aiDrawer.q4') || 'What is required for Chhattisgarh Domicile Certificate?',
+    t('aiDrawer.q5') || 'How much is the fee for Aadhaar update?',
+  ];
+
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
     try {
       const saved = sessionStorage.getItem(CHAT_STORAGE_KEY) || sessionStorage.getItem('sevaguide_chat_history_v1');
@@ -171,7 +174,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   };
 
   const handleClearHistory = () => {
-    if (window.confirm('Clear your conversation history with CivicSeva AI?')) {
+    if (window.confirm('Clear your conversation history with CivicSaathi AI?')) {
       const reset = [DEFAULT_WELCOME_MESSAGE];
       setMessages(reset);
       try {
@@ -305,7 +308,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     return (
       <div
         className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-40 flex items-center"
-        aria-label="Floating CivicSeva AI Chatbot"
+        aria-label="Floating CivicSaathi AI Chatbot"
       >
         <button
           type="button"
@@ -313,15 +316,15 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             setIsMinimized(false);
             if (onOpen) onOpen();
           }}
-          title="Open CivicSeva AI Assistant"
+          title="Open CivicSaathi AI Assistant"
           className="group relative w-14 h-14 rounded-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-2xl hover:shadow-blue-500/30 transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 cursor-pointer active:scale-95 hover:scale-105"
-          aria-label="Open CivicSeva AI Assistant"
+          aria-label="Open CivicSaathi AI Assistant"
         >
           <div className="relative flex items-center justify-center">
             <Bot className="w-6 h-6 text-white transition-transform group-hover:scale-110" />
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-blue-700 dark:ring-blue-600 animate-pulse" />
           </div>
-          <span className="sr-only">Open CivicSeva AI Assistant</span>
+          <span className="sr-only">Open CivicSaathi AI Assistant</span>
         </button>
       </div>
     );
@@ -333,7 +336,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   if (isMinimized) {
     return (
       <div
-        className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-40 flex items-center shadow-2xl rounded-2xl"
+        className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 rtl:right-auto rtl:left-4 sm:rtl:left-6 z-40 flex items-center shadow-2xl rounded-2xl"
         role="region"
         aria-label="Minimized AI Assistant"
       >
@@ -345,7 +348,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             aria-label="Restore chat window"
           >
             <Bot className="w-4 h-4 text-blue-400" />
-            <span>CivicSeva AI Assistant</span>
+            <span>{t('aiDrawer.title') || 'CivicSaathi AI Assistant'}</span>
             <Maximize2 className="w-3.5 h-3.5 ml-1 text-slate-400" />
           </button>
           <div className="h-4 w-px bg-slate-700 dark:bg-zinc-800" />
@@ -369,8 +372,8 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     <div
       role="dialog"
       aria-modal="false"
-      aria-label="CivicSeva AI Assistant"
-      className="fixed right-3 sm:right-6 bottom-3 sm:bottom-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[410px] h-[550px] max-h-[85vh] bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 flex flex-col overflow-hidden transition-all duration-200 animate-in fade-in slide-in-from-bottom-3"
+      aria-label="CivicSaathi AI Assistant"
+      className="fixed right-3 sm:right-6 bottom-3 sm:bottom-6 rtl:right-auto rtl:left-3 sm:rtl:left-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[410px] h-[550px] max-h-[85vh] bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 flex flex-col overflow-hidden transition-all duration-200 animate-in fade-in slide-in-from-bottom-3"
     >
       {/* ---------------- HEADER ---------------- */}
       <div className="px-4 py-3.5 bg-slate-900 dark:bg-black text-white flex justify-between items-center border-b border-slate-800 dark:border-zinc-800 shrink-0">
@@ -381,12 +384,12 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-xs sm:text-sm text-white leading-none">
-                CivicSeva AI Assistant
+                {t('aiDrawer.title') || 'CivicSaathi AI Assistant'}
               </h3>
             </div>
             <p className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-              <span>Civic Assistant • AI Guidance</span>
+              <span>{t('aiDrawer.subtitle') || 'Civic Assistant • AI Guidance'}</span>
             </p>
           </div>
         </div>
@@ -397,7 +400,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           <button
             type="button"
             onClick={handleClearHistory}
-            title="Clear conversation history"
+            title={t('aiDrawer.clearChat') || 'Clear conversation history'}
             className="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition"
             aria-label="Clear chat conversation"
           >
@@ -561,20 +564,20 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ---------------- SUGGESTED QUESTION CHIPS (When starting or only welcome msg) ---------------- */}
+      {/* ---------------- SUGGESTED QUESTION CHIPS ---------------- */}
       {messages.length <= 2 && (
         <div className="px-3.5 py-2 bg-slate-100/90 dark:bg-zinc-900/80 border-t border-slate-200/80 dark:border-zinc-800 shrink-0">
           <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-            Suggested Queries
+            {t('aiDrawer.suggestedHeading') || 'Suggested Queries'}
           </p>
           <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
-            {SUGGESTED_QUESTIONS.map((q, idx) => (
+            {suggestedQuestions.map((q, idx) => (
               <button
                 key={idx}
                 type="button"
                 onClick={() => handleSend(q)}
                 disabled={loading}
-                className="text-[11px] text-left bg-white dark:bg-zinc-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-300 px-2.5 py-1 rounded-lg transition shadow-2xs cursor-pointer disabled:opacity-50"
+                className="text-[11px] text-start bg-white dark:bg-zinc-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-slate-300 hover:text-blue-700 dark:hover:text-blue-300 px-2.5 py-1 rounded-lg transition shadow-2xs cursor-pointer disabled:opacity-50"
               >
                 {q}
               </button>
@@ -593,8 +596,8 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={loading}
-            placeholder="Ask about documents, fees, or steps... (Enter to send)"
-            aria-label="Type your message to CivicSeva AI"
+            placeholder={t('aiDrawer.inputPlaceholder') || 'Ask about documents, fees, or steps... (Enter to send)'}
+            aria-label="Type your message to CivicSaathi AI"
             maxLength={1000}
             className="flex-1 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl px-3 py-2 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600 resize-none transition"
           />
@@ -603,15 +606,15 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             onClick={() => handleSend()}
             disabled={!input.trim() || loading}
             className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white p-2.5 rounded-2xl transition shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 shrink-0 cursor-pointer"
-            aria-label="Send query"
+            aria-label={t('aiDrawer.sendBtn') || 'Send query'}
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-4 h-4 rtl-flip" />
           </button>
         </div>
 
         {/* Security and privacy footer note */}
         <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center flex items-center justify-center gap-1">
-          <span>🔒 Never share personal Aadhaar numbers, OTPs, or passwords.</span>
+          <span>{t('aiDrawer.disclaimer') || '🔒 Never share personal Aadhaar numbers, OTPs, or passwords.'}</span>
         </p>
       </div>
     </div>

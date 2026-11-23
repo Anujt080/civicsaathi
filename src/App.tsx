@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { AuthGuard } from './components/AuthGuard';
 import { MainLayout } from './layouts/MainLayout';
 import { Home } from './pages/Home';
@@ -23,55 +24,57 @@ import { Contact } from './pages/Contact';
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="services" element={<Services />} />
-            <Route path="services/:serviceId" element={<ServiceDetails />} />
-            <Route
-              path="verify/:serviceId"
-              element={<ServiceDetails initialStep={2} />}
-            />
-            <Route
-              path="applications"
-              element={
-                <AuthGuard>
-                  <Applications />
-                </AuthGuard>
-              }
-            />
-            <Route
-              path="profile"
-              element={
-                <AuthGuard>
-                  <Profile />
-                </AuthGuard>
-              }
-            />
-            <Route
-              path="family-documents"
-              element={
-                <AuthGuard>
-                  <FamilyDocuments />
-                </AuthGuard>
-              }
-            />
-            <Route path="offices" element={<OfficeLocator />} />
-            <Route path="offices/:serviceId" element={<OfficeLocator />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="privacy" element={<PrivacyPolicy />} />
-            <Route path="terms" element={<TermsOfUse />} />
-            <Route path="feedback" element={<Feedback />} />
-            <Route path="about" element={<About />} />
-            <Route path="faq" element={<FAQ />} />
-            <Route path="contact" element={<Contact />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Home />} />
+              <Route path="services" element={<Services />} />
+              <Route path="services/:serviceId" element={<ServiceDetails />} />
+              <Route
+                path="verify/:serviceId"
+                element={<ServiceDetails initialStep={2} />}
+              />
+              <Route
+                path="applications"
+                element={
+                  <AuthGuard>
+                    <Applications />
+                  </AuthGuard>
+                }
+              />
+              <Route
+                path="profile"
+                element={
+                  <AuthGuard>
+                    <Profile />
+                  </AuthGuard>
+                }
+              />
+              <Route
+                path="family-documents"
+                element={
+                  <AuthGuard>
+                    <FamilyDocuments />
+                  </AuthGuard>
+                }
+              />
+              <Route path="offices" element={<OfficeLocator />} />
+              <Route path="offices/:serviceId" element={<OfficeLocator />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="privacy" element={<PrivacyPolicy />} />
+              <Route path="terms" element={<TermsOfUse />} />
+              <Route path="feedback" element={<Feedback />} />
+              <Route path="about" element={<About />} />
+              <Route path="faq" element={<FAQ />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </LanguageProvider>
   </ThemeProvider>
   );
 };

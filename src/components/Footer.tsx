@@ -13,8 +13,10 @@ import {
   Home as HomeIcon,
 } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
+import { useTranslation } from '../context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -57,7 +59,7 @@ export const Footer: React.FC = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 space-y-10">
         {/* Simplified Navigation Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
-          {/* Column 1: CivicSeva Branding */}
+          {/* Column 1: CivicSaathi Branding */}
           <div className="space-y-4 md:col-span-2 lg:col-span-2 lg:pr-8">
             <Link to="/" className="inline-block hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg">
               <BrandLogo lightText={true} size="md" />
@@ -65,23 +67,23 @@ export const Footer: React.FC = () => {
 
             <div>
               <span className="inline-block text-[10px] font-bold tracking-widest text-amber-400 uppercase bg-amber-950/60 border border-amber-800/60 px-2.5 py-0.5 rounded">
-                CITIZEN ASSISTANCE PORTAL
+                {t('footer.badge')}
               </span>
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed">
-              Government services, simplified for everyone. Prepare, verify, find and track your documentation in one place.
+              {t('footer.description')}
             </p>
 
             {/* Badges accurately describing actual functionality */}
             <div className="flex flex-col sm:flex-row gap-2 pt-1">
               <div className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-800/60 px-2.5 py-1 rounded-lg w-fit">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Prevention-First Guidance</span>
+                <span>{t('footer.badgePrevention')}</span>
               </div>
               <div className="inline-flex items-center gap-1.5 text-[11px] font-medium text-blue-300 bg-blue-950/50 border border-blue-800/60 px-2.5 py-1 rounded-lg w-fit">
                 <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Rule-Guided Document Checks</span>
+                <span>{t('footer.badgeVerification')}</span>
               </div>
             </div>
           </div>
@@ -89,7 +91,7 @@ export const Footer: React.FC = () => {
           {/* Column 4: Official Portals */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold tracking-wider uppercase text-amber-500">
-              OFFICIAL PORTALS
+              {t('footer.officialPortalsTitle')}
             </h3>
             <nav aria-label="Official Government Portals" className="flex flex-col space-y-2 text-xs">
               <a
@@ -152,7 +154,7 @@ export const Footer: React.FC = () => {
           {/* Column 5: Quick Links */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold tracking-wider uppercase text-amber-500">
-              QUICK LINKS
+              {t('footer.quickLinksTitle')}
             </h3>
             <nav aria-label="Quick Links" className="flex flex-col space-y-2 text-xs">
               <Link
@@ -160,42 +162,42 @@ export const Footer: React.FC = () => {
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <HomeIcon className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Home</span>
+                <span>{t('footer.home')}</span>
               </Link>
               <Link
                 to="/faq"
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <HelpCircle className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>FAQ</span>
+                <span>{t('footer.faq')}</span>
               </Link>
               <Link
                 to="/feedback"
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Support & Feedback</span>
+                <span>{t('footer.supportFeedback')}</span>
               </Link>
               <Link
                 to="/about"
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>About Us</span>
+                <span>{t('footer.aboutUs')}</span>
               </Link>
               <Link
                 to="/services"
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <Layers className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Resources & Guides</span>
+                <span>{t('footer.resourcesGuides')}</span>
               </Link>
               <Link
                 to="/contact"
                 className="text-slate-300 hover:text-white hover:underline transition py-0.5 flex items-center gap-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
               >
                 <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                <span>Contact Us</span>
+                <span>{t('footer.contactUs')}</span>
               </Link>
             </nav>
           </div>
@@ -205,14 +207,14 @@ export const Footer: React.FC = () => {
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 shadow-sm text-xs text-slate-300">
           <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            <strong>Official Guidance Notice:</strong> CivicSeva is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.
+            <strong>{t('footer.disclaimerTitle')}</strong> {t('footer.disclaimerText')}
           </p>
         </div>
 
         {/* Bottom Legal Navigation & Dynamic Copyright */}
         <div className="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p className="text-center sm:text-left">
-            © {currentYear} CivicSeva Citizen Assistance Platform. Non-commercial civic assistance utility.
+            © {currentYear} {t('footer.copyright')}
           </p>
 
           <nav aria-label="Legal Navigation" className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs">
@@ -220,28 +222,28 @@ export const Footer: React.FC = () => {
               to="/privacy"
               className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
             >
-              Privacy Policy
+              {t('footer.privacyPolicy')}
             </Link>
             <span className="text-slate-700 hidden sm:inline">•</span>
             <Link
               to="/terms"
               className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
             >
-              Terms of Use
+              {t('footer.termsOfUse')}
             </Link>
             <span className="text-slate-700 hidden sm:inline">•</span>
             <Link
               to="/feedback"
               className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
             >
-              Feedback
+              {t('footer.feedback')}
             </Link>
             <span className="text-slate-700 hidden sm:inline">•</span>
             <Link
               to="/contact"
               className="text-slate-400 hover:text-white hover:underline transition focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 rounded"
             >
-              Contact Us
+              {t('footer.contactUs')}
             </Link>
           </nav>
         </div>

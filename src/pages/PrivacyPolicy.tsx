@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Lock, Database, Cpu, Trash2, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export const PrivacyPolicy: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 py-4">
       {/* Breadcrumb / Back button */}
@@ -11,8 +14,8 @@ export const PrivacyPolicy: React.FC = () => {
           to="/"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Home</span>
+          <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+          <span>{t('common.backToHome') || 'Back to Home'}</span>
         </Link>
       </div>
 
@@ -23,10 +26,10 @@ export const PrivacyPolicy: React.FC = () => {
           <span>Transparency & Privacy Notice</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Privacy Policy & Data Handling
+          {t('legal.privacyTitle') || 'Privacy Policy & Data Handling'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Last updated: October 2026. This policy describes how CivicSeva collects, processes, and protects your information.
+          {t('legal.lastUpdated') || 'Last updated: January 2026'}. {t('legal.privacySubtitle') || 'How CivicSaathi protects citizen privacy and handles informational queries.'}
         </p>
       </div>
 
@@ -34,7 +37,7 @@ export const PrivacyPolicy: React.FC = () => {
       <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex items-start gap-3 text-xs text-amber-900 dark:text-amber-200">
         <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong>Non-Governmental Environment Notice:</strong> CivicSeva is an independent civic-tech platform. We do not transmit your documents to government departments or external commercial advertisers. All processing disclosures below reflect our actual technical implementation.
+          <strong>Non-Governmental Environment Notice:</strong> CivicSaathi is an independent civic-tech platform. We do not transmit your documents to government departments or external commercial advertisers. All processing disclosures below reflect our actual technical implementation.
         </p>
       </div>
 
@@ -47,10 +50,10 @@ export const PrivacyPolicy: React.FC = () => {
             <h2 className="text-base font-bold text-slate-900 dark:text-white">1. Data We Collect</h2>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            CivicSeva collects only the information necessary to provide guidance and pre-submission document verification:
+            CivicSaathi collects only the information necessary to provide guidance and pre-submission document verification:
           </p>
           <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
-            <li><strong>Account Profile:</strong> When registering, we store your email address, unique account identifier (UID), and optional profile preferences (full name, state, and district) in the <code>public.profiles</code> table.</li>
+            <li><strong>Account Profile:</strong> When registering, we store your email address, unique account identifier (UID), and optional profile preferences in your private profile.</li>
             <li><strong>Uploaded Document Files:</strong> Image or PDF files that you choose to upload for pre-submission checks.</li>
             <li><strong>Extracted Verification Fields:</strong> Extracted document metadata (such as PAN number, cardholder name, or birth date) parsed during verification.</li>
           </ul>
@@ -82,10 +85,9 @@ export const PrivacyPolicy: React.FC = () => {
             When you are authenticated and choose to save verified documents to your vault:
           </p>
           <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
-            <li>Files are uploaded to a Supabase Storage bucket scoped to your user account (<code>documents/{'{user_id}'}/...</code>).</li>
-            <li>Document metadata is recorded in the <code>public.documents</code> table protected by <strong>Row-Level Security (RLS)</strong> policies.</li>
+            <li>Files are uploaded to a private storage bucket scoped to your user account.</li>
+            <li>Document metadata is recorded protected by <strong>Row-Level Security (RLS)</strong> policies.</li>
             <li>Under RLS policies, only the authenticated user owning the record is permitted to view, update, or delete that document.</li>
-            <li>Access security relies upon Supabase authentication tokens; if you sign out or clear session tokens, unauthenticated requests are blocked by database policies.</li>
           </ul>
         </section>
 
@@ -109,7 +111,10 @@ export const PrivacyPolicy: React.FC = () => {
       {/* Footer Navigation Back Link */}
       <div className="pt-4 border-t border-slate-200 dark:border-zinc-800 flex justify-between items-center text-xs text-slate-500">
         <span>Questions about data privacy? Reach out via our <Link to="/contact" className="text-blue-600 dark:text-blue-400 hover:underline">Contact page</Link>.</span>
-        <Link to="/terms" className="text-blue-600 dark:text-blue-400 hover:underline">Terms of Use &rarr;</Link>
+        <Link to="/terms" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1">
+          <span>{t('legal.termsTitle') || 'Terms of Use'}</span>
+          <span className="rtl-flip">&rarr;</span>
+        </Link>
       </div>
     </div>
   );

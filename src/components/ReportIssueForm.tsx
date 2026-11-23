@@ -262,7 +262,7 @@ export const ReportIssueForm: React.FC<ReportIssueFormProps> = ({
               Report Submitted Successfully
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              Grievance Registered with CivicSeva
+              Grievance Registered with CivicSaathi
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
               Your community report has been logged and assigned a unique tracking identifier. You can follow progress updates in the <strong>My Reports</strong> section.
@@ -698,7 +698,7 @@ export const ReportIssueForm: React.FC<ReportIssueFormProps> = ({
         <div className="pt-4 border-t border-slate-100 dark:border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
             <ShieldAlert className="w-4 h-4 text-blue-600 shrink-0" />
-            <span>CivicSeva logs reports into local mock storage for fast tracking.</span>
+            <span>CivicSaathi logs reports into local mock storage for fast tracking.</span>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">

@@ -17,6 +17,7 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { useTheme, ColorVisionMode } from '../context/ThemeContext';
+import { useTranslation } from '../context/LanguageContext';
 import { CivicCalendar } from './CivicCalendar';
 
 interface FloatingQuickAccessToolbarProps {
@@ -34,6 +35,7 @@ const DEFAULT_MAGNIFICATION = 100;
 export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProps> = ({
   onOpenAssistant
 }) => {
+  const { t } = useTranslation();
   const [activePanel, setActivePanel] = useState<ActivePanel>('none');
   const [shareToast, setShareToast] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -184,8 +186,8 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
   const handleShare = async () => {
     setActivePanel('none');
     const shareData = {
-      title: document.title || 'CivicSeva - Citizen Service Portal',
-      text: 'Explore official government services and citizen guidelines on CivicSeva.',
+      title: document.title || 'CivicSaathi - Citizen Service Portal',
+      text: 'Explore official government services and citizen guidelines on CivicSaathi.',
       url: window.location.href
     };
 
@@ -224,13 +226,13 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
   const toolbarActions = [
     {
       id: 'feedback' as const,
-      label: 'Feedback',
+      label: t('quickToolbar.feedback') || 'Feedback',
       icon: MessageSquareWarning,
       onClick: () => setActivePanel((prev) => (prev === 'feedback' ? 'none' : 'feedback'))
     },
     {
       id: 'assistant' as const,
-      label: 'Ask AI Assistant',
+      label: t('quickToolbar.askAi') || 'Ask AI Assistant',
       icon: Bot,
       onClick: () => {
         setActivePanel('none');
@@ -239,19 +241,19 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
     },
     {
       id: 'calendar' as const,
-      label: 'Civic Calendar',
+      label: t('quickToolbar.calendar') || 'Civic Calendar',
       icon: CalendarDays,
       onClick: () => setActivePanel((prev) => (prev === 'calendar' ? 'none' : 'calendar'))
     },
     {
       id: 'share' as const,
-      label: 'Share Page',
+      label: t('quickToolbar.share') || 'Share Page',
       icon: Share2,
       onClick: handleShare
     },
     {
       id: 'accessibility' as const,
-      label: 'Accessibility Options',
+      label: t('quickToolbar.accessibility') || 'Accessibility Options',
       icon: SlidersHorizontal,
       onClick: () => setActivePanel((prev) => (prev === 'accessibility' ? 'none' : 'accessibility'))
     }
@@ -303,7 +305,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
   return (
     <div
       ref={containerRef}
-      className="fixed right-3 sm:right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center"
+      className="fixed right-3 sm:right-4 rtl:right-auto rtl:left-3 sm:rtl:left-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center"
       aria-label="Floating Quick Access Toolbar"
     >
       {/* ---------------- FLOATING TOOLBAR CONTAINER ---------------- */}
@@ -319,7 +321,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
             <div key={action.id} className="relative group flex items-center">
               {/* Tooltip */}
               <div
-                className="absolute right-full mr-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-150 ease-out z-50 hidden sm:block translate-x-1 group-hover:translate-x-0"
+                className="absolute right-full rtl:right-auto rtl:left-full mr-3 rtl:mr-0 rtl:ml-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-all duration-150 ease-out z-50 hidden sm:block translate-x-1 group-hover:translate-x-0"
                 role="tooltip"
               >
                 <div className="bg-zinc-900 text-zinc-100 text-xs font-semibold px-3 py-1.5 rounded-lg border border-zinc-700/90 shadow-xl whitespace-nowrap">
@@ -347,7 +349,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
       {/* ---------------- SHARE CONFIRMATION TOAST ---------------- */}
       {shareToast && (
         <div
-          className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-zinc-900/95 text-emerald-400 border border-emerald-500/40 px-3.5 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200 whitespace-nowrap z-50 backdrop-blur-md"
+          className="absolute right-full rtl:right-auto rtl:left-full mr-4 rtl:mr-0 rtl:ml-4 top-1/2 -translate-y-1/2 bg-zinc-900/95 text-emerald-400 border border-emerald-500/40 px-3.5 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 animate-in fade-in duration-200 whitespace-nowrap z-50 backdrop-blur-md"
           role="status"
           aria-live="polite"
         >
@@ -363,7 +365,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
       {/* 1. FEEDBACK PANEL */}
       {activePanel === 'feedback' && (
         <div
-          className="absolute right-full mr-4 top-1/2 -translate-y-1/2 w-80 sm:w-96 max-w-[calc(100vw-4.5rem)] max-h-[85vh] overflow-y-auto bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in duration-200"
+          className="absolute right-full rtl:right-auto rtl:left-full mr-4 rtl:mr-0 rtl:ml-4 top-1/2 -translate-y-1/2 w-80 sm:w-96 max-w-[calc(100vw-4.5rem)] max-h-[85vh] overflow-y-auto bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-5 z-50 animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
           aria-label="Provide Feedback"
@@ -371,7 +373,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
           <div className="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-zinc-800">
             <div className="flex items-center gap-2">
               <MessageSquareWarning className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">CivicSeva Feedback</h3>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">CivicSaathi Feedback</h3>
             </div>
             <button
               type="button"
@@ -480,7 +482,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
 
       {/* 2. CIVIC CALENDAR PANEL */}
       {activePanel === 'calendar' && (
-        <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-50 animate-in fade-in duration-200">
+        <div className="absolute right-full rtl:right-auto rtl:left-full mr-4 rtl:mr-0 rtl:ml-4 top-1/2 -translate-y-1/2 z-50 animate-in fade-in duration-200">
           <CivicCalendar
             onClose={() => setActivePanel('none')}
             className="relative top-0 right-0 mt-0 shadow-2xl"
@@ -491,16 +493,16 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
       {/* 3. ACCESSIBILITY OPTIONS PANEL (Tasks 1 & 2) */}
       {activePanel === 'accessibility' && (
         <div
-          className="absolute right-full mr-4 top-1/2 -translate-y-1/2 w-80 sm:w-88 max-w-[calc(100vw-4.5rem)] max-h-[85vh] overflow-y-auto bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in duration-200"
+          className="absolute right-full rtl:right-auto rtl:left-full mr-4 rtl:mr-0 rtl:ml-4 top-1/2 -translate-y-1/2 w-80 sm:w-88 max-w-[calc(100vw-4.5rem)] max-h-[85vh] overflow-y-auto bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
-          aria-label="Accessibility Options"
+          aria-label={t('quickToolbar.accessibility') || 'Accessibility Options'}
         >
           {/* HEADER */}
           <div className="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-zinc-800">
             <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
               <SlidersHorizontal className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <span>Accessibility Options</span>
+              <span>{t('quickToolbar.accessibility') || 'Accessibility Options'}</span>
             </h3>
             <button
               type="button"
@@ -562,7 +564,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
             <div className="pt-2.5 border-t border-slate-100 dark:border-zinc-800">
               <div className="flex items-center justify-between mb-2">
                 <label id="quick-toolbar-magnification-label" className="block font-semibold text-slate-800 dark:text-slate-200">
-                  Display Magnification
+                  {t('quickToolbar.magnification') || 'Display Magnification'}
                 </label>
                 {magnification !== DEFAULT_MAGNIFICATION && (
                   <button
@@ -610,7 +612,9 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
 
             {/* SECTION C: HIGH CONTRAST MODE */}
             <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 dark:border-zinc-800">
-              <span className="font-semibold text-slate-800 dark:text-slate-200">High Contrast Mode</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                {t('quickToolbar.highContrast') || 'High Contrast Mode'}
+              </span>
               <button
                 type="button"
                 onClick={handleContrastToggle}
@@ -630,7 +634,9 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
 
             {/* SECTION D: REDUCE ANIMATIONS */}
             <div className="flex items-center justify-between pt-2.5 border-t border-slate-100 dark:border-zinc-800">
-              <span className="font-semibold text-slate-800 dark:text-slate-200">Reduce Animations</span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                {t('quickToolbar.reducedMotion') || 'Reduce Animations'}
+              </span>
               <button
                 type="button"
                 onClick={handleMotionToggle}
@@ -651,7 +657,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
             {/* SECTION E: COLOR VISION ACCESSIBILITY */}
             <div className="pt-2.5 border-t border-slate-100 dark:border-zinc-800 space-y-1.5">
               <label className="block font-semibold text-slate-800 dark:text-slate-200 mb-1">
-                Color Vision Accessibility
+                {t('quickToolbar.colorVisionMode') || 'Color Vision Accessibility'}
               </label>
               <div className="space-y-1.5" role="radiogroup" aria-label="Color Vision Palettes">
                 {[
@@ -745,14 +751,14 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
               className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-medium transition py-1"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset to Defaults</span>
+              <span>{t('quickToolbar.resetDefault') || 'Reset to Defaults'}</span>
             </button>
             <button
               type="button"
               onClick={() => setActivePanel('none')}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-xl text-xs transition shadow-2xs"
             >
-              Done
+              {t('common.done') || 'Done'}
             </button>
           </div>
         </div>

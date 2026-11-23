@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Star, Check, Copy, AlertCircle, ArrowLeft, Send } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 interface FeedbackItem {
   id: string;
@@ -12,6 +13,7 @@ interface FeedbackItem {
 }
 
 export const Feedback: React.FC = () => {
+  const { t } = useTranslation();
   const [category, setCategory] = useState('Guidance Clarity');
   const [rating, setRating] = useState(5);
   const [message, setMessage] = useState('');
@@ -67,7 +69,7 @@ export const Feedback: React.FC = () => {
 
   const handleCopySummary = () => {
     if (!submittedItem) return;
-    const summary = `CivicSeva Feedback Summary:
+    const summary = `CivicSaathi Feedback Summary:
 Category: ${submittedItem.category}
 Rating: ${submittedItem.rating}/5 Stars
 Message: ${submittedItem.message}
@@ -93,8 +95,8 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           to="/"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Home</span>
+          <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+          <span>{t('common.backToHome') || 'Back to Home'}</span>
         </Link>
       </div>
 
@@ -102,13 +104,13 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
       <div className="space-y-3">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs font-semibold uppercase tracking-wider">
           <MessageSquare className="w-3.5 h-3.5" />
-          <span>Citizen Feedback</span>
+          <span>{t('feedback.title') || 'Citizen Feedback'}</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Help Us Improve CivicSeva
+          {t('feedback.title') || 'Help Us Improve CivicSaathi'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Your insights help make government documentation guides clearer, faster, and more accessible for fellow citizens.
+          {t('feedback.subtitle') || 'Your insights help make government documentation guides clearer, faster, and more accessible for fellow citizens.'}
         </p>
       </div>
 
@@ -118,25 +120,25 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
             <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <div className="space-y-1">
               <h3 className="font-bold text-sm text-emerald-950 dark:text-emerald-200">
-                Feedback Recorded in Prototype Session
+                {t('feedback.thankYouTitle') || 'Thank You for Your Feedback!'}
               </h3>
               <p className="text-xs text-emerald-800 dark:text-emerald-300 leading-relaxed">
-                Thank you for your response! Your entry has been saved to your browser session storage.
+                {t('feedback.thankYouDesc') || 'Thank you for your response! Your entry has been saved to your browser session storage.'}
               </p>
             </div>
           </div>
 
           <div className="bg-slate-50 dark:bg-zinc-900 rounded-2xl p-4 text-xs space-y-2 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300">
             <div className="flex justify-between border-b border-slate-200 dark:border-zinc-800 pb-2">
-              <span className="font-semibold text-slate-500">Category:</span>
+              <span className="font-semibold text-slate-500">{t('feedback.categoryLabel') || 'Category'}:</span>
               <span className="font-bold text-slate-900 dark:text-white">{submittedItem.category}</span>
             </div>
             <div className="flex justify-between border-b border-slate-200 dark:border-zinc-800 pb-2">
-              <span className="font-semibold text-slate-500">Rating:</span>
+              <span className="font-semibold text-slate-500">{t('feedback.ratingLabel') || 'Rating'}:</span>
               <span className="font-bold text-slate-900 dark:text-white">{submittedItem.rating} of 5 Stars</span>
             </div>
             <div className="pt-1">
-              <span className="font-semibold text-slate-500 block mb-1">Your Comments:</span>
+              <span className="font-semibold text-slate-500 block mb-1">{t('feedback.commentLabel') || 'Your Comments'}:</span>
               <p className="italic text-slate-800 dark:text-slate-200 bg-white dark:bg-zinc-950 p-3 rounded-xl border border-slate-200 dark:border-zinc-800">
                 "{submittedItem.message}"
               </p>
@@ -184,7 +186,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           {/* Category Selection */}
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Feedback Topic
+              {t('feedback.categoryLabel') || 'Feedback Topic'}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {categories.map((cat) => (
@@ -192,7 +194,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
-                  className={`px-3 py-2.5 rounded-xl text-xs text-left font-semibold border transition cursor-pointer ${
+                  className={`px-3 py-2.5 rounded-xl text-xs text-start font-semibold border transition cursor-pointer ${
                     category === cat
                       ? 'border-blue-600 bg-blue-50/60 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 ring-2 ring-blue-600/20'
                       : 'border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-zinc-900'
@@ -207,7 +209,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           {/* Rating */}
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Overall Experience Rating
+              {t('feedback.ratingLabel') || 'Overall Experience Rating'}
             </label>
             <div className="flex items-center gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -234,13 +236,13 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           {/* Message Textarea */}
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Your Feedback or Suggestion <span className="text-rose-500">*</span>
+              {t('feedback.commentLabel') || 'Your Feedback or Suggestion'} <span className="text-rose-500">*</span>
             </label>
             <textarea
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="What worked well? What government requirements or steps were confusing?"
+              placeholder={t('feedback.commentPlaceholder') || 'What worked well? What government requirements or steps were confusing?'}
               className="w-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-3.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
             />
           </div>
@@ -248,7 +250,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           {/* Optional Contact Email */}
           <div className="space-y-2">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Your Email <span className="text-slate-400 font-normal lowercase">(optional, if you'd like a response)</span>
+              {t('auth.emailLabel') || 'Your Email'} <span className="text-slate-400 font-normal lowercase">(optional, if you'd like a response)</span>
             </label>
             <input
               type="email"
@@ -266,7 +268,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
-              <span>Submit Feedback</span>
+              <span>{t('feedback.submitBtn') || 'Submit Feedback'}</span>
             </button>
           </div>
         </form>
@@ -274,3 +276,4 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
     </div>
   );
 };
+

@@ -3,9 +3,11 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BrandLogo } from '../components/BrandLogo';
 import { AlertCircle, Lock, Mail, Loader2, ArrowRight } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export const Login: React.FC = () => {
   const { signIn, user, isConfigured } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,11 +29,11 @@ export const Login: React.FC = () => {
     setError(null);
 
     if (!email.trim()) {
-      setError('Please enter your email.');
+      setError(t('auth.errors.emailRequired'));
       return;
     }
     if (!password) {
-      setError('Please enter your password.');
+      setError(t('auth.errors.passwordRequired'));
       return;
     }
 
@@ -42,15 +44,15 @@ export const Login: React.FC = () => {
     if (signInError) {
       const msg = signInError.message.toLowerCase();
       if (msg.includes('invalid login credentials') || msg.includes('invalid_grant')) {
-        setError('Invalid email or password.');
+        setError(t('auth.errors.invalidCredentials'));
       } else if (msg.includes('email not confirmed')) {
-        setError('Please check your email to confirm your account.');
+        setError(t('auth.errors.emailNotConfirmed'));
       } else if (msg.includes('rate limit')) {
-        setError('Too many login attempts. Please wait a moment and try again.');
+        setError(t('auth.errors.rateLimit'));
       } else if (msg.includes('credentials are not configured')) {
         setError('Supabase is not configured yet. Please configure SUPABASE_URL and SUPABASE_ANON_KEY in your .env file.');
       } else {
-        setError('Unable to sign in. Please verify your credentials and try again.');
+        setError(t('auth.errors.genericLogin'));
       }
       return;
     }
@@ -67,8 +69,12 @@ export const Login: React.FC = () => {
             <BrandLogo size="lg" />
           </Link>
           <div className="pt-2">
-            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Welcome back</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Sign in to continue to CivicSeva</p>
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              {t('auth.loginTitle')}
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
+              {t('auth.loginSubtitle')}
+            </p>
           </div>
         </div>
 
@@ -90,14 +96,16 @@ export const Login: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              {t('auth.emailLabel')}
+            </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
+                placeholder={t('auth.emailPlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="email"
@@ -107,14 +115,9 @@ export const Login: React.FC = () => {
 
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">Password</label>
-              <button
-                type="button"
-                onClick={() => alert('Password reset link will be sent to your registered email.')}
-                className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 font-medium"
-              >
-                Forgot password?
-              </button>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                {t('auth.passwordLabel')}
+              </label>
             </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -122,7 +125,7 @@ export const Login: React.FC = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('auth.passwordPlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="current-password"
@@ -133,26 +136,26 @@ export const Login: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            className="w-full mt-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 cursor-pointer"
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
-                <span>Signing in...</span>
+                <span>{t('common.loading')}</span>
               </>
             ) : (
               <>
-                <span>Login</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{t('auth.signInBtn')}</span>
+                <ArrowRight className="w-4 h-4 rtl-flip" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-500">
-          <span>Don't have an account? </span>
-          <Link to="/signup" className="text-emerald-600 hover:text-emerald-700 font-bold ml-1">
-            Create account
+        <div className="mt-8 pt-6 border-t border-slate-100 dark:border-zinc-900 text-center text-xs text-slate-500 dark:text-slate-400">
+          <span>{t('auth.noAccount')} </span>
+          <Link to="/signup" className="text-blue-600 dark:text-blue-400 hover:underline font-bold ml-1">
+            {t('auth.signUpLink')}
           </Link>
         </div>
       </div>

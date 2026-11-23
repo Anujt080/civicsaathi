@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HelpCircle, ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 interface FaqItem {
   question: string;
@@ -10,12 +11,13 @@ interface FaqItem {
 
 export const FAQ: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const { t } = useTranslation();
 
   const faqs: FaqItem[] = [
     {
       category: 'General',
-      question: 'Is CivicSeva an official government website?',
-      answer: 'No. CivicSeva is an independent, non-commercial civic-tech guidance platform. We do not issue documents, collect government fees, or approve applications. We help citizens verify that their documentation meets official guidelines before visiting official portals or seva kendras.',
+      question: 'Is CivicSaathi an official government website?',
+      answer: 'No. CivicSaathi is an independent, non-commercial civic-tech guidance platform. We do not issue documents, collect government fees, or approve applications. We help citizens verify that their documentation meets official guidelines before visiting official portals or seva kendras.',
     },
     {
       category: 'Document Verification',
@@ -29,8 +31,8 @@ export const FAQ: React.FC = () => {
     },
     {
       category: 'Services',
-      question: 'Can I submit my passport, Aadhaar, or DL application directly through CivicSeva?',
-      answer: 'No. Statutory government applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSeva provides direct verified links to these portals once your documents are ready.',
+      question: 'Can I submit my passport, Aadhaar, or DL application directly through CivicSaathi?',
+      answer: 'No. Statutory government applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSaathi provides direct verified links to these portals once your documents are ready.',
     },
     {
       category: 'Offices & Centers',
@@ -39,8 +41,8 @@ export const FAQ: React.FC = () => {
     },
     {
       category: 'Fees',
-      question: 'Does CivicSeva charge any fees for using the platform?',
-      answer: 'No. CivicSeva is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are the statutory government fees payable directly to the official government authorities.',
+      question: 'Does CivicSaathi charge any fees for using the platform?',
+      answer: 'No. CivicSaathi is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are the statutory government fees payable directly to the official government authorities.',
     },
   ];
 
@@ -52,8 +54,8 @@ export const FAQ: React.FC = () => {
           to="/"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Home</span>
+          <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+          <span>{t('common.backToHome') || 'Back to Home'}</span>
         </Link>
       </div>
 
@@ -61,13 +63,13 @@ export const FAQ: React.FC = () => {
       <div className="space-y-3">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 text-xs font-semibold uppercase tracking-wider">
           <HelpCircle className="w-3.5 h-3.5" />
-          <span>Frequently Asked Questions</span>
+          <span>{t('faq.title') || 'Frequently Asked Questions'}</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Common Questions & Guidance
+          {t('faq.title') || 'Common Questions & Guidance'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-          Everything you need to know about using CivicSeva, document verification privacy, and official application workflows.
+          {t('faq.subtitle') || 'Everything you need to know about using CivicSaathi, document verification privacy, and official application workflows.'}
         </p>
       </div>
 
@@ -83,7 +85,7 @@ export const FAQ: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
+                className="w-full p-5 text-start flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
               >
                 <div className="space-y-1">
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
@@ -120,8 +122,8 @@ export const FAQ: React.FC = () => {
           to="/feedback"
           className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition shadow-xs shrink-0"
         >
-          <span>Submit Feedback</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <span>{t('feedback.title') || 'Submit Feedback'}</span>
+          <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
         </Link>
       </div>
     </div>

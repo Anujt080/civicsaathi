@@ -5,6 +5,7 @@ import { ServiceWorkflowSteps } from '../components/ServiceWorkflowSteps';
 import { DocumentChecklist } from '../components/DocumentChecklist';
 import { VerifyDocuments } from './VerifyDocuments';
 import { SubmissionModeStep } from '../components/SubmissionModeStep';
+import { useTranslation } from '../context/LanguageContext';
 import {
   ArrowLeft,
   ArrowRight,
@@ -25,10 +26,18 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
   const { serviceId } = useParams<{ serviceId: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { t, getServiceTranslation } = useTranslation();
 
   const stepParam = searchParams.get('step') || (initialStep ? initialStep.toString() : null);
 
   const service = SERVICES_DATA.find((s) => s.id === serviceId);
+  const localized = service ? getServiceTranslation(service.id) : undefined;
+
+  const displayName = localized?.name || service?.name || '';
+  const displayCategory = localized?.category || service?.category || '';
+  const displayDescription = localized?.description || service?.description || '';
+  const displayFee = localized?.fee || service?.fee || '';
+  const displayTime = localized?.processingTime || service?.processingTime || '';
 
   // Storage key specific to this service for checklist persistence
   const storageKey = service ? `civicsaathi_checklist_${service.id}` : '';
@@ -191,19 +200,19 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
               onClick={() => setSearchParams({})}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition cursor-pointer"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to Service Summary</span>
+              <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+              <span>{t('serviceDetails.overview')}</span>
             </button>
             <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/70 px-2.5 py-1 rounded-md border border-blue-200 dark:border-blue-900">
-              {service.category}
+              {displayCategory}
             </span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-            {service.name} Checklist
+            {displayName} {t('serviceDetails.checklistTitle')}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Confirm the physical papers or scans you have on hand before verification.
+            {t('verification.preSubmissionDesc')}
           </p>
         </div>
 
@@ -217,22 +226,22 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                   {readyCount === totalDocs && totalDocs > 0 ? (
                     <>
                       <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                      <span>All {totalDocs} documents ready!</span>
+                      <span>{t('verification.readyToSubmit')}</span>
                     </>
                   ) : (
                     <span>
-                      {readyCount} of {totalDocs} documents ready
+                      {readyCount} / {totalDocs} {t('serviceDetails.documentsTab').toLowerCase()} {t('common.ready', undefined, 'ready')}
                     </span>
                   )}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Mandatory documents:{' '}
+                  {t('serviceDetails.mandatoryProofs')}:{' '}
                   <strong className="text-slate-800 dark:text-slate-200">
-                    {readyRequiredCount} of {totalRequiredCount} ready
+                    {readyRequiredCount} / {totalRequiredCount}
                   </strong>
                   {missingRequiredDocs.length > 0 && (
                     <span className="text-amber-600 dark:text-amber-400 font-medium ml-1.5">
-                      ({missingRequiredDocs.length} mandatory still needed)
+                      ({missingRequiredDocs.length} {t('common.required').toLowerCase()})
                     </span>
                   )}
                 </p>
@@ -246,7 +255,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                       : 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900'
                   }`}
                 >
-                  {progressPercent}% Prepared
+                  {progressPercent}% {t('verification.readinessScore')}
                 </span>
               </div>
             </div>
@@ -282,8 +291,8 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
               onClick={() => setSearchParams({})}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-zinc-900 font-semibold text-xs transition cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Summary</span>
+              <ArrowLeft className="w-4 h-4 rtl-flip" />
+              <span>{t('serviceDetails.overview')}</span>
             </button>
 
             <button
@@ -291,8 +300,8 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
               onClick={handleContinueClick}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-xl shadow-sm hover:shadow transition cursor-pointer"
             >
-              <span>Continue to Document Verification</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{t('serviceDetails.startVerificationBtn')}</span>
+              <ArrowRight className="w-4 h-4 rtl-flip" />
             </button>
           </div>
         </div>
@@ -316,10 +325,10 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                       id="warning-modal-title"
                       className="font-bold text-lg text-slate-900 dark:text-white"
                     >
-                      Missing Mandatory Documents
+                      {t('common.warning')}
                     </h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                      {missingRequiredDocs.length} mandatory document(s) marked as still needed
+                      {missingRequiredDocs.length} {t('serviceDetails.mandatoryProofs').toLowerCase()}
                     </p>
                   </div>
                 </div>
@@ -327,7 +336,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                   type="button"
                   onClick={() => setShowIncompleteWarning(false)}
                   className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900 transition"
-                  aria-label="Close warning"
+                  aria-label={t('common.close')}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -335,7 +344,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
 
               <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-zinc-900/80 p-4 rounded-2xl border border-slate-200 dark:border-zinc-800">
                 <p className="font-semibold text-slate-800 dark:text-slate-200">
-                  The following mandatory documents are not marked as ready:
+                  {t('serviceDetails.mandatoryProofs')}:
                 </p>
                 <ul className="space-y-1 mt-2 list-disc list-inside text-amber-700 dark:text-amber-300 font-medium">
                   {missingRequiredDocs.map((doc) => (
@@ -343,7 +352,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                   ))}
                 </ul>
                 <p className="pt-2 text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-zinc-800">
-                  Official government application portals require all mandatory proofs. You can still proceed to test document verification.
+                  {t('serviceDetails.counterNotice')}
                 </p>
               </div>
 
@@ -353,7 +362,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                   onClick={() => setShowIncompleteWarning(false)}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-zinc-900 font-semibold text-xs transition cursor-pointer"
                 >
-                  Review Checklist
+                  {t('common.back')}
                 </button>
                 <button
                   type="button"
@@ -363,8 +372,8 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
                   }}
                   className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-sm transition cursor-pointer flex items-center justify-center gap-1.5"
                 >
-                  <span>Acknowledge & Continue</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>{t('common.continue')}</span>
+                  <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
                 </button>
               </div>
             </div>
@@ -385,11 +394,11 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
           to="/services"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>All Government Services</span>
+          <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+          <span>{t('serviceDetails.backToServices')}</span>
         </Link>
         <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/70 px-2.5 py-1 rounded-md border border-blue-200 dark:border-blue-900">
-          {service.category}
+          {displayCategory}
         </span>
       </div>
 
@@ -397,36 +406,36 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
       <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
         <div className="space-y-3">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {service.name}
+            {displayName}
           </h1>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-            {service.description}
+            {displayDescription}
           </p>
         </div>
 
         {/* Metadata info badges (Fee & Processing Time only) */}
         <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-100 dark:border-zinc-800 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-          {service.fee && (
+          {displayFee && (
             <div className="flex items-center gap-2">
               <Banknote className="w-4 h-4 text-slate-400 shrink-0" />
               <span>
-                Official Fee:{' '}
+                {t('serviceDetails.fee')}:{' '}
                 <strong className="text-slate-900 dark:text-white font-semibold">
-                  {service.fee}
+                  {displayFee}
                 </strong>
               </span>
             </div>
           )}
-          {service.fee && service.processingTime && (
+          {displayFee && displayTime && (
             <span className="text-slate-300 dark:text-zinc-700">•</span>
           )}
-          {service.processingTime && (
+          {displayTime && (
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-slate-400 shrink-0" />
               <span>
-                Processing Time:{' '}
+                {t('serviceDetails.processingTime')}:{' '}
                 <strong className="text-slate-900 dark:text-white font-semibold">
-                  {service.processingTime}
+                  {displayTime}
                 </strong>
               </span>
             </div>
@@ -442,7 +451,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
             >
-              <span>{service.officialPortalName || 'Official Source Portal'}</span>
+              <span>{service.officialPortalName || t('common.officialPortal')}</span>
               <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
             </a>
           ) : (
@@ -456,8 +465,8 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-2xl shadow-sm hover:shadow transition cursor-pointer"
           >
             <FileCheck2 className="w-5 h-5" />
-            <span>Prepare My Documents</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>{t('serviceDetails.startVerificationBtn')}</span>
+            <ArrowRight className="w-4 h-4 rtl-flip" />
           </button>
         </div>
       </div>

@@ -3,12 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CivicSeva — Citizen Guidance Platform for Indian Public Services</title>
-    <meta name="description" content="CivicSeva — Citizen Guidance Platform for Indian Public Services. Demystifying government service procedures, verifying document readiness, and eliminating counter friction." />
+    <title>CivicSaathi — Citizen Guidance Platform for Indian Public Services</title>
+    <meta name="description" content="CivicSaathi — Citizen Guidance Platform for Indian Public Services. Demystifying government service procedures, verifying document readiness, and eliminating counter friction." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
     <script>
       (function() {
         try {
+          // Pre-render language and text direction (RTL for Urdu) to prevent FOUC / layout shift
+          var lang = localStorage.getItem('civicsaathi_language') || 'en';
+          if (lang === 'en' || lang === 'hi' || lang === 'ur' || lang === 'te' || lang === 'gu') {
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute('data-lang', lang);
+            var isRtl = (lang === 'ur');
+            document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+            if (isRtl) {
+              document.documentElement.classList.add('rtl');
+            } else {
+              document.documentElement.classList.remove('rtl');
+            }
+          }
+
           // Pre-render theme application to avoid FOUC
           var theme = localStorage.getItem('civicsaathi_theme') || localStorage.getItem('sevaguide_theme');
           var isDark = false;

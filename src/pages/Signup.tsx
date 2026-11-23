@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { BrandLogo } from '../components/BrandLogo';
 import { AlertCircle, Lock, Mail, User, Loader2, ArrowRight } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export const Signup: React.FC = () => {
   const { signUp, user, isConfigured } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -27,24 +29,24 @@ export const Signup: React.FC = () => {
     setError(null);
 
     if (!fullName.trim()) {
-      setError('Please enter your full name.');
+      setError(t('auth.errors.fullNameRequired'));
       return;
     }
     if (!email.trim()) {
-      setError('Please enter your email address.');
+      setError(t('auth.errors.emailRequired'));
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      setError('Please enter a valid email address.');
+      setError(t('auth.errors.emailRequired'));
       return;
     }
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+      setError(t('auth.errors.passwordTooShort'));
       return;
     }
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t('auth.errors.passwordMismatch'));
       return;
     }
 
@@ -83,8 +85,12 @@ export const Signup: React.FC = () => {
             <BrandLogo size="lg" />
           </Link>
           <div className="pt-2">
-            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Create your account</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Get started with verified citizen services</p>
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              {t('auth.signupTitle')}
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
+              {t('auth.signupSubtitle')}
+            </p>
           </div>
         </div>
 
@@ -106,14 +112,16 @@ export const Signup: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Full Name</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              {t('auth.fullNameLabel')}
+            </label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Priyanshu Pandey"
+                placeholder={t('auth.fullNamePlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="name"
@@ -122,14 +130,16 @@ export const Signup: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email address</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              {t('auth.emailLabel')}
+            </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
+                placeholder={t('auth.emailPlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="email"
@@ -138,14 +148,16 @@ export const Signup: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              {t('auth.passwordLabel')}
+            </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
+                placeholder={t('auth.passwordPlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="new-password"
@@ -154,14 +166,16 @@ export const Signup: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Confirm Password</label>
+            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              {t('auth.confirmPasswordLabel')}
+            </label>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Re-enter password"
+                placeholder={t('auth.passwordPlaceholder')}
                 className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600"
                 disabled={loading}
                 autoComplete="new-password"
@@ -172,26 +186,26 @@ export const Signup: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            className="w-full mt-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 cursor-pointer"
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
-                <span>Creating Account...</span>
+                <span>{t('common.loading')}</span>
               </>
             ) : (
               <>
-                <span>Create Account</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{t('auth.signUpBtn')}</span>
+                <ArrowRight className="w-4 h-4 rtl-flip" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-500">
-          <span>Already have an account? </span>
-          <Link to="/login" className="text-emerald-600 hover:text-emerald-700 font-bold ml-1">
-            Login
+        <div className="mt-8 pt-6 border-t border-slate-100 dark:border-zinc-900 text-center text-xs text-slate-500 dark:text-slate-400">
+          <span>{t('auth.hasAccount')} </span>
+          <Link to="/login" className="text-blue-600 dark:text-blue-400 hover:underline font-bold ml-1">
+            {t('auth.signInLink')}
           </Link>
         </div>
       </div>

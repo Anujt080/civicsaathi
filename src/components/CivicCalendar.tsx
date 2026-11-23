@@ -14,6 +14,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { useCivicCalendar } from '../hooks/useCivicCalendar';
+import { useTranslation } from '../context/LanguageContext';
 import {
   LAST_VERIFIED_DATASET_DATE,
   OFFICIAL_DISCLAIMER_TEXT,
@@ -26,6 +27,7 @@ interface CivicCalendarProps {
 }
 
 export const CivicCalendar: React.FC<CivicCalendarProps> = ({ onClose, className }) => {
+  const { t } = useTranslation();
   const {
     currentDate,
     selectedDate,
@@ -181,7 +183,9 @@ export const CivicCalendar: React.FC<CivicCalendarProps> = ({ onClose, className
         <div>
           <div className="flex items-center gap-2">
             <CalendarIcon className="w-4 h-4 text-blue-700 dark:text-blue-400" />
-            <h2 className="font-bold text-sm text-slate-900 dark:text-white tracking-tight">Civic Calendar</h2>
+            <h2 className="font-bold text-sm text-slate-900 dark:text-white tracking-tight">
+              {t('calendar.title') || 'Civic Calendar'}
+            </h2>
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300">
               Verified 2026
             </span>
@@ -370,7 +374,7 @@ export const CivicCalendar: React.FC<CivicCalendarProps> = ({ onClose, className
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-600 dark:text-slate-300 transition"
               aria-label={viewMode === 'week' ? 'Previous Week' : 'Previous Month'}
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4 rtl-flip" />
             </button>
 
             <span className="text-slate-900 dark:text-white font-bold">
@@ -384,7 +388,7 @@ export const CivicCalendar: React.FC<CivicCalendarProps> = ({ onClose, className
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-600 dark:text-slate-300 transition"
               aria-label={viewMode === 'week' ? 'Next Week' : 'Next Month'}
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 rtl-flip" />
             </button>
           </div>
 

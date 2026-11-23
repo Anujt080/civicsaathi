@@ -56,7 +56,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 7. Seva Kendras & Facilitation Center Directory */}
       <KendrasSection />
 
-      {/* 8. Why CivicSeva: Trust, Privacy & Accuracy Pillars */}
+      {/* 8. Why CivicSaathi: Trust, Privacy & Accuracy Pillars */}
       <PillarsSection />
 
       {/* 9. Common Citizen Questions & FAQ */}

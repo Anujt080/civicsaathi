@@ -5,15 +5,17 @@ import {
   FileText,
   Users,
   Clock,
-  Settings,
+  SlidersHorizontal,
   LogOut,
   ChevronDown,
   ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from '../context/LanguageContext';
 
 export const ProfileDropdown: React.FC = () => {
   const { user, profile, signOut } = useAuth();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -134,7 +136,7 @@ export const ProfileDropdown: React.FC = () => {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 top-full mt-1.5 w-64 bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150 focus:outline-none"
+          className="absolute right-0 rtl:right-auto rtl:left-0 top-full mt-1.5 w-64 bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-xl shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150 focus:outline-none"
         >
           {/* User identity summary */}
           <div className="px-4 py-3 border-b border-slate-100 dark:border-zinc-800 bg-slate-50/60 dark:bg-zinc-950 -mt-2 rounded-t-xl mb-1">
@@ -165,7 +167,7 @@ export const ProfileDropdown: React.FC = () => {
               className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/70 dark:hover:bg-slate-800 transition"
             >
               <User className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-              <span>My Profile</span>
+              <span>{t('nav.profile')}</span>
             </Link>
 
             <Link
@@ -175,7 +177,7 @@ export const ProfileDropdown: React.FC = () => {
               className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/70 dark:hover:bg-slate-800 transition"
             >
               <FileText className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-              <span>Your Documents</span>
+              <span>{t('nav.documents')}</span>
             </Link>
 
             <Link
@@ -185,7 +187,7 @@ export const ProfileDropdown: React.FC = () => {
               className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/70 dark:hover:bg-slate-800 transition"
             >
               <Users className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-              <span>Family Document Management</span>
+              <span>{t('familyDocs.title')}</span>
             </Link>
 
             <Link
@@ -195,7 +197,7 @@ export const ProfileDropdown: React.FC = () => {
               className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/70 dark:hover:bg-slate-800 transition"
             >
               <Clock className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-              <span>My Applications</span>
+              <span>{t('nav.myApplications')}</span>
             </Link>
 
             <Link
@@ -204,8 +206,8 @@ export const ProfileDropdown: React.FC = () => {
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-blue-700 dark:hover:text-blue-400 hover:bg-blue-50/70 dark:hover:bg-slate-800 transition"
             >
-              <Settings className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-              <span>Account Settings</span>
+              <SlidersHorizontal className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+              <span>{t('nav.settings')}</span>
             </Link>
           </div>
 
@@ -216,10 +218,10 @@ export const ProfileDropdown: React.FC = () => {
           <button
             onClick={handleLogout}
             role="menuitem"
-            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition text-left"
+            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition text-start cursor-pointer"
           >
             <LogOut className="w-4 h-4 text-rose-500 dark:text-rose-400" />
-            <span>Sign Out</span>
+            <span>{t('nav.logout')}</span>
           </button>
         </div>
       )}
