@@ -1,14 +1,16 @@
 import { createClient } from '@supabase/supabase-js';
 
-const envUrl = import.meta.env.SUPABASE_URL;
-const envAnonKey = import.meta.env.SUPABASE_ANON_KEY;
+const envUrl = import.meta.env.SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL;
+const envAnonKey = import.meta.env.SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const isSupabaseConfigured = (): boolean => {
   return (
     Boolean(envUrl) &&
     Boolean(envAnonKey) &&
     envUrl !== 'https://your-project.supabase.co' &&
-    envAnonKey !== 'your-anon-key-here'
+    envUrl !== 'https://placeholder.supabase.co' &&
+    envAnonKey !== 'your-anon-key-here' &&
+    envAnonKey !== 'placeholder-key'
   );
 };
 
