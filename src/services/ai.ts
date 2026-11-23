@@ -90,7 +90,7 @@ export async function askCivicSaathi(
       if (!error && data?.reply) {
         return {
           reply: data.reply,
-          model: data.model || 'google/gemma-4-31b-it:free',
+          model: data.model || 'gemini-3.6-flash',
           warningNote: privacyWarning,
         };
       }
@@ -124,7 +124,7 @@ export async function askCivicSaathi(
     if (res.ok && data?.reply) {
       return {
         reply: data.reply,
-        model: data.model || 'google/gemma-4-31b-it:free',
+        model: data.model || 'gemini-3.6-flash',
         warningNote: privacyWarning,
       };
     }
