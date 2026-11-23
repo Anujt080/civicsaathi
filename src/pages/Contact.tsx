@@ -26,7 +26,7 @@ export const Contact: React.FC = () => {
           Contact & Grievance Redressal
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-          Find the right channel for technical feedback on CivicSaathi or lodging formal grievances regarding official government services.
+          Find the right channel for technical feedback on CivicSeva or lodging formal grievances regarding official government services.
         </p>
       </div>
 
@@ -34,7 +34,7 @@ export const Contact: React.FC = () => {
       <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 flex items-start gap-3 text-xs text-amber-900 dark:text-amber-200">
         <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          <strong>Official Grievance Notice:</strong> CivicSaathi is an independent civic-tech platform and cannot resolve pending government service applications, police verifications, or biometric rejections. For official grievances, please use the statutory government channels listed below.
+          <strong>Official Grievance Notice:</strong> CivicSeva is an independent civic-tech platform and cannot resolve pending government service applications, police verifications, or biometric rejections. For official grievances, please use the statutory government channels listed below.
         </p>
       </div>
 
@@ -45,7 +45,7 @@ export const Contact: React.FC = () => {
           <div className="flex items-center gap-2.5 text-blue-700 dark:text-blue-400">
             <MessageSquare className="w-5 h-5" />
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
-              CivicSaathi Platform Feedback
+              CivicSeva Platform Feedback
             </h2>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -61,7 +61,7 @@ export const Contact: React.FC = () => {
             </div>
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-1">
               <span className="font-bold text-slate-900 dark:text-white block">Project Environment</span>
-              <p className="text-slate-500 dark:text-slate-400">CivicSaathi Open Source Civic-Tech Platform for Citizen Assistance.</p>
+              <p className="text-slate-500 dark:text-slate-400">CivicSeva Open Source Civic-Tech Platform for Citizen Assistance.</p>
             </div>
           </div>
         </div>

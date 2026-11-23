@@ -23,7 +23,7 @@ export const About: React.FC = () => {
           <span>Citizen Guidance Platform</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          About CivicSaathi
+          About CivicSeva
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
           Empowering Indian citizens with clear requirements, pre-submission consistency checks, and local office discovery before they visit government counters.
@@ -39,13 +39,13 @@ export const About: React.FC = () => {
           Millions of citizens visit Aadhaar Seva Kendras, RTO offices, and facilitation centers every day only to be turned away because of subtle spelling mismatches, missing address proofs, or outdated photocopies.
         </p>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          CivicSaathi was designed as a "prevention-first" civic companion. We do not issue documents or replace authorized portals. Instead, we ensure you have the exact required paperwork in hand, validated for common consistency errors, before you stand in line.
+          CivicSeva was designed as a "prevention-first" civic companion. We do not issue documents or replace authorized portals. Instead, we ensure you have the exact required paperwork in hand, validated for common consistency errors, before you stand in line.
         </p>
       </div>
 
       {/* 4 Pillars Grid */}
       <div className="space-y-4">
-        <h2 className="text-base font-bold text-slate-900 dark:text-white">The Four Pillars of CivicSaathi</h2>
+        <h2 className="text-base font-bold text-slate-900 dark:text-white">The Four Pillars of CivicSeva</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-5 rounded-2xl bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 space-y-2 shadow-xs">
             <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 flex items-center justify-center">

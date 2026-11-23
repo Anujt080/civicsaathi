@@ -54,7 +54,7 @@ export async function askCivicSaathi(
   const trimmed = question.trim();
   if (!trimmed) {
     return {
-      reply: 'Please enter a question to ask the CivicSaathi assistant.',
+      reply: 'Please enter a question to ask the CivicSeva assistant.',
       isError: true,
       errorCode: 'EMPTY_INPUT',
     };

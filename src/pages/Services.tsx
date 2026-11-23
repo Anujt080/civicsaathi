@@ -1,36 +1,88 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { SERVICES_DATA } from '../data/services';
 import { ServiceCard } from '../components/ServiceCard';
 import { Search, X, SlidersHorizontal, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Service } from '../types';
 
 const INITIAL_VISIBLE_COUNT = 6;
 
-const CATEGORIES = [
+const APPLICATION_TYPES = [
   'All',
+  'New Applications',
+  'Updation / Corrections',
+] as const;
+
+const DOMAIN_CATEGORIES = [
   'Identity',
   'Certificates',
   'Pensions',
   'Transport',
   'Travel & Immigration',
   'Taxation',
-];
+] as const;
+
+const ALL_CATEGORIES = [...APPLICATION_TYPES, ...DOMAIN_CATEGORIES] as const;
+
+const NEW_APPLICATION_IDS = new Set([
+  'aadhaar-enrolment',
+  'passport-application',
+  'cg-domicile-certificate',
+  'cg-caste-scst',
+  'cg-caste-obc',
+  'cg-pension-ignoaps',
+  'cg-pension-ignwps',
+  'cg-pension-igndps',
+  'dl-learners',
+  'dl-permanent',
+]);
+
+const UPDATION_CORRECTION_IDS = new Set([
+  'aadhaar-update',
+  'dl-renewal',
+  'dl-duplicate',
+  'pan-correction',
+]);
+
+const matchServiceCategory = (service: Service, category: string): boolean => {
+  if (category === 'All') return true;
+  if (category === 'New Applications') return NEW_APPLICATION_IDS.has(service.id);
+  if (category === 'Updation / Corrections') return UPDATION_CORRECTION_IDS.has(service.id);
+  return service.category === category;
+};
 
 export const Services: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const filterContainerRef = useRef<HTMLDivElement>(null);
 
-  // Reset expanded state whenever search term or category changes
+  // Close filter dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterContainerRef.current &&
+        !filterContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Reset pagination/expansion state whenever search term or category changes
   useEffect(() => {
     setIsExpanded(false);
   }, [searchTerm, selectedCategory]);
 
-  // Filter services by search term and category
+  // Filter services by search term and category together
   const filteredServices = useMemo(() => {
     return SERVICES_DATA.filter((service) => {
-      const matchesCategory =
-        selectedCategory === 'All' || service.category === selectedCategory;
-
+      const matchesCategory = matchServiceCategory(service, selectedCategory);
       if (!matchesCategory) return false;
 
       if (!searchTerm.trim()) return true;
@@ -53,9 +105,9 @@ export const Services: React.FC = () => {
 
   // Compute category counts for badges
   const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { All: SERVICES_DATA.length };
-    SERVICES_DATA.forEach((s) => {
-      counts[s.category] = (counts[s.category] || 0) + 1;
+    const counts: Record<string, number> = {};
+    ALL_CATEGORIES.forEach((cat) => {
+      counts[cat] = SERVICES_DATA.filter((s) => matchServiceCategory(s, cat)).length;
     });
     return counts;
   }, []);
@@ -70,15 +122,11 @@ export const Services: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      {/* Page Title & Intro */}
+      {/* Page Title (Description removed as requested) */}
       <div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Government Services Directory
         </h1>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 max-w-3xl leading-relaxed">
-          Browse verified administrative guidance for central and Chhattisgarh state citizen services.
-          Understand eligibility, inspect required and conditional documents, and prepare your checklist before applying.
-        </p>
       </div>
 
       {/* Guidance Note */}
@@ -90,65 +138,168 @@ export const Services: React.FC = () => {
         </div>
       </div>
 
-      {/* Controls: Search Bar & Category Filter Pills */}
-      <div className="space-y-4">
-        {/* Search Bar */}
-        <div className="relative max-w-xl">
-          <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+      {/* Controls: Search Bar & Expandable Category Filters */}
+      <div ref={filterContainerRef} className="relative space-y-3 max-w-2xl">
+        {/* Prominent Search Bar */}
+        <div className="relative">
+          <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             placeholder="Search services or document proofs (e.g. Aadhaar, Domicile, Pension, Driving Licence)..."
             value={searchTerm}
+            onClick={() => setIsFilterOpen(true)}
+            onFocus={() => setIsFilterOpen(true)}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-2xl pl-10 pr-10 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 shadow-xs transition"
+            className="w-full bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-2xl pl-11 pr-20 py-3.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 shadow-xs transition"
           />
-          {searchTerm && (
+          <div className="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-full transition"
+                aria-label="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => setSearchTerm('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-full transition"
-              aria-label="Clear search"
+              onClick={() => setIsFilterOpen((prev) => !prev)}
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg transition hover:bg-slate-100 dark:hover:bg-zinc-800"
+              aria-label={isFilterOpen ? 'Close category filters' : 'Open category filters'}
+              title={isFilterOpen ? 'Collapse categories' : 'Expand categories'}
             >
-              <X className="w-4 h-4" />
+              {isFilterOpen ? (
+                <ChevronUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
             </button>
-          )}
-        </div>
-
-        {/* Category Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 mr-1 shrink-0">
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filter:</span>
           </div>
-
-          {CATEGORIES.map((cat) => {
-            const count = categoryCounts[cat] || 0;
-            const isSelected = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer select-none ${
-                  isSelected
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-zinc-700'
-                }`}
-              >
-                <span>{cat}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
-                    isSelected
-                      ? 'bg-blue-700 text-blue-100'
-                      : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-slate-400'
-                  }`}
-                >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
         </div>
+
+        {/* Selected Category Tag (when filter tray is closed and category is active) */}
+        {!isFilterOpen && selectedCategory !== 'All' && (
+          <div className="flex items-center gap-2 pt-0.5">
+            <span className="text-xs text-slate-500 dark:text-slate-400">Filtered by:</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/80 dark:border-blue-900/60 shadow-2xs">
+              <span>{selectedCategory}</span>
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('All')}
+                className="hover:text-blue-900 dark:hover:text-white p-0.5 cursor-pointer"
+                aria-label="Clear category filter"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          </div>
+        )}
+
+        {/* Expandable Filter / Search Interface */}
+        {isFilterOpen && (
+          <div className="p-4 sm:p-5 bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-2xl shadow-xl space-y-4 animate-in fade-in slide-in-from-top-2 duration-150">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 pb-2.5">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                <span>Service Categories</span>
+              </div>
+              <div className="flex items-center gap-3">
+                {selectedCategory !== 'All' && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategory('All')}
+                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                  >
+                    Reset to All
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setIsFilterOpen(false)}
+                  className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg transition cursor-pointer"
+                  aria-label="Collapse categories"
+                >
+                  <ChevronUp className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Segregated Section 1: Application Type */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">
+                Application Type
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {APPLICATION_TYPES.map((cat) => {
+                  const count = categoryCounts[cat] || 0;
+                  const isSelected = selectedCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer select-none ${
+                        isSelected
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                          isSelected
+                            ? 'bg-blue-700 text-blue-100'
+                            : 'bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-slate-400'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Segregated Section 2: Service Domains / Departments */}
+            <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-zinc-800/80">
+              <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider block">
+                Service Domain
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {DOMAIN_CATEGORIES.map((cat) => {
+                  const count = categoryCounts[cat] || 0;
+                  const isSelected = selectedCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat)}
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer select-none ${
+                        isSelected
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                          isSelected
+                            ? 'bg-blue-700 text-blue-100'
+                            : 'bg-slate-200 dark:bg-zinc-800 text-slate-600 dark:text-slate-400'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Services Count Bar */}

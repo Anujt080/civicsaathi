@@ -36,10 +36,10 @@ export const HowItWorks: React.FC = () => {
     <section id="how-it-works" className="space-y-8 pt-8 scroll-mt-24">
       <div className="text-center max-w-2xl mx-auto space-y-2">
         <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-900/60 inline-block">
-          The CivicSaathi Framework
+          The CivicSeva Framework
         </span>
         <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          How CivicSaathi Simplifies Public Services
+          How CivicSeva Simplifies Public Services
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
           A prevention-first approach engineered to save you repeat visits, unnecessary leave days, and frustrating counter queues.

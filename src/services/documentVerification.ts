@@ -20,7 +20,7 @@ export interface VerificationEvaluation {
 }
 
 export const VERIFICATION_DISCLAIMER =
-  'Notice: This is an automated pre-submission consistency check. CivicSaathi does not authenticate government records or verify data against official databases (e.g., NSDL, UTIITSL, or Income Tax Department). Always bring original documents to authorized facilitation centers.';
+  'Notice: This is an automated pre-submission consistency check. CivicSeva does not authenticate government records or verify data against official databases (e.g., NSDL, UTIITSL, or Income Tax Department). Always bring original documents to authorized facilitation centers.';
 
 /**
  * Normalizes name strings by removing honorifics, punctuation, and extra whitespace.
