@@ -245,3 +245,38 @@ export interface CivicIssueReport {
   departmentAssigned?: string;
   statusUpdates?: IssueStatusUpdate[];
 }
+
+// =============================================================================
+// SERVICE COMPLAINTS & GRIEVANCES TYPES
+// =============================================================================
+
+export type ComplaintCategory =
+  | 'Delay'
+  | 'Rejection'
+  | 'Status Issue'
+  | 'Document Issue'
+  | 'Payment Issue'
+  | 'Incorrect Details'
+  | 'Other';
+
+export type ComplaintStatus =
+  | 'Submitted'
+  | 'Under Review'
+  | 'Action Required'
+  | 'Resolved';
+
+export interface ServiceComplaint {
+  id: string;
+  serviceId: string;
+  serviceName: string;
+  category: ComplaintCategory;
+  description: string;
+  referenceNumber: string;
+  incidentDate: string;
+  attachmentName?: string;
+  attachmentSize?: number;
+  status: ComplaintStatus;
+  createdAt: string;
+  updatedAt: string;
+  statusRemarks?: string;
+}
