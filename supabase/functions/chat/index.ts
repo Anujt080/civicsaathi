@@ -53,70 +53,66 @@ Your primary mission:
    - NEVER claim that you have submitted the citizen's application or officially verified their identity.
    - NEVER ask users for personal Aadhaar numbers, PAN numbers, OTPs, or financial credentials.`;
 
-// Explicit verified free models list on OpenRouter - NEVER route to paid models
-const VERIFIED_FREE_MODELS = [
-  "google/gemma-4-31b-it:free",
-  "nvidia/nemotron-3.5-lightning:free",
-  "google/gemma-4-26b-a4b-it:free",
-  "openrouter/free",
+const VERIFIED_GEMINI_MODELS = [
+  "gemini-3.6-flash",
+  "gemini-3.8-flash",
+  "gemini-3.1-flash-lite",
 ];
 
 interface ErrorAnalysis {
-  isDailyQuota: boolean;
+  isQuotaExhausted: boolean;
   isThrottled: boolean;
   isProviderUnavailable: boolean;
-  retryAfterSec: number;
+  isAuthError: boolean;
   message: string;
 }
 
-function analyzeError(status: number, errorData: any, retryAfterHeader?: string | null): ErrorAnalysis {
+function analyzeGeminiError(status: number, errorData: any): ErrorAnalysis {
   const err = errorData?.error || errorData || {};
   const msg = (err.message || "").toLowerCase();
-  const metadata = err.metadata || {};
-  const errorType = (metadata.error_type || "").toLowerCase();
-  const providerCode = metadata.provider_code;
+  const statusStr = (err.status || "").toLowerCase();
 
-  let retryAfterSec = 0;
-  if (retryAfterHeader) {
-    const parsed = parseInt(retryAfterHeader, 10);
-    if (!isNaN(parsed) && parsed > 0) {
-      retryAfterSec = parsed;
-    }
-  }
+  const isAuthError =
+    status === 401 ||
+    status === 403 ||
+    statusStr.includes("permission_denied") ||
+    statusStr.includes("unauthenticated") ||
+    msg.includes("api key") ||
+    msg.includes("unauthorized");
 
-  // Account/daily quota exhaustion vs temporary throttling
-  const isDailyQuota =
-    errorType.includes("quota") ||
-    errorType.includes("daily") ||
-    msg.includes("daily limit") ||
-    msg.includes("free daily") ||
-    msg.includes("quota exceeded") ||
-    msg.includes("credit balance is too low") ||
-    msg.includes("insufficient quota");
+  const isQuotaExhausted =
+    status === 429 &&
+    (msg.includes("quota") || msg.includes("resource_exhausted") || statusStr.includes("resource_exhausted"));
 
   const isThrottled =
     status === 429 ||
-    providerCode === 429 ||
-    errorType.includes("rate_limit") ||
+    statusStr.includes("resource_exhausted") ||
     msg.includes("rate limit") ||
     msg.includes("too many requests");
 
   const isProviderUnavailable =
-    status === 502 ||
     status === 503 ||
+    status === 502 ||
     status === 504 ||
-    providerCode === 502 ||
-    providerCode === 503 ||
-    msg.includes("overloaded") ||
-    msg.includes("unavailable") ||
-    msg.includes("busy");
+    statusStr.includes("unavailable") ||
+    msg.includes("high demand") ||
+    msg.includes("overloaded");
+
+  let safeMessage = "AI assistant is temporarily unavailable. Please try again shortly.";
+  if (isAuthError) {
+    safeMessage = "AI assistant authentication failed. Please check server configuration.";
+  } else if (isQuotaExhausted) {
+    safeMessage = "The AI service daily quota has been reached. Please try again later.";
+  } else if (isThrottled || isProviderUnavailable) {
+    safeMessage = "The AI service is experiencing high traffic. Please wait a moment before trying again.";
+  }
 
   return {
-    isDailyQuota,
+    isQuotaExhausted,
     isThrottled,
     isProviderUnavailable,
-    retryAfterSec,
-    message: (err.message || `Provider responded with HTTP ${status}`).replace(/openrouter/gi, "AI assistant"),
+    isAuthError,
+    message: safeMessage,
   };
 }
 
@@ -134,14 +130,14 @@ serve(async (req) => {
   }
 
   try {
-    const apiKey = Deno.env.get("OPENROUTER_API_KEY");
-    const configuredModel = Deno.env.get("OPENROUTER_MODEL") || VERIFIED_FREE_MODELS[0];
+    const apiKey = Deno.env.get("GEMINI_API_KEY");
+    const configuredModel = Deno.env.get("GEMINI_MODEL") || VERIFIED_GEMINI_MODELS[0];
 
     if (!apiKey) {
       return new Response(
         JSON.stringify({
           error:
-            "AI assistant API key is not configured on the server. Please configure the API key in your server environment or Supabase secrets.",
+            "Google Gemini API key is not configured on the server. Please configure GEMINI_API_KEY in your Supabase secrets or server environment.",
           code: "MISSING_API_KEY",
         }),
         {
@@ -174,10 +170,8 @@ serve(async (req) => {
       );
     }
 
-    // Scrub sensitive citizen PII
     const cleanUserMessage = scrubSensitivePII(message.trim());
 
-    // Build context-enriched system instruction
     let activeContextNote = "";
     if (context?.activeServiceName) {
       activeContextNote = `\nCitizen is currently viewing: "${context.activeServiceName}" (Category: ${context.activeServiceCategory || "General"}). Focus advice on this service where relevant.`;
@@ -185,136 +179,134 @@ serve(async (req) => {
 
     const systemInstruction = CIVICSAATHI_SYSTEM_PROMPT + activeContextNote;
 
-    // Build standard OpenAI/OpenRouter messages array
-    const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [
-      { role: "system", content: systemInstruction },
-    ];
+    // Convert history to Gemini contents structure
+    const geminiContents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 
     if (Array.isArray(history)) {
       const recentHistory = history.slice(-8);
       for (const turn of recentHistory) {
-        if (turn.sender === "user" && turn.text) {
-          messages.push({
-            role: "user",
-            content: scrubSensitivePII(turn.text),
-          });
-        } else if (turn.sender === "assistant" && turn.text) {
-          messages.push({
-            role: "assistant",
-            content: turn.text,
-          });
+        if (turn.sender === "user" && turn.text?.trim()) {
+          const cleanTurn = scrubSensitivePII(turn.text.trim());
+          if (geminiContents.length > 0 && geminiContents[geminiContents.length - 1].role === "user") {
+            geminiContents[geminiContents.length - 1].parts[0].text += "\n" + cleanTurn;
+          } else {
+            geminiContents.push({
+              role: "user",
+              parts: [{ text: cleanTurn }],
+            });
+          }
+        } else if (turn.sender === "assistant" && turn.text?.trim()) {
+          if (geminiContents.length === 0) continue;
+          if (geminiContents[geminiContents.length - 1].role === "model") {
+            geminiContents[geminiContents.length - 1].parts[0].text += "\n" + turn.text.trim();
+          } else {
+            geminiContents.push({
+              role: "model",
+              parts: [{ text: turn.text.trim() }],
+            });
+          }
         }
       }
     }
 
-    messages.push({
-      role: "user",
-      content: cleanUserMessage,
-    });
+    // Append current user prompt
+    if (geminiContents.length > 0 && geminiContents[geminiContents.length - 1].role === "user") {
+      geminiContents[geminiContents.length - 1].parts[0].text += "\n" + cleanUserMessage;
+    } else {
+      geminiContents.push({
+        role: "user",
+        parts: [{ text: cleanUserMessage }],
+      });
+    }
 
-    // Strictly enforce candidate models that are explicitly free
-    const candidateModels = Array.from(
-      new Set([configuredModel, ...VERIFIED_FREE_MODELS])
-    ).filter((m) => m.endsWith(":free") || m === "openrouter/free");
-
-    const openRouterUrl = "https://openrouter.ai/api/v1/chat/completions";
+    const candidateModels = Array.from(new Set([configuredModel, ...VERIFIED_GEMINI_MODELS]));
 
     let lastError: ErrorAnalysis | null = null;
-    let anyDailyQuotaExhausted = false;
 
-    // Try primary model, with bounded backoff and fallback to other verified free models
     for (const modelToTry of candidateModels) {
-      let attempts = 0;
-      const maxAttemptsPerModel = 2;
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-      while (attempts < maxAttemptsPerModel) {
-        attempts++;
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${apiKey}`;
 
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s bounded timeout
-
-          const openRouterResponse = await fetch(openRouterUrl, {
-            method: "POST",
-            headers: {
-              "Authorization": `Bearer ${apiKey}`,
-              "Content-Type": "application/json",
-              "HTTP-Referer": "https://civicsaathi.in",
-              "X-Title": "CivicSaathi AI Assistant",
+        const geminiResponse = await fetch(geminiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemInstruction }],
             },
-            body: JSON.stringify({
-              model: modelToTry,
-              messages,
+            contents: geminiContents,
+            generationConfig: {
               temperature: 0.3,
-              max_tokens: 1024,
-            }),
-            signal: controller.signal,
-          });
+              maxOutputTokens: 1024,
+            },
+          }),
+          signal: controller.signal,
+        });
 
-          clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
 
-          if (openRouterResponse.ok) {
-            const data = await openRouterResponse.json();
-            const candidate = data.choices?.[0];
-            const replyText = candidate?.message?.content;
+        if (geminiResponse.ok) {
+          const data = await geminiResponse.json();
+          const candidate = data.candidates?.[0];
+          const replyText = candidate?.content?.parts?.[0]?.text;
 
-            if (replyText) {
-              return new Response(
-                JSON.stringify({
-                  reply: replyText,
-                  model: data.model || modelToTry,
-                }),
-                {
-                  status: 200,
-                  headers: { ...corsHeaders, "Content-Type": "application/json" },
-                }
-              );
-            }
+          if (replyText) {
+            return new Response(
+              JSON.stringify({
+                reply: replyText,
+                model: modelToTry,
+              }),
+              {
+                status: 200,
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+              }
+            );
           }
+        }
 
-          // Error response handling
-          const retryAfterHeader = openRouterResponse.headers.get("retry-after");
-          const errorData = await openRouterResponse.json().catch(() => ({}));
-          const analysis = analyzeError(openRouterResponse.status, errorData, retryAfterHeader);
-          lastError = analysis;
+        const errorData = await geminiResponse.json().catch(() => ({}));
+        const analysis = analyzeGeminiError(geminiResponse.status, errorData);
+        lastError = analysis;
 
-          if (analysis.isDailyQuota) {
-            anyDailyQuotaExhausted = true;
-            // Daily quota cannot be resolved by immediate backoff on this model; break to fallback model
-            break;
-          }
-
-          // Check for bounded backoff if temporarily throttled and under 3s
-          if (analysis.isThrottled && attempts < maxAttemptsPerModel) {
-            const delayMs = analysis.retryAfterSec > 0 && analysis.retryAfterSec <= 3
-              ? analysis.retryAfterSec * 1000
-              : Math.min(1000 * attempts, 2500);
-
-            await new Promise((resolve) => setTimeout(resolve, delayMs));
-            continue; // retry once with backoff
-          }
-
-          // Otherwise, switch to the next fallback free model
-          break;
-        } catch (_err) {
-          lastError = {
-            isDailyQuota: false,
-            isThrottled: false,
-            isProviderUnavailable: true,
-            retryAfterSec: 0,
-            message: "Request timeout or network failure reaching the AI service.",
-          };
+        if (analysis.isAuthError) {
           break;
         }
+
+        continue;
+      } catch (_err) {
+        lastError = {
+          isQuotaExhausted: false,
+          isThrottled: false,
+          isProviderUnavailable: true,
+          isAuthError: false,
+          message: "Request timeout or network failure reaching the Google Gemini service.",
+        };
+        continue;
       }
     }
 
-    // All free candidate models exhausted
-    if (anyDailyQuotaExhausted) {
+    if (lastError?.isAuthError) {
       return new Response(
         JSON.stringify({
-          error:
-            "The free daily quota has been exhausted. Please try again tomorrow.",
+          error: lastError.message,
+          code: "AUTH_ERROR",
+        }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    if (lastError?.isQuotaExhausted) {
+      return new Response(
+        JSON.stringify({
+          error: lastError.message,
           code: "DAILY_QUOTA_EXHAUSTED",
         }),
         {
@@ -327,8 +319,7 @@ serve(async (req) => {
     if (lastError?.isThrottled) {
       return new Response(
         JSON.stringify({
-          error:
-            "The AI assistant is currently experiencing high traffic. Please wait a moment before trying again.",
+          error: lastError.message,
           code: "RATE_LIMIT_EXHAUSTED",
         }),
         {
@@ -340,9 +331,7 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
-        error:
-          lastError?.message ||
-          "AI assistant is temporarily unavailable. Please try again shortly.",
+        error: lastError?.message || "AI assistant is temporarily unavailable. Please try again shortly.",
         code: "PROVIDERS_UNAVAILABLE",
       }),
       {
