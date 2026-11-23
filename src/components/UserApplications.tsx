@@ -15,8 +15,10 @@ import {
   Clock,
   Plus,
   Trash2,
-  ShieldCheck
+  ShieldCheck,
+  AlertCircle
 } from 'lucide-react';
+import { RaiseComplaintSection } from './RaiseComplaintSection';
 
 export const UserApplications: React.FC = () => {
   const { user } = useAuth();
@@ -24,6 +26,19 @@ export const UserApplications: React.FC = () => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  // Complaint targeting state
+  const [complaintServiceId, setComplaintServiceId] = useState<string | undefined>(undefined);
+  const [complaintServiceName, setComplaintServiceName] = useState<string | undefined>(undefined);
+  const [complaintRefNumber, setComplaintRefNumber] = useState<string | undefined>(undefined);
+  const [externalTriggerOpen, setExternalTriggerOpen] = useState<number>(0);
+
+  const handleRaiseComplaintForApp = (app: Application) => {
+    setComplaintServiceId(app.serviceId);
+    setComplaintServiceName(app.serviceName);
+    setComplaintRefNumber(app.id);
+    setExternalTriggerOpen((prev) => prev + 1);
+  };
 
   const fetchApplications = async () => {
     if (!user) return;
@@ -240,7 +255,16 @@ export const UserApplications: React.FC = () => {
                   <span className="text-xs text-slate-400 dark:text-slate-500">
                     {t('common.lastUpdated')} {app.lastUpdated}
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleRaiseComplaintForApp(app)}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-2 rounded-lg text-amber-700 dark:text-amber-400 bg-amber-50/80 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-950/70 border border-amber-200 dark:border-amber-900/60 transition cursor-pointer"
+                      title="Facing an issue with this application? Raise a complaint"
+                    >
+                      <AlertCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                      <span>Raise Complaint</span>
+                    </button>
                     <Link
                       to={`/verify/${app.serviceId}`}
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-800 dark:text-slate-200 border border-transparent dark:border-zinc-800 transition"
@@ -262,6 +286,15 @@ export const UserApplications: React.FC = () => {
           })}
         </div>
       )}
+
+      {/* Facing an Issue? Raise a Complaint Section */}
+      <RaiseComplaintSection
+        serviceId={complaintServiceId}
+        serviceName={complaintServiceName}
+        defaultReferenceNumber={complaintRefNumber}
+        externalTriggerOpen={externalTriggerOpen}
+        className="pt-2"
+      />
     </div>
   );
 };
