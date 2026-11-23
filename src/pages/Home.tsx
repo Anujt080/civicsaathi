@@ -4,8 +4,10 @@ import { SERVICES_DATA } from '../data/services';
 import { ServiceCard } from '../components/ServiceCard';
 import { CivicAlerts } from '../components/CivicAlerts';
 import { NearbySevaKendras } from '../components/NearbySevaKendras';
+import { HowItWorks } from '../components/HowItWorks';
 import { ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from '../context/LanguageContext';
 
 const POPULAR_SERVICE_IDS = [
   'aadhaar-enrolment',
@@ -15,6 +17,7 @@ const POPULAR_SERVICE_IDS = [
 
 export const Home: React.FC = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const getStartedRoute = user ? '/profile' : '/login';
 
   const popularServices = POPULAR_SERVICE_IDS.map((id) =>
@@ -48,21 +51,30 @@ export const Home: React.FC = () => {
         <div className="relative z-10 p-8 sm:p-12">
           <div className="max-w-2xl space-y-5">
             <span className="inline-flex items-center gap-1.5 bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wider shadow-2xs">
-              <span>Citizen Guidance Platform</span>
+              <span>{t('hero.badge')}</span>
             </span>
             <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-              Government services, without the confusion.
+              {t('hero.titleLine1')}{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600 dark:from-blue-400 dark:via-blue-300 dark:to-emerald-400">
+                {t('hero.titleLine2')}
+              </span>
             </h1>
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl">
-              Check document requirements, verify paperwork readiness, and find authorized seva kendras.
+              {t('hero.subtitle')}
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 to={getStartedRoute}
                 className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-lg transition flex items-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
               >
-                <span>Get Started</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{t('hero.getStartedBtn')}</span>
+                <ArrowRight className="w-4 h-4 rtl-flip" />
+              </Link>
+              <Link
+                to="/services"
+                className="bg-white/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-6 py-3 rounded-lg transition border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-slate-900 shadow-2xs"
+              >
+                {t('hero.exploreBtn')}
               </Link>
             </div>
           </div>
@@ -73,15 +85,19 @@ export const Home: React.FC = () => {
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Popular Services</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Most accessed citizen facilitation workflows</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              {t('services.popularTitle')}
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              {t('services.popularSubtitle')}
+            </p>
           </div>
           <Link
             to="/services"
             className="text-xs font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline flex items-center gap-1"
           >
-            <span>All Services</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t('services.allServicesLink')}</span>
+            <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
           </Link>
         </div>
 
@@ -91,6 +107,9 @@ export const Home: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* 4. How It Works Section */}
+      <HowItWorks />
 
       {/* 4. Civic Alerts Sliding Banner */}
       <div id="civic-alerts">

@@ -4,8 +4,10 @@ import { OFFICES_DATA } from '../data/offices';
 import { Office } from '../types';
 import { OfficeMap } from './OfficeMap';
 import { MapPin, Clock, Compass, ArrowRight } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export const NearbySevaKendras: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedOffice, setSelectedOffice] = useState<Office>(OFFICES_DATA[0]);
   const [locating, setLocating] = useState(false);
   const [locationNote, setLocationNote] = useState<string | null>(null);
@@ -20,11 +22,11 @@ export const NearbySevaKendras: React.FC = () => {
     navigator.geolocation.getCurrentPosition(
       (_pos) => {
         setLocating(false);
-        setLocationNote('Showing nearest facilitation centers relative to your location.');
+        setLocationNote(t('offices.locatingNote'));
       },
       (_err) => {
         setLocating(false);
-        setLocationNote('Location access was not enabled; displaying regional facilitation centers.');
+        setLocationNote(t('offices.locationDeniedNote'));
       },
       { timeout: 5000 }
     );
@@ -35,10 +37,10 @@ export const NearbySevaKendras: React.FC = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            Nearby Seva Kendras
+            {t('offices.title')}
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Locate facilitation centers, opening hours, and distance.
+            {t('offices.subtitle')}
           </p>
         </div>
 
@@ -50,14 +52,14 @@ export const NearbySevaKendras: React.FC = () => {
             title="Optional: Detect nearest center using device location"
           >
             <Compass className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
-            <span>{locating ? 'Detecting...' : 'Near Me'}</span>
+            <span>{locating ? t('common.detecting') : t('offices.nearMeBtn')}</span>
           </button>
           <Link
             to="/offices"
             className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline px-2 py-1.5"
           >
-            <span>All Centers</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>{t('offices.allCentersBtn')}</span>
+            <ArrowRight className="w-3.5 h-3.5 rtl-flip" />
           </Link>
         </div>
       </div>

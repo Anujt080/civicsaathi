@@ -5,6 +5,7 @@ import { UserDocuments } from '../components/UserDocuments';
 import { UserApplications } from '../components/UserApplications';
 import { FamilyDocuments } from './FamilyDocuments';
 import { useTheme } from '../context/ThemeContext';
+import { useTranslation } from '../context/LanguageContext';
 import {
   Sun,
   Moon,
@@ -13,7 +14,8 @@ import {
   CheckCircle2,
   FileText,
   Users,
-  Clock
+  Clock,
+  Languages
 } from 'lucide-react';
 
 type ProfileTab = 'documents' | 'family' | 'applications' | 'settings';
@@ -22,6 +24,7 @@ export const Profile: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, resolvedTheme, setTheme } = useTheme();
+  const { t, language, setLanguage, languages, currentLanguage } = useTranslation();
 
   const getInitialTab = (): ProfileTab => {
     const hash = location.hash.replace('#', '');
@@ -54,25 +57,25 @@ export const Profile: React.FC = () => {
   }> = [
     {
       id: 'documents',
-      label: 'Personal Documents',
+      label: t('profile.documentsTab') || 'Personal Documents',
       icon: FileText,
       description: 'Your verified identity and civil records'
     },
     {
       id: 'family',
-      label: 'Family Documents',
+      label: t('familyDocs.title') || 'Family Documents',
       icon: Users,
       description: 'Household members & family records'
     },
     {
       id: 'applications',
-      label: 'My Applications',
+      label: t('profile.applicationsTab') || 'My Applications',
       icon: Clock,
       description: 'Track ongoing public scheme filings'
     },
     {
       id: 'settings',
-      label: 'Account & Settings',
+      label: t('profile.settingsTab') || 'Account & Settings',
       icon: Sliders,
       description: 'Theme and account preferences'
     }
@@ -175,8 +178,61 @@ export const Profile: React.FC = () => {
           id="settings"
           role="tabpanel"
           aria-labelledby="tab-settings"
-          className="animate-in fade-in duration-200"
+          className="animate-in fade-in duration-200 space-y-6"
         >
+          {/* Language Preference Card */}
+          <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-7 shadow-xs space-y-5 transition-colors">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-900 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400">
+                  <Languages className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                    {t('profile.languagePreference') || 'Language Preference'}
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Choose your preferred portal language. Works instantly across all sections and devices.
+                  </p>
+                </div>
+              </div>
+
+              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 hidden sm:inline-flex items-center gap-1.5">
+                <span>Active:</span>
+                <strong className="font-bold">{currentLanguage.nativeName} ({currentLanguage.name})</strong>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-1">
+              {languages.map((lang) => {
+                const isSelected = language === lang.code;
+                return (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => setLanguage(lang.code)}
+                    className={`p-3.5 rounded-xl border text-start transition flex flex-col justify-between gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                      isSelected
+                        ? 'border-blue-600 ring-2 ring-blue-600/20 bg-blue-50/50 dark:bg-blue-950/30'
+                        : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-slate-300 dark:hover:border-zinc-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-bold text-slate-900 dark:text-white">
+                        {lang.nativeName}
+                      </span>
+                      {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-600" />}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {lang.name}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Theme & Appearance Card */}
           <div className="bg-white dark:bg-black border border-slate-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-7 shadow-xs space-y-5 transition-colors">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-900 pb-4">
               <div className="flex items-center gap-2.5">
@@ -184,7 +240,9 @@ export const Profile: React.FC = () => {
                   <Sliders className="w-4 h-4" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold text-slate-900 dark:text-white">Settings & Appearance</h2>
+                  <h2 className="text-base font-bold text-slate-900 dark:text-white">
+                    {t('profile.appearanceTheme') || 'Settings & Appearance'}
+                  </h2>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     Choose your interface theme. Switch back to clean white or pitch-black AMOLED dark anytime.
                   </p>
@@ -204,7 +262,7 @@ export const Profile: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setTheme('light')}
-                className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                className={`p-4 rounded-xl border text-start transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                   theme === 'light'
                     ? 'border-blue-600 ring-2 ring-blue-600/20 bg-blue-50/50 dark:bg-blue-950/30'
                     : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-slate-300 dark:hover:border-zinc-700'
@@ -228,7 +286,7 @@ export const Profile: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setTheme('dark')}
-                className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                className={`p-4 rounded-xl border text-start transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                   theme === 'dark'
                     ? 'border-blue-600 ring-2 ring-blue-600/20 bg-blue-50/50 dark:bg-blue-950/30'
                     : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-slate-300 dark:hover:border-zinc-700'
@@ -252,7 +310,7 @@ export const Profile: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setTheme('system')}
-                className={`p-4 rounded-xl border text-left transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                className={`p-4 rounded-xl border text-start transition flex flex-col justify-between gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                   theme === 'system'
                     ? 'border-blue-600 ring-2 ring-blue-600/20 bg-blue-50/50 dark:bg-blue-950/30'
                     : 'border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-slate-300 dark:hover:border-zinc-700'

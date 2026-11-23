@@ -16,11 +16,11 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     <div className="flex items-center gap-2.5 select-none group">
-      {/* Custom CivicSeva Civic Mark */}
+      {/* Custom CivicSaathi Civic Mark */}
       <div className="shrink-0 transition-transform duration-200 group-hover:scale-105">
         <img
           src="/logo.png"
-          alt="CivicSeva Logo"
+          alt="CivicSaathi Logo"
           className={`${
             size === 'lg'
               ? 'w-11 h-11'
@@ -40,7 +40,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
               : 'text-slate-900 dark:text-white'
           }`}
         >
-          Civic<span className="text-emerald-600 dark:text-emerald-400">Seva</span>
+          Civic<span className="text-emerald-600 dark:text-emerald-400">Saathi</span>
         </span>
         {showSubtitle && (
           <span

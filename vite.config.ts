@@ -23,15 +23,15 @@ export default defineConfig(({ mode }) => {
             req.on('end', async () => {
               res.setHeader('Content-Type', 'application/json');
 
-              const geminiApiKey = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
-              const configuredModel = env.GEMINI_MODEL || process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+              const openRouterApiKey = env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY || '';
+              const configuredModel = env.OPENROUTER_MODEL || process.env.OPENROUTER_MODEL || 'google/gemma-4-31b-it:free';
 
-              if (!geminiApiKey) {
+              if (!openRouterApiKey) {
                 res.statusCode = 503;
                 res.end(
                   JSON.stringify({
                     error:
-                      'Google Gemini API key is not configured on the server. Please configure GEMINI_API_KEY in your .env file or server environment.',
+                      'AI assistant API key is not configured on the server. Please configure your API key in your server environment or Supabase secrets.',
                     code: 'MISSING_API_KEY',
                   })
                 );
@@ -48,195 +48,171 @@ export default defineConfig(({ mode }) => {
                   return;
                 }
 
-                if (message.length > 3000) {
-                  res.statusCode = 400;
-                  res.end(JSON.stringify({ error: 'Message exceeds 3000 character limit', code: 'MESSAGE_TOO_LONG' }));
-                  return;
-                }
-
                 // Mask sensitive citizen PII
                 const aadhaarRegex = /\b\d{4}[ -]?\d{4}[ -]?\d{4}\b/g;
                 const panRegex = /\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b/gi;
-                const phoneRegex = /\b(?:\+91|91)?[6-9]\d{9}\b/g;
                 const cleanMessage = message
                   .trim()
                   .replace(aadhaarRegex, '[REDACTED_AADHAAR]')
-                  .replace(panRegex, '[REDACTED_PAN]')
-                  .replace(phoneRegex, '[REDACTED_PHONE]');
+                  .replace(panRegex, '[REDACTED_PAN]');
 
                 let activeContextNote = '';
                 if (context?.activeServiceName) {
                   activeContextNote = `\nCitizen is currently viewing: "${context.activeServiceName}" (Category: ${context.activeServiceCategory || 'General'}). Focus advice on this service where relevant.`;
                 }
 
-                const systemInstruction = `You are the CivicSeva AI Assistant (सिविक सेवा), an official civic advisor helping Indian citizens understand and prepare for government services.
-Your primary mission:
-1. Explain document categories clearly (POI, POA, DOB, POR).
-2. Guide citizens through CivicSeva's 3-step workflow (Pre-submission Checklist -> Verification & Consistency Check -> Submission Mode).
-3. Provide accurate information for indexed services (Central: Aadhaar, Passport, PAN, DL; Chhattisgarh: Domicile, Caste, Pensions).
-4. Tone & safety: Be concise, supportive, respectful. Suggest internal routes (/services, /offices). NEVER invent fees or laws. NEVER ask for Aadhaar numbers, PAN, OTPs, or passwords. Never claim to have officially submitted applications.${activeContextNote}`;
+                const systemInstruction = `You are the CivicSaathi AI Assistant (सिविक साथी), an official civic advisor helping Indian citizens understand and prepare for government services.
+Explain document categories clearly (POI, POA, DOB, POR). Guide citizens through CivicSaathi's 3-step workflow (Checklist -> Verification -> Submission).
+For indexed services (Aadhaar, Passport, PAN, DL, CG Domicile/Caste/Pensions), provide accurate rules, fees, and official links.
+NEVER invent fees or eligibility rules. If uncertain, advise visiting the nearest Lok Seva Kendra.
+NEVER ask for personal Aadhaar numbers, PAN, or passwords. Never claim to have submitted applications.${activeContextNote}`;
 
-                // Convert history to Gemini contents structure
-                const geminiContents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+                const messages = [
+                  { role: 'system', content: systemInstruction },
+                ];
 
                 if (Array.isArray(history)) {
                   for (const turn of history.slice(-8)) {
-                    if (turn.sender === 'user' && turn.text?.trim()) {
-                      const cleanTurn = turn.text
-                        .trim()
-                        .replace(aadhaarRegex, '[REDACTED_AADHAAR]')
-                        .replace(panRegex, '[REDACTED_PAN]')
-                        .replace(phoneRegex, '[REDACTED_PHONE]');
-                      if (geminiContents.length > 0 && geminiContents[geminiContents.length - 1].role === 'user') {
-                        geminiContents[geminiContents.length - 1].parts[0].text += '\n' + cleanTurn;
-                      } else {
-                        geminiContents.push({
-                          role: 'user',
-                          parts: [{ text: cleanTurn }],
-                        });
-                      }
-                    } else if (turn.sender === 'assistant' && turn.text?.trim()) {
-                      if (geminiContents.length === 0) continue;
-                      if (geminiContents[geminiContents.length - 1].role === 'model') {
-                        geminiContents[geminiContents.length - 1].parts[0].text += '\n' + turn.text.trim();
-                      } else {
-                        geminiContents.push({
-                          role: 'model',
-                          parts: [{ text: turn.text.trim() }],
-                        });
-                      }
+                    if (turn.sender === 'user' && turn.text) {
+                      messages.push({
+                        role: 'user',
+                        content: turn.text.replace(aadhaarRegex, '[REDACTED]').replace(panRegex, '[REDACTED]'),
+                      });
+                    } else if (turn.sender === 'assistant' && turn.text) {
+                      messages.push({
+                        role: 'assistant',
+                        content: turn.text,
+                      });
                     }
                   }
                 }
 
-                // Append current user prompt
-                if (geminiContents.length > 0 && geminiContents[geminiContents.length - 1].role === 'user') {
-                  geminiContents[geminiContents.length - 1].parts[0].text += '\n' + cleanMessage;
-                } else {
-                  geminiContents.push({
-                    role: 'user',
-                    parts: [{ text: cleanMessage }],
-                  });
-                }
+                messages.push({
+                  role: 'user',
+                  content: cleanMessage,
+                });
 
-                const verifiedGeminiModels = [
-                  'gemini-3.1-flash-lite',
-                  'gemini-3.5-flash-lite',
-                  'gemini-3.6-flash',
-                  'gemini-3.8-flash',
+                const verifiedFreeModels = [
+                  'google/gemma-4-31b-it:free',
+                  'nvidia/nemotron-3.5-lightning:free',
+                  'google/gemma-4-26b-a4b-it:free',
+                  'openrouter/free',
                 ];
 
-                const candidateModels = Array.from(new Set([configuredModel, ...verifiedGeminiModels]));
+                const candidateModels = Array.from(
+                  new Set([configuredModel, ...verifiedFreeModels])
+                ).filter((m) => m.endsWith(':free') || m === 'openrouter/free');
+
+                const openRouterUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
                 let lastError = null;
+                let anyDailyQuotaExhausted = false;
 
                 for (const modelToTry of candidateModels) {
-                  try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 25000);
+                  let attempts = 0;
+                  const maxAttemptsPerModel = 2;
 
-                    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelToTry}:generateContent?key=${geminiApiKey}`;
+                  while (attempts < maxAttemptsPerModel) {
+                    attempts++;
 
-                    const geminiRes = await fetch(geminiUrl, {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        systemInstruction: {
-                          parts: [{ text: systemInstruction }],
+                    try {
+                      const controller = new AbortController();
+                      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+                      const openRouterRes = await fetch(openRouterUrl, {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${openRouterApiKey}`,
+                          'Content-Type': 'application/json',
+                          'HTTP-Referer': 'https://civicsaathi.in',
+                          'X-Title': 'CivicSaathi AI Assistant',
                         },
-                        contents: geminiContents,
-                        generationConfig: {
+                        body: JSON.stringify({
+                          model: modelToTry,
+                          messages,
                           temperature: 0.3,
-                          maxOutputTokens: 1024,
-                        },
-                      }),
-                      signal: controller.signal,
-                    });
+                          max_tokens: 1024,
+                        }),
+                        signal: controller.signal,
+                      });
 
-                    clearTimeout(timeoutId);
+                      clearTimeout(timeoutId);
 
-                    if (geminiRes.ok) {
-                      const geminiData = await geminiRes.json();
-                      const reply = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                      if (openRouterRes.ok) {
+                        const openRouterData = await openRouterRes.json();
+                        const reply = openRouterData.choices?.[0]?.message?.content || '';
 
-                      if (reply) {
-                        res.statusCode = 200;
-                        res.end(JSON.stringify({ reply, model: modelToTry }));
-                        return;
+                        if (reply) {
+                          res.statusCode = 200;
+                          res.end(JSON.stringify({ reply, model: openRouterData.model || modelToTry }));
+                          return;
+                        }
                       }
-                    }
 
-                    const errorData = await geminiRes.json().catch(() => ({}));
-                    const errObj = errorData?.error || errorData || {};
-                    const errMsg = (errObj.message || '').toLowerCase();
-                    const statusStr = (errObj.status || '').toLowerCase();
+                      const retryAfterHeader = openRouterRes.headers.get('retry-after');
+                      const errorData = await openRouterRes.json().catch(() => ({}));
+                      const errObj = errorData?.error || errorData || {};
+                      const errMsg = (errObj.message || '').toLowerCase();
+                      const metadata = errObj.metadata || {};
+                      const errorType = (metadata.error_type || '').toLowerCase();
+                      const providerCode = metadata.provider_code;
 
-                    const isAuthError =
-                      geminiRes.status === 401 ||
-                      geminiRes.status === 403 ||
-                      statusStr.includes('permission_denied') ||
-                      statusStr.includes('unauthenticated');
+                      let retryAfterSec = 0;
+                      if (retryAfterHeader) {
+                        const p = parseInt(retryAfterHeader, 10);
+                        if (!isNaN(p) && p > 0) retryAfterSec = p;
+                      }
 
-                    const isQuotaExhausted =
-                      geminiRes.status === 429 &&
-                      (errMsg.includes('quota') || errMsg.includes('resource_exhausted'));
+                      const isDailyQuota =
+                        errorType.includes('quota') ||
+                        errorType.includes('daily') ||
+                        errMsg.includes('daily limit') ||
+                        errMsg.includes('free daily') ||
+                        errMsg.includes('quota exceeded') ||
+                        errMsg.includes('credit balance is too low') ||
+                        errMsg.includes('insufficient quota');
 
-                    const isThrottled =
-                      geminiRes.status === 429 ||
-                      statusStr.includes('resource_exhausted');
+                      const isThrottled =
+                        openRouterRes.status === 429 ||
+                        providerCode === 429 ||
+                        errorType.includes('rate_limit') ||
+                        errMsg.includes('rate limit') ||
+                        errMsg.includes('too many requests');
 
-                    let safeMsg = 'AI assistant is temporarily unavailable. Please try again shortly.';
-                    if (isAuthError) {
-                      safeMsg = 'AI assistant authentication failed. Please check server configuration.';
-                    } else if (isQuotaExhausted) {
-                      safeMsg = 'The AI service daily quota has been reached. Please try again later.';
-                    } else if (isThrottled) {
-                      safeMsg = 'The AI service is experiencing high traffic. Please wait a moment before trying again.';
-                    }
+                      lastError = {
+                        isDailyQuota,
+                        isThrottled,
+                        message: (errObj.message || `Status ${openRouterRes.status}`).replace(/openrouter/gi, 'AI assistant'),
+                      };
 
-                    lastError = {
-                      status: geminiRes.status,
-                      isAuthError,
-                      isQuotaExhausted,
-                      isThrottled,
-                      message: safeMsg,
-                    };
+                      if (isDailyQuota) {
+                        anyDailyQuotaExhausted = true;
+                        break; // fallback to next free model
+                      }
 
-                    if (isAuthError) {
+                      if (isThrottled && attempts < maxAttemptsPerModel) {
+                        const delayMs = retryAfterSec > 0 && retryAfterSec <= 3
+                          ? retryAfterSec * 1000
+                          : Math.min(1000 * attempts, 2500);
+
+                        await new Promise((r) => setTimeout(r, delayMs));
+                        continue;
+                      }
+
+                      break; // proceed to next fallback free model
+                    } catch (_err) {
+                      lastError = { isDailyQuota: false, isThrottled: false, message: 'Request timeout or network failure reaching the AI service.' };
                       break;
                     }
-
-                    continue;
-                  } catch (_err) {
-                    lastError = {
-                      status: 504,
-                      isAuthError: false,
-                      isQuotaExhausted: false,
-                      isThrottled: false,
-                      message: 'Request timeout or network failure reaching the Google Gemini service.',
-                    };
-                    continue;
                   }
                 }
 
-                if (lastError?.isAuthError) {
-                  res.statusCode = 401;
-                  res.end(
-                    JSON.stringify({
-                      error: lastError.message,
-                      code: 'AUTH_ERROR',
-                    })
-                  );
-                  return;
-                }
-
-                if (lastError?.isQuotaExhausted) {
+                if (anyDailyQuotaExhausted) {
                   res.statusCode = 429;
                   res.end(
                     JSON.stringify({
-                      error: lastError.message,
+                      error:
+                        'The free daily quota has been exhausted. Please try again tomorrow.',
                       code: 'DAILY_QUOTA_EXHAUSTED',
                     })
                   );
@@ -247,7 +223,8 @@ Your primary mission:
                   res.statusCode = 429;
                   res.end(
                     JSON.stringify({
-                      error: lastError.message,
+                      error:
+                        'The AI assistant is currently experiencing high traffic. Please wait a moment before trying again.',
                       code: 'RATE_LIMIT_EXHAUSTED',
                     })
                   );
@@ -263,7 +240,7 @@ Your primary mission:
                     code: 'PROVIDERS_UNAVAILABLE',
                   })
                 );
-              } catch (err: any) {
+              } catch (err) {
                 res.statusCode = 500;
                 res.end(JSON.stringify({ error: err.message, code: 'INTERNAL_ERROR' }));
               }

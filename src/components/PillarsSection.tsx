@@ -7,13 +7,13 @@ export const PillarsSection: React.FC = () => {
       icon: ShieldCheck,
       title: 'Prevention-First Design',
       description:
-        'Over 35% of counter visits fail due to minor clerical mismatches like initials or unaccepted address proofs. CivicSeva highlights inconsistencies before you visit the counter.',
+        'Over 35% of counter visits fail due to minor clerical mismatches like initials or unaccepted address proofs. CivicSaathi highlights inconsistencies before you visit the counter.',
     },
     {
       icon: Eye,
       title: 'Zero Commercial Tracking',
       description:
-        'CivicSeva does not monetize citizen data, run advertisements, or store your personal identity cards. All guidance and checklists run entirely in your browser.',
+        'CivicSaathi does not monetize citizen data, run advertisements, or store your personal identity cards. All guidance and checklists run entirely in your browser.',
     },
     {
       icon: Compass,
@@ -33,7 +33,7 @@ export const PillarsSection: React.FC = () => {
     <section className="space-y-6 pt-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
         <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          The Pillars of CivicSeva
+          The Pillars of CivicSaathi
         </h2>
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
           Built as an independent, transparent civic-tech utility committed to public service transparency.

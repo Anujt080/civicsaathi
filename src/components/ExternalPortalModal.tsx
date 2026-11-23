@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExternalLink, ShieldCheck, X } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 interface ExternalPortalModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ export const ExternalPortalModal: React.FC<ExternalPortalModalProps> = ({
   portalName,
   portalUrl,
 }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   let domain = '';
@@ -47,7 +49,7 @@ export const ExternalPortalModal: React.FC<ExternalPortalModalProps> = ({
                 id="external-portal-modal-title"
                 className="font-bold text-lg sm:text-xl text-slate-900 dark:text-white"
               >
-                You're leaving CivicSeva
+                {t('serviceDetails.officialPortalNotice') || "You're leaving CivicSaathi"}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 Official external destination verification
@@ -65,8 +67,7 @@ export const ExternalPortalModal: React.FC<ExternalPortalModalProps> = ({
         </div>
 
         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          You are about to visit an external government website. Check the website address and confirm
-          it is official before entering personal information or uploading documents.
+          {t('serviceDetails.counterNotice') || 'You are about to visit an external government website. Check the website address and confirm it is official before entering personal information or uploading documents.'}
         </p>
 
         {/* Destination preview box */}
@@ -99,15 +100,15 @@ export const ExternalPortalModal: React.FC<ExternalPortalModalProps> = ({
             onClick={onClose}
             className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-zinc-900 font-semibold text-xs transition cursor-pointer"
           >
-            Cancel
+            {t('common.cancel') || 'Cancel'}
           </button>
           <button
             type="button"
             onClick={handleProceed}
             className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm hover:shadow transition cursor-pointer inline-flex items-center justify-center gap-2"
           >
-            <span>Continue to Official Website</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <span>{t('serviceDetails.visitPortalBtn') || 'Continue to Official Website'}</span>
+            <ExternalLink className="w-3.5 h-3.5 rtl-flip" />
           </button>
         </div>
       </div>

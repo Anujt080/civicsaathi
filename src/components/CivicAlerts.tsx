@@ -9,6 +9,7 @@ import {
   Pause,
   Play,
 } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export interface CivicAlert {
   id: string;
@@ -47,6 +48,7 @@ const DEMO_CIVIC_ALERTS: CivicAlert[] = [
 ];
 
 export const CivicAlerts: React.FC = () => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -116,21 +118,21 @@ export const CivicAlerts: React.FC = () => {
         return (
           <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900">
             <AlertCircle className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-            Important
+            {t('alerts.importantBadge')}
           </span>
         );
       case 'Update':
         return (
           <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
             <Info className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-            Update
+            {t('alerts.updateBadge')}
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-900">
             <ShieldAlert className="w-3 h-3 text-teal-600 dark:text-teal-400" />
-            Advisory
+            {t('alerts.advisoryBadge')}
           </span>
         );
     }
@@ -152,7 +154,7 @@ export const CivicAlerts: React.FC = () => {
             <Bell className="w-4 h-4" />
           </div>
           <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">
-            Civic Alerts & Advisories
+            {t('alerts.title')}
           </h2>
         </div>
 
@@ -161,8 +163,8 @@ export const CivicAlerts: React.FC = () => {
           <button
             type="button"
             onClick={togglePauseResume}
-            aria-label={isPaused ? 'Resume automatic rotation' : 'Pause automatic rotation'}
-            title={isPaused ? 'Resume automatic rotation' : 'Pause automatic rotation'}
+            aria-label={isPaused ? t('alerts.playAutoScroll') : t('alerts.pauseAutoScroll')}
+            title={isPaused ? t('alerts.playAutoScroll') : t('alerts.pauseAutoScroll')}
             className={`p-1.5 rounded-lg border transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 cursor-pointer ${
               isPaused
                 ? 'border-amber-300 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400'
@@ -178,7 +180,7 @@ export const CivicAlerts: React.FC = () => {
             aria-label="Previous alert"
             className="p-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4 rtl-flip" />
           </button>
 
           <span className="text-xs font-mono text-slate-400 dark:text-slate-500 px-1">
@@ -191,7 +193,7 @@ export const CivicAlerts: React.FC = () => {
             aria-label="Next alert"
             className="p-1.5 rounded-lg border border-slate-200 dark:border-zinc-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-zinc-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 cursor-pointer"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 rtl-flip" />
           </button>
         </div>
       </div>

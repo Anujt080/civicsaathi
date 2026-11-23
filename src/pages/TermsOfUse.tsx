@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scale, AlertCircle, CheckCircle2, ArrowLeft, ExternalLink } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 
 export const TermsOfUse: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-4xl mx-auto space-y-8 py-4">
       {/* Breadcrumb / Back button */}
@@ -11,8 +14,8 @@ export const TermsOfUse: React.FC = () => {
           to="/"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-400 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Home</span>
+          <ArrowLeft className="w-3.5 h-3.5 rtl-flip" />
+          <span>{t('common.backToHome') || 'Back to Home'}</span>
         </Link>
       </div>
 
@@ -23,10 +26,10 @@ export const TermsOfUse: React.FC = () => {
           <span>Platform Terms & Disclaimer</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Terms of Use & Legal Disclaimer
+          {t('legal.termsTitle') || 'Terms of Use & Legal Disclaimer'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Please read these terms carefully before utilizing CivicSeva's citizen assistance tools.
+          {t('legal.termsSubtitle') || "Please read these terms carefully before utilizing CivicSaathi's citizen assistance tools."}
         </p>
       </div>
 
@@ -37,7 +40,7 @@ export const TermsOfUse: React.FC = () => {
           <span>Independent Platform Disclaimer</span>
         </div>
         <p className="leading-relaxed">
-          CivicSeva is an independent civic-tech guidance platform. It is <strong>not an official government body, affiliated department, or authorized licensing agency</strong>. CivicSeva does not issue legal certificates, approve statutory applications, or replace designated government portals (such as UIDAI, Parivahan, Passport Seva, or Income Tax).
+          CivicSaathi is an independent civic-tech guidance platform. It is <strong>not an official government body, affiliated department, or authorized licensing agency</strong>. CivicSaathi does not issue legal certificates, approve statutory applications, or replace designated government portals (such as UIDAI, Parivahan, Passport Seva, or Income Tax).
         </p>
       </div>
 
@@ -50,11 +53,11 @@ export const TermsOfUse: React.FC = () => {
             <span>1. Scope of Pre-Submission Verification</span>
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            The document verification feature in CivicSeva conducts automated preliminary consistency checks (such as verifying character structures and standard regex patterns for PAN cards).
+            The document verification feature in CivicSaathi conducts automated preliminary consistency checks (such as verifying character structures and standard regex patterns for PAN cards).
           </p>
           <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
             <li>These checks are designed to help citizens identify common clerical errors (e.g. spelling mismatches or unreadable photocopies) prior to queuing at facilitation counters.</li>
-            <li>A "Passed Check" status in CivicSeva does <strong>not</strong> constitute official government authentication or guarantee application approval by official scrutinizing officers.</li>
+            <li>A "Passed Check" status in CivicSaathi does <strong>not</strong> constitute official government authentication or guarantee application approval by official scrutinizing officers.</li>
           </ul>
         </section>
 
@@ -68,7 +71,7 @@ export const TermsOfUse: React.FC = () => {
             Government service requirements, statutory fee schedules, valid document lists, and processing turnaround times are determined exclusively by authorized government ministries and state departments.
           </p>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            While CivicSeva strives to maintain current, guide-backed information, citizens should always confirm statutory fees and final requirements directly on the official portal before initiating payment or booking appointments.
+            While CivicSaathi strives to maintain current, guide-backed information, citizens should always confirm statutory fees and final requirements directly on the official portal before initiating payment or booking appointments.
           </p>
         </section>
 
@@ -78,7 +81,7 @@ export const TermsOfUse: React.FC = () => {
             3. User Responsibility & Accurate Submissions
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            Users are solely responsible for ensuring the accuracy and legitimacy of all information submitted to official government bodies. CivicSeva does not act as an agent, broker, or intermediary in processing applications.
+            Users are solely responsible for ensuring the accuracy and legitimacy of all information submitted to official government bodies. CivicSaathi does not act as an agent, broker, or intermediary in processing applications.
           </p>
         </section>
 
@@ -88,7 +91,7 @@ export const TermsOfUse: React.FC = () => {
             4. Informational Purpose (Not Legal Advice)
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            All content, checklists, guidance steps, and advisory notes provided by CivicSeva are for educational and informational assistance only. Nothing on this website constitutes legal counsel, immigration advice, or statutory representation.
+            All content, checklists, guidance steps, and advisory notes provided by CivicSaathi are for educational and informational assistance only. Nothing on this website constitutes legal counsel, immigration advice, or statutory representation.
           </p>
         </section>
       </div>
@@ -98,21 +101,36 @@ export const TermsOfUse: React.FC = () => {
         <span className="text-slate-600 dark:text-slate-300">
           Looking to access official government service portals directly?
         </span>
-        <a
-          href="https://www.myscheme.gov.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:underline"
-        >
-          <span>Visit myScheme Portal</span>
-          <ExternalLink className="w-3 h-3" />
-        </a>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:underline shrink-0"
+          >
+            <span>{t('nav.services') || 'Explore All Services'}</span>
+            <span className="rtl-flip">&rarr;</span>
+          </Link>
+          <a
+            href="https://www.myscheme.gov.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            <span>Visit myScheme Portal</span>
+            <ExternalLink className="w-3 h-3 rtl-flip" />
+          </a>
+        </div>
       </div>
 
       {/* Footer Navigation Back Link */}
       <div className="pt-4 border-t border-slate-200 dark:border-zinc-800 flex justify-between items-center text-xs text-slate-500">
-        <Link to="/privacy" className="text-blue-600 dark:text-blue-400 hover:underline">&larr; Privacy Policy</Link>
-        <Link to="/contact" className="text-blue-600 dark:text-blue-400 hover:underline">Contact & Grievances &rarr;</Link>
+        <Link to="/privacy" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1">
+          <span className="rtl-flip">&larr;</span>
+          <span>{t('legal.privacyTitle') || 'Privacy Policy'}</span>
+        </Link>
+        <Link to="/contact" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1">
+          <span>{t('contact.title') || 'Contact & Grievances'}</span>
+          <span className="rtl-flip">&rarr;</span>
+        </Link>
       </div>
     </div>
   );

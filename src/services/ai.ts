@@ -54,7 +54,7 @@ export async function askCivicSaathi(
   const trimmed = question.trim();
   if (!trimmed) {
     return {
-      reply: 'Please enter a question to ask the CivicSeva assistant.',
+      reply: 'Please enter a question to ask the CivicSaathi assistant.',
       isError: true,
       errorCode: 'EMPTY_INPUT',
     };
@@ -90,7 +90,7 @@ export async function askCivicSaathi(
       if (!error && data?.reply) {
         return {
           reply: data.reply,
-          model: data.model || 'gemini-3.6-flash',
+          model: data.model || 'google/gemma-4-31b-it:free',
           warningNote: privacyWarning,
         };
       }
@@ -124,7 +124,7 @@ export async function askCivicSaathi(
     if (res.ok && data?.reply) {
       return {
         reply: data.reply,
-        model: data.model || 'gemini-3.6-flash',
+        model: data.model || 'google/gemma-4-31b-it:free',
         warningNote: privacyWarning,
       };
     }
