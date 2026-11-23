@@ -235,7 +235,7 @@ A fully integrated, privacy-focused conversational civic advisor accessible acro
 - **Circular Floating Launcher**: Elegant bottom-right bubble with a pulsing status badge, screen-reader accessibility (`aria-label`), and seamless integration with the floating toolbar.
 - **Dynamic Context Awareness**: Automatically inherits active service context (`activeServiceId`, `activeServiceName`, `activeServiceCategory`) when browsing services or verification workflows.
 - **Client & Server PII Redaction**: Automatically scrubs 12-digit Aadhaar and 10-character PAN identifiers before transmission, warning users with a prominent privacy badge.
-- **Multi-Model Fallback Cascade**: Built with resilient server-side fallback across verified free models (`google/gemma-4-31b-it:free`, `nvidia/nemotron-3.5-lightning:free`, `google/gemma-4-26b-a4b-it:free`, `openrouter/free`).
+- **Multi-Model Fallback Cascade**: Built with resilient server-side fallback across Google Gemini models (`gemini-3.6-flash`, `gemini-3.8-flash`, `gemini-3.1-flash-lite`).
 - **Bounded Rate-Limit & Quota Handling**: Parses `Retry-After` headers with bounded exponential backoff; distinguishes between temporary provider busy states and daily free quota exhaustion (`DAILY_QUOTA_EXHAUSTED`).
 - **Duplicate Request Guard**: Implements synchronous submit locks (`isSubmittingRef`) to eliminate duplicate requests caused by accidental double-clicks or rapid enter keys.
 - **Rich Civic Formatting**: Renders markdown bullet lists, bold terminology, government portal links, message copy buttons, suggested question chips, and session-preserved conversation history (`sessionStorage`). *See [CivicSaathi AI Assistant & Backend Architecture](#-civicsaathi-ai-assistant--backend-architecture) for full architecture and configuration.*
@@ -295,7 +295,7 @@ flowchart TD
 
     subgraph AIProviders["AI Chat Completions Layer"]
         LLM["AI Chat Completions API"]
-        ModelCascade["Verified Free Models Cascade<br/>- google/gemma-4-31b-it:free<br/>- nvidia/nemotron-3.5-lightning:free<br/>- google/gemma-4-26b-a4b-it:free<br/>- openrouter/free"]
+        ModelCascade["Google Gemini Models Cascade<br/>- gemini-3.6-flash<br/>- gemini-3.8-flash<br/>- gemini-3.1-flash-lite"]
     end
 
     subgraph ExternalServices["External Civic Integrations"]
@@ -349,7 +349,7 @@ flowchart TD
 | **Routing** | [React Router DOM](https://reactrouter.com/) | `^6.26.0` | Declarative client-side routing |
 | **Backend & Database** | [Supabase](https://supabase.com/) | `^2.117.3` | Authentication, PostgreSQL with RLS, Private Storage |
 | **Serverless & Edge AI** | Supabase Edge Functions & Vercel Functions | Deno / Node.js | Dual-route AI chat backend with rate-limiting & free model cascade |
-| **AI LLM Orchestration** | Verified Free Models Cascade | OpenRouter Free API | `google/gemma-4-31b-it:free`, `nvidia/nemotron-3.5-lightning:free` |
+| **AI LLM Orchestration** | Google Gemini API Cascade | Google Generative Language API | `gemini-3.6-flash`, `gemini-3.8-flash`, `gemini-3.1-flash-lite` |
 | **Client OCR Engine** | [Tesseract.js](https://tesseract.projectnaptha.com/) | `^7.0.0` | In-browser WebAssembly OCR for image text extraction |
 | **CSS Processing** | PostCSS & Autoprefixer | `^8.4.47` / `^10.4.20` | Vendor prefixing and CSS transformation |
 | **Geospatial & Mapping** | OpenStreetMap / Google Maps | N/A | Interactive office location embeds and directions |
@@ -391,9 +391,9 @@ Ensure you have the following installed on your machine:
    VITE_GOOGLE_MAPS_API_KEY=
 
    # Optional: Server-side AI Assistant API Key (Set in Supabase Secrets or Serverless environment; NEVER use VITE_ prefix)
-   # OPENROUTER_API_KEY=your-openrouter-api-key-here
-   # Optional: Model override (Defaults to google/gemma-4-31b-it:free)
-   # OPENROUTER_MODEL=google/gemma-4-31b-it:free
+   # GEMINI_API_KEY=your-gemini-api-key-here
+   # Optional: Model override (Defaults to gemini-3.6-flash)
+   # GEMINI_MODEL=gemini-3.6-flash
    ```
 
 4. **Initialize Supabase database:**
@@ -425,8 +425,8 @@ Ensure you have the following installed on your machine:
 | `SUPABASE_URL` | **Yes** | Client (Inlined) | Your Supabase project URL (`https://<project-ref>.supabase.co`). |
 | `SUPABASE_ANON_KEY` | **Yes** | Client (Inlined) | The public/anon API key for Supabase. Safe for client exposure under PostgreSQL RLS. |
 | `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Client | Google Maps Embed API key. If omitted, CivicSaathi automatically uses OpenStreetMap. |
-| `OPENROUTER_API_KEY` | *Optional* | Server-side only | API key for the AI civic assistant. Set in Supabase Secrets or Vercel Environment Variables. Never prefix with `VITE_`. |
-| `OPENROUTER_MODEL` | *Optional* | Server-side only | Model ID override for AI chat completions. Defaults to verified free model `google/gemma-4-31b-it:free`. |
+| `GEMINI_API_KEY` | *Optional* | Server-side only | API key for the AI civic assistant. Set in Supabase Secrets or Vercel Environment Variables. Never prefix with `VITE_`. |
+| `GEMINI_MODEL` | *Optional* | Server-side only | Model ID override for AI chat completions. Defaults to `gemini-3.6-flash`. |
 
 ### Vite Environment Variable Architecture
 
@@ -588,18 +588,17 @@ CivicSaathi incorporates an intelligent, privacy-grounded civic advisor designed
    │  Vercel Serverless Function (`api/chat.ts`)            │
    └────────────────────────────────────────────────────────┘
        │  
-       │  4. Reads server secret: OPENROUTER_API_KEY (never exposed to browser)
+       │  4. Reads server secret: GEMINI_API_KEY (never exposed to browser)
        │  5. Injects verified CivicSaathi rules & civic system prompt
-       │  6. Multi-Model Fallback Cascade (Evaluates HTTP 429 & Retry-After)
+       │  6. Multi-Model Fallback Cascade (Evaluates HTTP 429 & 503)
        ▼
-[ AI Chat Completions Provider ]
+[ Google Gemini Generative API ]
        │
        ▼
-[ Verified Free Models Cascade ]
-  ├── 1. Primary: google/gemma-4-31b-it:free
-  ├── 2. Fallback 1: nvidia/nemotron-3.5-lightning:free
-  ├── 3. Fallback 2: google/gemma-4-26b-a4b-it:free
-  └── 4. Fallback 3: openrouter/free
+[ Google Gemini Models Cascade ]
+  ├── 1. Primary: gemini-3.6-flash
+  ├── 2. Fallback 1: gemini-3.8-flash
+  └── 3. Fallback 2: gemini-3.1-flash-lite
 ```
 
 ### Dual Backend Routing & Fallback
@@ -611,10 +610,10 @@ The assistant employs a resilient dual-tier architecture in [`src/services/ai.ts
 
 ### Security & PII Sanitization
 
-- **Zero Client Secret Exposure**: The `OPENROUTER_API_KEY` is strictly managed server-side. It is **never** prefixed with `VITE_` or bundled into browser code or static JavaScript assets.
-- **Client & Server PII Masking**: Citizen queries are scrubbed for 12-digit Aadhaar patterns (`\b\d{4}[ -]?\d{4}[ -]?\d{4}\b`) and 10-character PAN patterns (`\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b`) both before client transmission and upon backend receipt. A privacy notice banner is displayed whenever sensitive data is redacted.
-- **Strict Free-Model Enforcement**: The backend strictly validates candidate models against a whitelist of verified free models (`:free`). It **never** silently cascades to paid endpoints.
-- **Error Sanitization**: Upstream provider error messages are regex-sanitized (`.replace(/openrouter/gi, 'AI assistant')`) before returning to the frontend to ensure clean civic branding.
+- **Zero Client Secret Exposure**: The `GEMINI_API_KEY` is strictly managed server-side. It is **never** prefixed with `VITE_` or bundled into browser code or static JavaScript assets.
+- **Client & Server PII Masking**: Citizen queries are scrubbed for 12-digit Aadhaar patterns (`\b\d{4}[ -]?\d{4}[ -]?\d{4}\b`), 10-character PAN patterns (`\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b`), and phone numbers both before client transmission and upon backend receipt. A privacy notice banner is displayed whenever sensitive data is redacted.
+- **Strict Model Enforcement**: The backend strictly validates candidate models against verified Google Gemini models (`gemini-3.6-flash`, `gemini-3.8-flash`, `gemini-3.1-flash-lite`).
+- **Error Sanitization**: Upstream provider error messages are sanitized before returning to the frontend to ensure clean civic branding.
 
 ### Rate-Limit & Quota Resilience Strategy
 
@@ -628,11 +627,11 @@ Free AI model tiers occasionally encounter upstream provider throttling. CivicSa
 
 #### 1. Supabase Edge Function (Recommended)
 ```bash
-# Set your AI API key in Supabase Secrets
-supabase secrets set OPENROUTER_API_KEY=your-api-key-here
+# Set your Gemini API key in Supabase Secrets
+supabase secrets set GEMINI_API_KEY=your-api-key-here
 
-# Optional: Set preferred model (defaults to google/gemma-4-31b-it:free)
-supabase secrets set OPENROUTER_MODEL=google/gemma-4-31b-it:free
+# Optional: Set preferred model (defaults to gemini-3.6-flash)
+supabase secrets set GEMINI_MODEL=gemini-3.6-flash
 
 # Deploy the chat function
 supabase functions deploy chat --no-verify-jwt
@@ -640,12 +639,12 @@ supabase functions deploy chat --no-verify-jwt
 
 #### 2. Vercel Serverless Deployment
 1. Navigate to your Vercel Project Dashboard ➔ **Settings** ➔ **Environment Variables**.
-2. Add `OPENROUTER_API_KEY` with your secret key from your AI provider.
-3. *(Optional)* Add `OPENROUTER_MODEL` (e.g. `google/gemma-4-31b-it:free`).
+2. Add `GEMINI_API_KEY` with your secret key from Google AI Studio.
+3. *(Optional)* Add `GEMINI_MODEL` (e.g. `gemini-3.6-flash`).
 4. Redeploy the application.
 
 #### 3. Local Development (Vite Dev Server)
-Provide `OPENROUTER_API_KEY=your_key` in your environment or `.env` before running:
+Provide `GEMINI_API_KEY=your_key` in your environment or `.env` before running:
 ```bash
 npm run dev
 ```
@@ -675,8 +674,8 @@ CivicSaathi is optimized for deployment on [Vercel](https://vercel.com/):
    Under **Environment Variables**, add:
    - `SUPABASE_URL` = `https://<your-project>.supabase.co`
    - `SUPABASE_ANON_KEY` = `<your-supabase-anon-key>`
-   - `OPENROUTER_API_KEY` = `<your-ai-api-key>` (Secret key for AI civic assistant)
-   - *(Optional)* `OPENROUTER_MODEL` = `google/gemma-4-31b-it:free`
+   - `GEMINI_API_KEY` = `<your-gemini-api-key>` (Secret key for Google Gemini AI civic assistant)
+   - *(Optional)* `GEMINI_MODEL` = `gemini-3.6-flash`
    - *(Optional)* `VITE_GOOGLE_MAPS_API_KEY` = `<your-key-if-applicable>`
 
 5. **Deploy**:
