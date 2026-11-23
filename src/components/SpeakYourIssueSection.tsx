@@ -149,9 +149,9 @@ export const SpeakYourIssueSection: React.FC<SpeakYourIssueSectionProps> = ({
             />
             <span>
               {serviceOnline === true
-                ? 'Local Voice Engine Online'
+                ? 'Voice Engine Online'
                 : serviceOnline === false
-                ? 'Voice Service Offline (:8000)'
+                ? 'Voice Service Offline'
                 : 'Connecting to Engine...'}
             </span>
           </div>
@@ -263,9 +263,9 @@ export const SpeakYourIssueSection: React.FC<SpeakYourIssueSectionProps> = ({
             <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div className="flex-1 space-y-1">
               <p className="font-semibold">{error}</p>
-              {error.includes('voice-service') || error.includes(':8000') ? (
+              {error.includes('voice-service') || error.includes(':8000') || error.includes('VITE_VOICE_API_URL') ? (
                 <p className="text-[11px] text-amber-800/80 dark:text-amber-300/80">
-                  Tip: In a terminal, run <code>cd voice-service && python main.py</code> to launch the local speech recognition engine.
+                  Tip: In development, run <code>cd voice-service && python main.py</code> to launch the local speech recognition engine. In production, configure <code>VITE_VOICE_API_URL</code>.
                 </p>
               ) : null}
             </div>

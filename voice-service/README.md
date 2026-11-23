@@ -71,9 +71,27 @@ The service will be available at `http://localhost:8000`.
 
 ## 🔄 Integration with CivicSeva
 
-1. The frontend records citizen speech in the browser via `MediaRecorder`.
-2. The recorded audio blob is sent directly to `POST http://localhost:8000/transcribe`.
+1. The frontend records citizen speech in the browser via `MediaRecorder` using browser-supported formats (`audio/webm;codecs=opus`, with fallbacks to `audio/mp4`, `audio/ogg`, or `audio/wav`).
+2. The recorded audio is packaged as a `File` and submitted via `FormData` to `POST /transcribe` without hardcoded content-type headers.
 3. The returned Roman Hinglish text is populated into:
    - The **Voice Assistant / Speak Your Issue** section on the homepage
    - The **AI Chat input textarea** inside the CivicSeva Assistant drawer
 4. Citizens can review and edit their transcribed text before sending it to the existing CivicSeva Gemini AI chatbot.
+
+---
+
+## 🌐 Production Deployment Architecture
+
+Because `faster-whisper` and CTranslate2 require compiled native libraries, CPU inference, and model weights, the voice service cannot run on ephemeral serverless platforms like Vercel Functions.
+
+### Recommended Architecture:
+- **Frontend (Vercel):** React + Vite SPA (static assets + serverless Gemini `/api/chat`).
+- **Voice Service Backend:** Python FastAPI container on Render, Railway, Hugging Face Spaces, Fly.io, or Cloud Run.
+
+### Connecting Frontend to Production Voice Service:
+1. Deploy `voice-service/` using Docker or standard Python buildpacks to your cloud provider (e.g. `https://voice.civicseva.org` or `https://civicseva-voice.onrender.com`).
+2. In your Vercel Project Settings under **Environment Variables**, configure:
+   ```bash
+   VITE_VOICE_API_URL=https://your-voice-service-subdomain.com
+   ```
+3. In local development, the frontend automatically defaults to `http://localhost:8000` when `VITE_VOICE_API_URL` is omitted.

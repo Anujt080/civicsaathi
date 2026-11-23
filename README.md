@@ -421,13 +421,14 @@ Ensure you have the following installed on your machine:
 
 ### Environment Variables
 
-| Variable Name | Required | Scope | Description |
+| Variable Name | Required | Scope / Type | Description |
 | :--- | :---: | :---: | :--- |
-| `SUPABASE_URL` | **Yes** | Client (Inlined) | Your Supabase project URL (`https://<project-ref>.supabase.co`). |
-| `SUPABASE_ANON_KEY` | **Yes** | Client (Inlined) | The public/anon API key for Supabase. Safe for client exposure under PostgreSQL RLS. |
-| `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Client | Google Maps Embed API key. If omitted, CivicSeva automatically uses OpenStreetMap. |
-| `GEMINI_API_KEY` | *Optional* | Server-side only | API key for the AI civic assistant. Set in Supabase Secrets or Vercel Environment Variables. Never prefix with `VITE_`. |
-| `GEMINI_MODEL` | *Optional* | Server-side only | Model ID override for AI chat completions. Defaults to `gemini-3.6-flash`. |
+| `GEMINI_API_KEY` | **Yes** (for AI) | **Server Secret** | API key for Google Gemini AI civic assistant. Set in Vercel Environment Variables or Supabase Secrets. **Never** prefix with `VITE_` or expose to browser code. |
+| `GEMINI_MODEL` | *Optional* | **Server Secret** | Model ID override for AI chat completions (defaults to `gemini-3-flash-preview` with automatic multi-model fallback). |
+| `VITE_VOICE_API_URL` | *Optional* | **Public Frontend** | Base URL of the deployed CivicSeva Python voice-to-text service (e.g. `https://voice.civicseva.org`). If omitted, defaults to `http://localhost:8000` during local development and preview testing. |
+| `SUPABASE_URL` | **Yes** | Public Frontend | Your Supabase project URL (`https://<project-ref>.supabase.co`). |
+| `SUPABASE_ANON_KEY` | **Yes** | Public Frontend | The public/anon API key for Supabase. Safe for client exposure under PostgreSQL RLS. |
+| `VITE_GOOGLE_MAPS_API_KEY` | *Optional* | Public Frontend | Google Maps Embed API key. If omitted, CivicSeva automatically uses OpenStreetMap. |
 
 ### Vite Environment Variable Architecture
 
@@ -655,35 +656,81 @@ The Vite development server's internal middleware handles `/api/chat` requests d
 
 ## 🚀 Deployment Guide (Vercel)
 
-CivicSeva is optimized for deployment on [Vercel](https://vercel.com/):
+CivicSeva is optimized for production deployment on [Vercel](https://vercel.com/) with a hybrid architecture:
 
-1. **Push your code to GitHub**:
-   Ensure your latest code is committed and pushed to your GitHub repository on `main`.
+- **Frontend & Serverless Chat:** Deployed directly to Vercel (React + Vite static assets + `/api/chat` serverless function).
+- **Hinglish Voice Service:** Deployed as a standalone Python container service (Render, Railway, Fly.io, Cloud Run, or Hugging Face Spaces) due to native CTranslate2 and PyAV dependencies.
 
-2. **Import Project in Vercel**:
-   - Go to your [Vercel Dashboard](https://vercel.com/dashboard).
-   - Click **Add New...** ➔ **Project**.
-   - Select your `CivicSeva` repository and click **Import**.
+---
 
-3. **Configure Project Settings**:
-   - **Framework Preset**: `Vite`
-   - **Root Directory**: `./`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
+### Step-by-Step Vercel Deployment
 
-4. **Set Environment Variables**:
-   Under **Environment Variables**, add:
-   - `SUPABASE_URL` = `https://<your-project>.supabase.co`
-   - `SUPABASE_ANON_KEY` = `<your-supabase-anon-key>`
-   - `GEMINI_API_KEY` = `<your-gemini-api-key>` (Secret key for Google Gemini AI civic assistant)
-   - *(Optional)* `GEMINI_MODEL` = `gemini-3.6-flash`
-   - *(Optional)* `VITE_GOOGLE_MAPS_API_KEY` = `<your-key-if-applicable>`
+#### 1. Push Code to GitHub
+Ensure all your latest project files are committed and pushed to your GitHub repository on `main`.
 
-5. **Deploy**:
-   Click **Deploy**. Vercel will run `tsc && vite build` and deploy the static SPA across its global edge network.
+#### 2. Import Project in Vercel
+1. Open the [Vercel Dashboard](https://vercel.com/dashboard).
+2. Click **Add New...** ➔ **Project**.
+3. Select your `CivicSeva` repository and click **Import**.
 
-6. **Important Note on Environment Updates**:
-   If you add or update `SUPABASE_URL` or `SUPABASE_ANON_KEY` in Vercel after the initial build, navigate to **Deployments** ➔ select the latest deployment ➔ click **Redeploy** to inline the updated variables into the client bundle.
+#### 3. Configure Project Settings
+- **Framework Preset**: `Vite`
+- **Root Directory**: `./`
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+#### 4. Configure Environment Variables in Vercel
+Under **Project Settings ➔ Environment Variables**, add:
+
+| Key | Value | Scope / Protection |
+| :--- | :--- | :--- |
+| `GEMINI_API_KEY` | Your secret API key from Google AI Studio | **Server Secret** (Available to `/api/chat`; never exposed to browser) |
+| `VITE_VOICE_API_URL` | `https://your-voice-service.onrender.com` | **Public Frontend** (URL of your deployed Python voice service) |
+| `SUPABASE_URL` | `https://<your-project>.supabase.co` | Public Frontend (Inlined at build time) |
+| `SUPABASE_ANON_KEY` | `<your-supabase-anon-key>` | Public Frontend (Inlined at build time) |
+| `GEMINI_MODEL` *(Optional)* | `gemini-3-flash-preview` | Server Secret |
+| `VITE_GOOGLE_MAPS_API_KEY` *(Optional)* | `<your-maps-key>` | Public Frontend |
+
+> [!IMPORTANT]
+> **Server Secrets vs. Public Frontend Variables:**
+> - `GEMINI_API_KEY` is a **server-side secret**. It is read securely by Vercel Serverless Function `/api/chat` and is **never** bundled into browser code.
+> - `VITE_VOICE_API_URL` is a **public frontend variable**. It tells the browser where to send recorded audio for transcription.
+
+#### 5. Deploy
+Click **Deploy**. Vercel will run `tsc && vite build` and deploy the application globally.
+
+#### 6. Redeploy Note
+Client variables (`VITE_*`, `SUPABASE_*`) are inlined during build time. If you add or update `VITE_VOICE_API_URL` or Supabase keys after the initial build, navigate to **Deployments** ➔ select the latest deployment ➔ click **Redeploy** (without cache) for the changes to take effect.
+
+---
+
+### Deploying the Python Voice Service (Standalone)
+
+Because `faster-whisper`, CTranslate2, and PyAV require compiled binary libraries and persistent model caching, the voice service cannot run inside Vercel's ephemeral 250MB serverless lambda limit. Deploy it as a container service:
+
+1. **Deploy via Docker / Cloud Provider:**
+   Deploy the `voice-service/` directory using the provided [`voice-service/Dockerfile`](voice-service/Dockerfile) to any container platform:
+   - **Render:** New Web Service ➔ connect repository ➔ Root Directory: `voice-service` ➔ Runtime: Docker.
+   - **Railway / Fly.io / Cloud Run:** Deploy using `voice-service/Dockerfile`.
+2. **Configure CORS on Voice Service:**
+   Set the environment variable on your voice service:
+   ```bash
+   ALLOWED_ORIGINS=https://your-civicseva.vercel.app
+   ```
+   *(By default, all `https://*.vercel.app` domains and local development origins are automatically permitted via built-in regex).*
+3. **Connect Frontend:**
+   Copy your deployed voice service URL (e.g. `https://voice.civicseva.org` or `https://civicseva-voice.onrender.com`) and paste it as `VITE_VOICE_API_URL` in your Vercel project environment variables.
+
+---
+
+### Post-Deployment Verification Checklist
+
+Once deployed, verify the complete pipeline:
+
+- [ ] **Normal Gemini Chat:** Open the CivicSeva AI Assistant drawer, send `"What documents are accepted for Proof of Address?"`, and verify that the assistant responds as **CivicSeva (सिविक सेवा)**.
+- [ ] **Microphone Recording:** Tap the microphone button in the chat input or on the homepage **Voice Assistant** section and speak in Hinglish (e.g., *"mere area mein road bahut kharab hai"*).
+- [ ] **Hinglish Transcription:** Verify that the recorded speech transcribes into Roman Hinglish text in the input box.
+- [ ] **Transcription ➔ Gemini Response:** Send the transcribed message and verify that CivicSeva AI provides a complete civic guidance response.
 
 ---
 

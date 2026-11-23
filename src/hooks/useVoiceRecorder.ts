@@ -19,6 +19,7 @@ export function useVoiceRecorder(options: UseVoiceRecorderOptions = {}) {
   const audioChunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const chosenMimeTypeRef = useRef<string>('');
 
   // Clean up stream & timers on unmount
   useEffect(() => {
@@ -70,6 +71,7 @@ export function useVoiceRecorder(options: UseVoiceRecorderOptions = {}) {
       audioChunksRef.current = [];
 
       const mimeType = getSupportedMimeType();
+      chosenMimeTypeRef.current = mimeType;
       const recorderOptions: MediaRecorderOptions = mimeType ? { mimeType } : {};
       const recorder = new MediaRecorder(stream, recorderOptions);
       mediaRecorderRef.current = recorder;
@@ -127,12 +129,12 @@ export function useVoiceRecorder(options: UseVoiceRecorderOptions = {}) {
           streamRef.current = null;
         }
 
-        const mimeType = recorder.mimeType || 'audio/webm';
+        const mimeType = recorder.mimeType || chosenMimeTypeRef.current || 'audio/webm';
         const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
         audioChunksRef.current = [];
 
-        if (audioBlob.size < 100) {
-          const errMsg = 'Recording was too short or silent.';
+        if (audioBlob.size < 400) {
+          const errMsg = 'Recording was too short. Please speak your issue and tap stop when finished.';
           setError(errMsg);
           setIsTranscribing(false);
           onTranscribeError?.(errMsg);
@@ -161,6 +163,15 @@ export function useVoiceRecorder(options: UseVoiceRecorderOptions = {}) {
           setIsTranscribing(false);
         }
       };
+
+      // Request any pending buffer chunk before stopping to ensure complete audio payload
+      if (recorder.state === 'recording') {
+        try {
+          recorder.requestData();
+        } catch {
+          // ignore if unsupported
+        }
+      }
 
       recorder.stop();
     });

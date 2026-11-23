@@ -86,12 +86,42 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for local frontend development and production origins
+# Configure CORS for local development and production Vercel origins
+default_origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:4173",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:4173",
+]
+
+env_origins = os.getenv("ALLOWED_ORIGINS", "").strip()
+if env_origins:
+    if env_origins == "*":
+        allowed_origins = ["*"]
+        allow_creds = False
+    else:
+        allowed_origins = [origin.strip() for origin in env_origins.split(",") if origin.strip()]
+        for dev_orig in default_origins:
+            if dev_orig not in allowed_origins:
+                allowed_origins.append(dev_orig)
+        allow_creds = True
+else:
+    allowed_origins = default_origins
+    allow_creds = True
+
+allow_origin_regex = os.getenv(
+    "ALLOW_ORIGIN_REGEX",
+    r"^https://.*\.vercel\.app$"
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=allowed_origins,
+    allow_origin_regex=allow_origin_regex if allow_creds else None,
+    allow_credentials=allow_creds,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -114,32 +144,85 @@ def health_check():
         "compute_type": COMPUTE_TYPE
     }
 
+def detect_audio_extension(data: bytes, filename: Optional[str] = None, content_type: Optional[str] = None) -> str:
+    """
+    Safely inspects file magic bytes to determine the correct audio container format,
+    preventing PyAV / FFmpeg demuxer mismatch errors (e.g. Invalid data found when processing input).
+    """
+    if len(data) >= 4:
+        if data[:4] == b"\x1aE\xdf\xa3":
+            return ".webm"
+        if data[:4] == b"RIFF":
+            return ".wav"
+        if data[:4] == b"OggS":
+            return ".ogg"
+        if data[:4] == b"fLaC":
+            return ".flac"
+    if len(data) >= 8 and data[4:8] == b"ftyp":
+        return ".mp4"
+
+    ct = (content_type or "").lower()
+    if "webm" in ct:
+        return ".webm"
+    if "wav" in ct or "wave" in ct:
+        return ".wav"
+    if "ogg" in ct:
+        return ".ogg"
+    if "mp4" in ct or "m4a" in ct or "aac" in ct:
+        return ".mp4"
+
+    if filename:
+        _, ext = os.path.splitext(filename)
+        if ext:
+            return ext.lower()
+
+    return ".webm"
+
 @app.post("/transcribe")
 async def transcribe_audio(file: UploadFile = File(...)):
     if not file:
         raise HTTPException(status_code=400, detail="No audio file provided")
 
     original_filename = file.filename or "recording.webm"
-    _, ext = os.path.splitext(original_filename)
-    if not ext:
-        ext = ".webm"
-
-    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=ext)
-    temp_path = temp_file.name
+    content_type = file.content_type or "audio/webm"
 
     try:
-        with open(temp_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        content = await file.read()
+    except Exception as e:
+        logger.error(f"Failed to read uploaded audio file: {e}")
+        return {"success": False, "error": f"Failed to read audio file: {e}", "text": ""}
 
-        file_size = os.path.getsize(temp_path)
-        logger.info(f"Received audio file {original_filename} ({file_size} bytes)")
+    file_size = len(content) if content else 0
+    # Safe debugging log: filename, content_type, size (never log secrets or keys)
+    logger.info(
+        f"Received audio upload: filename='{original_filename}', "
+        f"content_type='{content_type}', size={file_size} bytes"
+    )
 
-        if file_size == 0:
-            return {"success": False, "error": "Empty audio file received", "text": ""}
+    if file_size == 0:
+        logger.warning("Empty audio payload received (0 bytes)")
+        return {"success": False, "error": "Empty audio file received (0 bytes)", "text": ""}
+
+    if file_size < 100:
+        logger.warning(f"Audio payload too small ({file_size} bytes)")
+        return {
+            "success": False,
+            "error": f"Audio file is too small ({file_size} bytes) to contain valid audio data",
+            "text": ""
+        }
+
+    detected_ext = detect_audio_extension(content, original_filename, content_type)
+    logger.info(f"Resolved container extension: '{detected_ext}' for decoding")
+
+    fd, temp_path = tempfile.mkstemp(suffix=detected_ext)
+    try:
+        with os.fdopen(fd, "wb") as buffer:
+            buffer.write(content)
+            buffer.flush()
 
         # Transcribe audio with language="en" so Hindi/Hinglish is returned in Roman script
         transcribed_text = transcriber_manager.transcribe(temp_path, language="en")
-        logger.info(f"Transcription result: '{transcribed_text}'")
+        logger.info(f"Transcription successful ({len(transcribed_text)} chars): '{transcribed_text}'")
 
         return {
             "success": True,
@@ -147,9 +230,14 @@ async def transcribe_audio(file: UploadFile = File(...)):
         }
     except Exception as e:
         logger.exception(f"Transcription error: {e}")
+        err_msg = str(e)
+        if "Invalid data found" in err_msg or "InvalidDataError" in err_msg:
+            user_msg = "Audio data could not be decoded. Please speak clearly into your microphone and try again."
+        else:
+            user_msg = f"Transcription error: {err_msg}"
         return {
             "success": False,
-            "error": str(e),
+            "error": user_msg,
             "text": ""
         }
     finally:
