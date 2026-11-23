@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 space-y-10">
         {/* Simplified Navigation Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
-          {/* Column 1: CivicSaathi Branding */}
+          {/* Column 1: CivicSeva Branding */}
           <div className="space-y-4 md:col-span-2 lg:col-span-2 lg:pr-8">
             <Link to="/" className="inline-block hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-lg">
               <BrandLogo lightText={true} size="md" />
@@ -205,14 +205,14 @@ export const Footer: React.FC = () => {
         <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 shadow-sm text-xs text-slate-300">
           <AlertCircle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            <strong>Official Guidance Notice:</strong> CivicSaathi is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.
+            <strong>Official Guidance Notice:</strong> CivicSeva is an independent guidance platform. It does not issue documents, approve applications or replace official government portals. Always confirm fees and rules on the official website.
           </p>
         </div>
 
         {/* Bottom Legal Navigation & Dynamic Copyright */}
         <div className="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p className="text-center sm:text-left">
-            © {currentYear} CivicSaathi Citizen Assistance Platform. Non-commercial civic assistance utility.
+            © {currentYear} CivicSeva Citizen Assistance Platform. Non-commercial civic assistance utility.
           </p>
 
           <nav aria-label="Legal Navigation" className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs">

@@ -68,7 +68,7 @@ export const Login: React.FC = () => {
           </Link>
           <div className="pt-2">
             <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Welcome back</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Sign in to continue to CivicSaathi</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">Sign in to continue to CivicSeva</p>
           </div>
         </div>
 

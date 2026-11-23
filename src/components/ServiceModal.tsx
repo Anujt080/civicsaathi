@@ -231,7 +231,7 @@ export const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) 
         <div className="p-4 sm:p-5 bg-slate-50 dark:bg-black border-t border-slate-200 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
             <Info className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-            <span>CivicSaathi is free & non-commercial. Applications are processed on official portals.</span>
+            <span>CivicSeva is free & non-commercial. Applications are processed on official portals.</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
