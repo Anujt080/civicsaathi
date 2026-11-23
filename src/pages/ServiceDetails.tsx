@@ -5,6 +5,7 @@ import { ServiceWorkflowSteps } from '../components/ServiceWorkflowSteps';
 import { DocumentChecklist } from '../components/DocumentChecklist';
 import { VerifyDocuments } from './VerifyDocuments';
 import { SubmissionModeStep } from '../components/SubmissionModeStep';
+import { RaiseComplaintSection } from '../components/RaiseComplaintSection';
 import {
   ArrowLeft,
   ArrowRight,
@@ -164,6 +165,7 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
           onBack={() => setSearchParams({ step: '2' })}
           onHome={() => navigate('/services')}
         />
+        <RaiseComplaintSection serviceId={service.id} serviceName={service.name} />
       </div>
     );
   }
@@ -461,6 +463,9 @@ export const ServiceDetails: React.FC<ServiceDetailsProps> = ({ initialStep }) =
           </button>
         </div>
       </div>
+
+      {/* Facing an Issue? Raise a Complaint */}
+      <RaiseComplaintSection serviceId={service.id} serviceName={service.name} />
     </div>
   );
 };
