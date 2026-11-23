@@ -295,7 +295,7 @@ export const FamilyDocumentModal: React.FC<FamilyDocumentModalProps> = ({
           </div>
 
           <div className="p-2.5 rounded-lg bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-900/40 text-[11px] text-blue-800 dark:text-blue-300">
-            <strong>Notice:</strong> Document statuses reflect household preparedness checks within CivicSaathi and do not imply official government agency endorsement.
+            <strong>Notice:</strong> Document statuses reflect household preparedness checks within CivicSeva and do not imply official government agency endorsement.
           </div>
 
           {/* Footer Buttons */}

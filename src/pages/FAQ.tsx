@@ -16,8 +16,8 @@ export const FAQ: React.FC = () => {
   const faqs: FaqItem[] = [
     {
       category: 'General',
-      question: 'Is CivicSaathi an official government website?',
-      answer: 'No. CivicSaathi is an independent, non-commercial civic-tech guidance platform. We do not issue documents, collect government fees, or approve applications. We help citizens verify that their documentation meets official guidelines before visiting official portals or seva kendras.',
+      question: 'Is CivicSeva an official government website?',
+      answer: 'No. CivicSeva is an independent, non-commercial civic-tech guidance platform. We do not issue documents, collect government fees, or approve applications. We help citizens verify that their documentation meets official guidelines before visiting official portals or seva kendras.',
     },
     {
       category: 'Document Verification',
@@ -31,8 +31,8 @@ export const FAQ: React.FC = () => {
     },
     {
       category: 'Services',
-      question: 'Can I submit my passport, Aadhaar, or DL application directly through CivicSaathi?',
-      answer: 'No. Statutory government applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSaathi provides direct verified links to these portals once your documents are ready.',
+      question: 'Can I submit my passport, Aadhaar, or DL application directly through CivicSeva?',
+      answer: 'No. Statutory government applications must be submitted through their designated official websites (such as uidai.gov.in, passportindia.gov.in, or parivahan.gov.in) or at an authorized facilitation center. CivicSeva provides direct verified links to these portals once your documents are ready.',
     },
     {
       category: 'Offices & Centers',
@@ -41,8 +41,8 @@ export const FAQ: React.FC = () => {
     },
     {
       category: 'Fees',
-      question: 'Does CivicSaathi charge any fees for using the platform?',
-      answer: 'No. CivicSaathi is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are the statutory government fees payable directly to the official government authorities.',
+      question: 'Does CivicSeva charge any fees for using the platform?',
+      answer: 'No. CivicSeva is completely free to use for all citizens. Any fees mentioned on service cards (such as ₹50 for Aadhaar demographic update or ₹1,500 for normal passport) are the statutory government fees payable directly to the official government authorities.',
     },
   ];
 
@@ -69,7 +69,7 @@ export const FAQ: React.FC = () => {
           {t('faq.title') || 'Common Questions & Guidance'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-          {t('faq.subtitle') || 'Everything you need to know about using CivicSaathi, document verification privacy, and official application workflows.'}
+          {t('faq.subtitle') || 'Everything you need to know about using CivicSeva, document verification privacy, and official application workflows.'}
         </p>
       </div>
 

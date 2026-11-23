@@ -29,7 +29,7 @@ export const TermsOfUse: React.FC = () => {
           {t('legal.termsTitle') || 'Terms of Use & Legal Disclaimer'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          {t('legal.termsSubtitle') || "Please read these terms carefully before utilizing CivicSaathi's citizen assistance tools."}
+          {t('legal.termsSubtitle') || "Please read these terms carefully before utilizing CivicSeva's citizen assistance tools."}
         </p>
       </div>
 
@@ -40,7 +40,7 @@ export const TermsOfUse: React.FC = () => {
           <span>Independent Platform Disclaimer</span>
         </div>
         <p className="leading-relaxed">
-          CivicSaathi is an independent civic-tech guidance platform. It is <strong>not an official government body, affiliated department, or authorized licensing agency</strong>. CivicSaathi does not issue legal certificates, approve statutory applications, or replace designated government portals (such as UIDAI, Parivahan, Passport Seva, or Income Tax).
+          CivicSeva is an independent civic-tech guidance platform. It is <strong>not an official government body, affiliated department, or authorized licensing agency</strong>. CivicSeva does not issue legal certificates, approve statutory applications, or replace designated government portals (such as UIDAI, Parivahan, Passport Seva, or Income Tax).
         </p>
       </div>
 
@@ -53,11 +53,11 @@ export const TermsOfUse: React.FC = () => {
             <span>1. Scope of Pre-Submission Verification</span>
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            The document verification feature in CivicSaathi conducts automated preliminary consistency checks (such as verifying character structures and standard regex patterns for PAN cards).
+            The document verification feature in CivicSeva conducts automated preliminary consistency checks (such as verifying character structures and standard regex patterns for PAN cards).
           </p>
           <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
             <li>These checks are designed to help citizens identify common clerical errors (e.g. spelling mismatches or unreadable photocopies) prior to queuing at facilitation counters.</li>
-            <li>A "Passed Check" status in CivicSaathi does <strong>not</strong> constitute official government authentication or guarantee application approval by official scrutinizing officers.</li>
+            <li>A "Passed Check" status in CivicSeva does <strong>not</strong> constitute official government authentication or guarantee application approval by official scrutinizing officers.</li>
           </ul>
         </section>
 
@@ -71,7 +71,7 @@ export const TermsOfUse: React.FC = () => {
             Government service requirements, statutory fee schedules, valid document lists, and processing turnaround times are determined exclusively by authorized government ministries and state departments.
           </p>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            While CivicSaathi strives to maintain current, guide-backed information, citizens should always confirm statutory fees and final requirements directly on the official portal before initiating payment or booking appointments.
+            While CivicSeva strives to maintain current, guide-backed information, citizens should always confirm statutory fees and final requirements directly on the official portal before initiating payment or booking appointments.
           </p>
         </section>
 
@@ -81,7 +81,7 @@ export const TermsOfUse: React.FC = () => {
             3. User Responsibility & Accurate Submissions
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            Users are solely responsible for ensuring the accuracy and legitimacy of all information submitted to official government bodies. CivicSaathi does not act as an agent, broker, or intermediary in processing applications.
+            Users are solely responsible for ensuring the accuracy and legitimacy of all information submitted to official government bodies. CivicSeva does not act as an agent, broker, or intermediary in processing applications.
           </p>
         </section>
 
@@ -91,7 +91,7 @@ export const TermsOfUse: React.FC = () => {
             4. Informational Purpose (Not Legal Advice)
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-            All content, checklists, guidance steps, and advisory notes provided by CivicSaathi are for educational and informational assistance only. Nothing on this website constitutes legal counsel, immigration advice, or statutory representation.
+            All content, checklists, guidance steps, and advisory notes provided by CivicSeva are for educational and informational assistance only. Nothing on this website constitutes legal counsel, immigration advice, or statutory representation.
           </p>
         </section>
       </div>

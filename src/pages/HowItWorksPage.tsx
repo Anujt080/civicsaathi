@@ -24,7 +24,7 @@ export const HowItWorksPage: React.FC = () => {
       title: 'Know Requirements Upfront',
       subtitle: 'Clear, Gazette-Backed Document Lists',
       description:
-        'Search through 24+ Indian public services to inspect exact statutory document requirements. CivicSaathi breaks proofs into four standardized categories (POI, POA, DOB, and POR), highlighting which documents are mandatory and which are situational alternatives.',
+        'Search through 24+ Indian public services to inspect exact statutory document requirements. CivicSeva breaks proofs into four standardized categories (POI, POA, DOB, and POR), highlighting which documents are mandatory and which are situational alternatives.',
       details: [
         'Understand statutory fee schedules and average processing turnaround times.',
         'View accepted primary and secondary proof combinations approved by UIDAI, MEA, and State Governments.',
@@ -107,14 +107,14 @@ export const HowItWorksPage: React.FC = () => {
         <div className="max-w-3xl space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/70 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-900/60 inline-flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>The CivicSaathi Framework</span>
+            <span>The CivicSeva Framework</span>
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-            How CivicSaathi Simplifies Public Services
+            How CivicSeva Simplifies Public Services
           </h1>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
             Every day, thousands of Indian citizens face counter rejection at government facilitation
-            centers due to minor documentation oversights. CivicSaathi is engineered as a prevention-first
+            centers due to minor documentation oversights. CivicSeva is engineered as a prevention-first
             guidance platform that eliminates counter friction before you leave home.
           </p>
         </div>

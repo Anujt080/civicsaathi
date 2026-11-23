@@ -15,7 +15,7 @@ import {
   Copy,
   Info
 } from 'lucide-react';
-import { askCivicSaathi, AIContext } from '../services/ai';
+import { askCivicSeva, AIContext } from '../services/ai';
 import { ChatMessage } from '../types';
 import { useTranslation } from '../context/LanguageContext';
 
@@ -29,7 +29,7 @@ interface AIAssistantDrawerProps {
 const DEFAULT_WELCOME_MESSAGE: ChatMessage = {
   id: 'welcome-1',
   sender: 'assistant',
-  text: `Namaste! I am the **CivicSaathi AI Assistant**.
+  text: `Namaste! I am the **CivicSeva AI Assistant**.
 
 I can help you with:
 - Explaining **POI**, **POA**, and **DOB** proof categories
@@ -134,7 +134,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     setLastFailedQuery(null);
 
     try {
-      const response = await askCivicSaathi(query, context, messages);
+      const response = await askCivicSeva(query, context, messages);
       const assistantMsgId = (Date.now() + 1).toString();
 
       const assistantMessage: ChatMessage = {
@@ -174,7 +174,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
   };
 
   const handleClearHistory = () => {
-    if (window.confirm('Clear your conversation history with CivicSaathi AI?')) {
+    if (window.confirm('Clear your conversation history with CivicSeva AI?')) {
       const reset = [DEFAULT_WELCOME_MESSAGE];
       setMessages(reset);
       try {
@@ -308,7 +308,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     return (
       <div
         className="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-40 flex items-center"
-        aria-label="Floating CivicSaathi AI Chatbot"
+        aria-label="Floating CivicSeva AI Chatbot"
       >
         <button
           type="button"
@@ -316,15 +316,15 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             setIsMinimized(false);
             if (onOpen) onOpen();
           }}
-          title="Open CivicSaathi AI Assistant"
+          title="Open CivicSeva AI Assistant"
           className="group relative w-14 h-14 rounded-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-2xl hover:shadow-blue-500/30 transition-all duration-200 flex items-center justify-center focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 cursor-pointer active:scale-95 hover:scale-105"
-          aria-label="Open CivicSaathi AI Assistant"
+          aria-label="Open CivicSeva AI Assistant"
         >
           <div className="relative flex items-center justify-center">
             <Bot className="w-6 h-6 text-white transition-transform group-hover:scale-110" />
             <span className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-blue-700 dark:ring-blue-600 animate-pulse" />
           </div>
-          <span className="sr-only">Open CivicSaathi AI Assistant</span>
+          <span className="sr-only">Open CivicSeva AI Assistant</span>
         </button>
       </div>
     );
@@ -348,7 +348,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             aria-label="Restore chat window"
           >
             <Bot className="w-4 h-4 text-blue-400" />
-            <span>{t('aiDrawer.title') || 'CivicSaathi AI Assistant'}</span>
+            <span>{t('aiDrawer.title') || 'CivicSeva AI Assistant'}</span>
             <Maximize2 className="w-3.5 h-3.5 ml-1 text-slate-400" />
           </button>
           <div className="h-4 w-px bg-slate-700 dark:bg-zinc-800" />
@@ -372,7 +372,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
     <div
       role="dialog"
       aria-modal="false"
-      aria-label="CivicSaathi AI Assistant"
+      aria-label="CivicSeva AI Assistant"
       className="fixed right-3 sm:right-6 bottom-3 sm:bottom-6 rtl:right-auto rtl:left-3 sm:rtl:left-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[410px] h-[550px] max-h-[85vh] bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 flex flex-col overflow-hidden transition-all duration-200 animate-in fade-in slide-in-from-bottom-3"
     >
       {/* ---------------- HEADER ---------------- */}
@@ -384,7 +384,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-xs sm:text-sm text-white leading-none">
-                {t('aiDrawer.title') || 'CivicSaathi AI Assistant'}
+                {t('aiDrawer.title') || 'CivicSeva AI Assistant'}
               </h3>
             </div>
             <p className="text-[10px] text-slate-400 mt-0.5 flex items-center gap-1">
@@ -597,7 +597,7 @@ export const AIAssistantDrawer: React.FC<AIAssistantDrawerProps> = ({
             onKeyDown={handleKeyDown}
             disabled={loading}
             placeholder={t('aiDrawer.inputPlaceholder') || 'Ask about documents, fees, or steps... (Enter to send)'}
-            aria-label="Type your message to CivicSaathi AI"
+            aria-label="Type your message to CivicSeva AI"
             maxLength={1000}
             className="flex-1 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl px-3 py-2 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600 resize-none transition"
           />

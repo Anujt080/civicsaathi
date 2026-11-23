@@ -186,8 +186,8 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
   const handleShare = async () => {
     setActivePanel('none');
     const shareData = {
-      title: document.title || 'CivicSaathi - Citizen Service Portal',
-      text: 'Explore official government services and citizen guidelines on CivicSaathi.',
+      title: document.title || 'CivicSeva - Citizen Service Portal',
+      text: 'Explore official government services and citizen guidelines on CivicSeva.',
       url: window.location.href
     };
 
@@ -373,7 +373,7 @@ export const FloatingQuickAccessToolbar: React.FC<FloatingQuickAccessToolbarProp
           <div className="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-zinc-800">
             <div className="flex items-center gap-2">
               <MessageSquareWarning className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">CivicSaathi Feedback</h3>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">CivicSeva Feedback</h3>
             </div>
             <button
               type="button"

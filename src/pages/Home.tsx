@@ -70,12 +70,6 @@ export const Home: React.FC = () => {
                 <span>{t('hero.getStartedBtn')}</span>
                 <ArrowRight className="w-4 h-4 rtl-flip" />
               </Link>
-              <Link
-                to="/services"
-                className="bg-white/90 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-6 py-3 rounded-lg transition border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-slate-900 shadow-2xs"
-              >
-                {t('hero.exploreBtn')}
-              </Link>
             </div>
           </div>
         </div>

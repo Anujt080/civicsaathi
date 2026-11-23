@@ -69,7 +69,7 @@ export const Feedback: React.FC = () => {
 
   const handleCopySummary = () => {
     if (!submittedItem) return;
-    const summary = `CivicSaathi Feedback Summary:
+    const summary = `CivicSeva Feedback Summary:
 Category: ${submittedItem.category}
 Rating: ${submittedItem.rating}/5 Stars
 Message: ${submittedItem.message}
@@ -107,7 +107,7 @@ Submitted: ${new Date(submittedItem.submittedAt).toLocaleString()}`;
           <span>{t('feedback.title') || 'Citizen Feedback'}</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          {t('feedback.title') || 'Help Us Improve CivicSaathi'}
+          {t('feedback.title') || 'Help Us Improve CivicSeva'}
         </h1>
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
           {t('feedback.subtitle') || 'Your insights help make government documentation guides clearer, faster, and more accessible for fellow citizens.'}

@@ -3,7 +3,7 @@ import { TranslationType } from './en';
 export const ur: TranslationType = {
   // Navigation & Header
   nav: {
-    brandName: 'CivicSaathi',
+    brandName: 'CivicSeva',
     brandTagline: 'شہری معاونت پورٹل',
     services: 'خدمات',
     offices: 'دفاتر تلاش کریں',
@@ -15,7 +15,7 @@ export const ur: TranslationType = {
     profile: 'میرا پروفائل',
     documents: 'آپ کی دستاویزات',
     settings: 'اکاؤنٹ سیٹنگز',
-    askAi: 'CivicSaathi AI سے پوچھیں',
+    askAi: 'CivicSeva AI سے پوچھیں',
     theme: 'تھیم',
     themeLight: 'لائٹ',
     themeDark: 'ڈارک',
@@ -98,8 +98,8 @@ export const ur: TranslationType = {
 
   // How It Works
   howItWorks: {
-    badge: 'CivicSaathi فریم ورک',
-    title: 'CivicSaathi عوامی خدمات کو کس طرح آسان بناتا ہے',
+    badge: 'CivicSeva فریم ورک',
+    title: 'CivicSeva عوامی خدمات کو کس طرح آسان بناتا ہے',
     subtitle: 'پیشگی روک تھام کا طریقہ کار جو آپ کو بار بار دفاتر کے چکر لگانے اور پریشانی سے بچاتا ہے۔',
     phase1: 'مرحلہ 1 رہنمائی',
     phase2: 'مرحلہ 2 رہنمائی',
@@ -166,7 +166,7 @@ export const ur: TranslationType = {
     startVerificationBtn: 'دستاویزات کی تصدیق شروع کریں',
     officialPortalNotice: 'سرکاری درخواست جمع کرانے کا پورٹل',
     visitPortalBtn: 'سرکاری پورٹل کھولیں',
-    counterNotice: 'CivicSaathi ایک آزاد معلوماتی پلیٹ فارم ہے۔ حتمی درخواستیں مجاز سرکاری پورٹلز یا نامزد سیوا کیندرز کے ذریعے ہی جمع کرائی جانی چاہئیں۔',
+    counterNotice: 'CivicSeva ایک آزاد معلوماتی پلیٹ فارم ہے۔ حتمی درخواستیں مجاز سرکاری پورٹلز یا نامزد سیوا کیندرز کے ذریعے ہی جمع کرائی جانی چاہئیں۔',
   },
 
   // Verification & Readiness Checker
@@ -270,9 +270,9 @@ export const ur: TranslationType = {
   // Auth: Login & Signup
   auth: {
     loginTitle: 'خوش آمدید',
-    loginSubtitle: 'CivicSaathi میں جاری رکھنے کے لیے سائن ان کریں',
+    loginSubtitle: 'CivicSeva میں جاری رکھنے کے لیے سائن ان کریں',
     signupTitle: 'اکاؤنٹ بنائیں',
-    signupSubtitle: 'CivicSaathi شہری معاونت کا استعمال شروع کریں',
+    signupSubtitle: 'CivicSeva شہری معاونت کا استعمال شروع کریں',
     emailLabel: 'ای میل ایڈریس',
     emailPlaceholder: 'name@example.com',
     passwordLabel: 'پاس ورڈ',
@@ -315,7 +315,7 @@ export const ur: TranslationType = {
     appearanceTheme: 'تھیم کا انتخاب',
     accessibilityTitle: 'رسائی اور بصارت موڈز',
     saveSuccess: 'ترجیحات کامیابی سے اپ ڈیٹ ہو گئیں۔',
-    signOutBtn: 'CivicSaathi سے سائن آؤٹ کریں',
+    signOutBtn: 'CivicSeva سے سائن آؤٹ کریں',
   },
 
   // Footer
@@ -336,15 +336,15 @@ export const ur: TranslationType = {
     termsOfUse: 'شرائط استعمال',
     feedback: 'فیڈ بیک',
     disclaimerTitle: 'سرکاری رہنمائی نوٹس:',
-    disclaimerText: 'CivicSaathi ایک خود مختار معلوماتی پلیٹ فارم ہے۔ یہ دستاویزات جاری نہیں کرتا، درخواستیں منظور نہیں کرتا اور نہ ہی سرکاری پورٹل کا نعم البدل ہے۔ فیس اور قواعد کی تصدیق کے لیے ہمیشہ سرکاری ویب سائٹ دیکھیں۔',
-    copyright: 'CivicSaathi سٹیزن اسسٹنس پلیٹ فارم۔ غیر تجارتی عوامی سہولت۔',
+    disclaimerText: 'CivicSeva ایک خود مختار معلوماتی پلیٹ فارم ہے۔ یہ دستاویزات جاری نہیں کرتا، درخواستیں منظور نہیں کرتا اور نہ ہی سرکاری پورٹل کا نعم البدل ہے۔ فیس اور قواعد کی تصدیق کے لیے ہمیشہ سرکاری ویب سائٹ دیکھیں۔',
+    copyright: 'CivicSeva سٹیزن اسسٹنس پلیٹ فارم۔ غیر تجارتی عوامی سہولت۔',
   },
 
   // AI Assistant Drawer
   aiDrawer: {
-    title: 'CivicSaathi AI معاون',
+    title: 'CivicSeva AI معاون',
     subtitle: 'شہری دستاویزات اور انتظامی طریقہ کار کے لیے مصدقہ رہنمائی',
-    welcomeGreeting: 'آداب! میں CivicSaathi AI اسسٹنٹ ہوں۔',
+    welcomeGreeting: 'آداب! میں CivicSeva AI اسسٹنٹ ہوں۔',
     helpIntro: 'میں ان معاملات میں آپ کی مدد کر سکتا ہوں:',
     helpPoint1: 'شناخت (POI)، پتہ (POA) اور تاریخ پیدائش (DOB) کے ثبوتوں کی وضاحت',
     helpPoint2: 'مرکزی اور ریاستی خدمات کی اہلیت اور مرحلہ وار چیک لسٹ',
@@ -360,7 +360,7 @@ export const ur: TranslationType = {
     inputPlaceholder: 'سرکاری طریقہ کار، دستاویزات، فیس کے بارے میں کوئی سوال پوچھیں...',
     sendBtn: 'ارسال کریں',
     clearChat: 'گفتگو صاف کریں',
-    disclaimer: 'CivicSaathi AI سرکاری قواعد کی بنیاد پر معلوماتی رہنمائی فراہم کرتا ہے۔ حتمی تصدیق ہمیشہ سرکاری پورٹل پر کریں۔',
+    disclaimer: 'CivicSeva AI سرکاری قواعد کی بنیاد پر معلوماتی رہنمائی فراہم کرتا ہے۔ حتمی تصدیق ہمیشہ سرکاری پورٹل پر کریں۔',
   },
 
   // Quick Access Floating Toolbar
@@ -393,10 +393,10 @@ export const ur: TranslationType = {
 
   // About Page
   about: {
-    title: 'CivicSaathi کے بارے میں',
+    title: 'CivicSeva کے بارے میں',
     subtitle: 'سرکاری خدمات کو آسان بنانا اور ہر شہری کے لیے کاؤنٹر کی پریشانیوں کو ختم کرنا۔',
     missionTitle: 'ہمارا مشن',
-    missionDesc: 'روزانہ ہزاروں شہری کام سے چھٹی لے کر سرکاری کاؤنٹرز پر جاتے ہیں لیکن صرف نام کی غلطی، غیر تصدیق شدہ پتے یا پرانے فارم کی وجہ سے واپس کر دیے جاتے ہیں۔ CivicSaathi اس پریشانی کو ختم کرنے کے لیے بنایا گیا ہے۔',
+    missionDesc: 'روزانہ ہزاروں شہری کام سے چھٹی لے کر سرکاری کاؤنٹرز پر جاتے ہیں لیکن صرف نام کی غلطی، غیر تصدیق شدہ پتے یا پرانے فارم کی وجہ سے واپس کر دیے جاتے ہیں۔ CivicSeva اس پریشانی کو ختم کرنے کے لیے بنایا گیا ہے۔',
     pillarsTitle: 'ہمارے بنیادی اصول',
     pillar1Title: 'گزٹ پر مبنی درستگی',
     pillar1Desc: 'تمام دستاویزات کی چیک لسٹ سرکاری اعلانات کے مطابق مصدقہ ہوتی ہے۔',
@@ -426,7 +426,7 @@ export const ur: TranslationType = {
   // Feedback Page
   feedback: {
     title: 'شہری تاثرات اور تجاویز',
-    subtitle: 'اپنا تجربہ شیئر کر کے یا پرانے قواعد کی نشاندہی کر کے CivicSaathi کو بہتر بنانے میں مدد کریں۔',
+    subtitle: 'اپنا تجربہ شیئر کر کے یا پرانے قواعد کی نشاندہی کر کے CivicSeva کو بہتر بنانے میں مدد کریں۔',
     ratingLabel: 'آپ کا تجربہ کتنا مددگار رہا؟',
     categoryLabel: 'فیڈ بیک کا زمرہ',
     categories: {
@@ -440,13 +440,13 @@ export const ur: TranslationType = {
     commentPlaceholder: 'بتائیں کہ ہم شہری رہنمائی کو کس طرح مزید آسان بنا سکتے ہیں...',
     submitBtn: 'فیڈ بیک جمع کرائیں',
     thankYouTitle: 'آپ کے فیڈ بیک کا شکریہ!',
-    thankYouDesc: 'آپ کے تاثرات سے CivicSaathi کو ملک بھر کے شہریوں کے لیے سب سے قابل اعتماد پلیٹ فارم بنانے میں مدد ملتی ہے۔',
+    thankYouDesc: 'آپ کے تاثرات سے CivicSeva کو ملک بھر کے شہریوں کے لیے سب سے قابل اعتماد پلیٹ فارم بنانے میں مدد ملتی ہے۔',
   },
 
   // Privacy Policy & Terms
   legal: {
     privacyTitle: 'پرائیویسی پالیسی',
-    privacySubtitle: 'CivicSaathi کس طرح شہریوں کے ڈیٹا اور رازداری کا تحفظ کرتا ہے۔',
+    privacySubtitle: 'CivicSeva کس طرح شہریوں کے ڈیٹا اور رازداری کا تحفظ کرتا ہے۔',
     termsTitle: 'شرائط استعمال',
     termsSubtitle: 'پلیٹ فارم کے اصول، قانونی اختیارات کی دستبرداری اور استعمال کی شرائط۔',
     lastUpdated: 'آخری تجدید: جنوری 2026',
