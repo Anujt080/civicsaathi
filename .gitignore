@@ -27,6 +27,11 @@ dist-ssr
 .env
 .env*.local
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
 # Supabase CLI temp files
 .temp
 supabase/.temp
